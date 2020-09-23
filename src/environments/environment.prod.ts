@@ -9,8 +9,12 @@ export const environment = {
   //ImagePath: 'http://ecomapi.uccnoida.com/ProductImage'
 
 
-  BASE_API_URL: 'http://34.67.65.213/ecommapi/api/',
-  ImagePath: 'http://34.67.65.213/ecommapi/ProductImage/',
+  //BASE_API_URL: 'http://34.67.65.213/ecommapi/api/',
+  //ImagePath: 'http://34.67.65.213/ecommapi/ProductImage/',
 
-  APIURL: 'http://34.67.65.213/ecommapi'
+  APIURL: 'http://ecomChairapi.uccnoida.com/api',
+
+  BASE_API_URL: 'http://ecomChairapi.uccnoida.com/api/',
+  ImagePath: 'http://ecomchairapi.uccnoida.com/ProductImage/',
+
 };
