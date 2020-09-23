@@ -1,0 +1,23 @@
+.mat-dialog-content {
+    display: block;
+    margin: 0 -24px;
+    padding: 0 24px;
+    /* max-height: 65vh; */
+    overflow: hidden;
+}
+
+
+.fHbZUJ
+{
+border-radius: 2px;
+    cursor: pointer;
+    
+    white-space: nowrap;
+    color: rgb(255, 255, 255);
+    border: 1px solid rgb(71, 160, 251);
+    background-color: rgb(71, 160, 251);
+   
+    padding-left: 15px;
+    padding-right: 16px;
+    text-transform: uppercase;
+}
