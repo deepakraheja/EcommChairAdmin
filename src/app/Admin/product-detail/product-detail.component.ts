@@ -98,8 +98,8 @@ export class ProductDetailComponent implements OnInit {
       shortDetails: ['', Validators.required],
       description: ['', Validators.required],
       supplierID: ['', Validators.required],
-      mainCategoryID: ['', Validators.required],
-      categoryID: ['', Validators.required],
+      mainCategoryID: [1, Validators.required],
+      categoryID: [1, Validators.required],
       subCategoryID: ['', Validators.required],
       brandId: ['', Validators.required],
 
@@ -118,7 +118,7 @@ export class ProductDetailComponent implements OnInit {
       smallImg: ['', [Validators.required]],
       title: [''],
       subTitle: [''],
-      tagId: ['0'],
+      tagId: [0],
       articalNo: [''],
       fabricId: ['0'],
       fabricTypeId: ['0'],
@@ -159,11 +159,12 @@ export class ProductDetailComponent implements OnInit {
       //productImg: ['', [Validators.required]],
     });
 
-    this.fnGetMainCategory();
+    //this.fnGetMainCategory();
+    this.LoadSubCategory("");
     this.LoadBrand();
     //this.LoadCategory("");
     this.LoadSupplier();
-    this.LoadTag();
+    //this.LoadTag();
     this.LoadFabric();
 
     this.LoggedInUserId = this._LocalStorage.getValueOnLocalStorage("LoggedInUserId");
@@ -302,54 +303,54 @@ export class ProductDetailComponent implements OnInit {
     });
   }
 
-  fnGetMainCategory() {
-    let obj = { Active: true };
-    this.spinner.show();
-    this._CategoryService.GetMainCategory(obj)
-      .subscribe(res => {
-        this.lstMainCategory = res
-        //this.spinner.hide();
-        // setTimeout(() => {
-        //   this.LoadCategory("");
-        // }, 2000);
+  // fnGetMainCategory() {
+  //   let obj = { Active: true };
+  //   this.spinner.show();
+  //   this._CategoryService.GetMainCategory(obj)
+  //     .subscribe(res => {
+  //       this.lstMainCategory = res
+  //       //this.spinner.hide();
+  //       // setTimeout(() => {
+  //       //   this.LoadCategory("");
+  //       // }, 2000);
 
-      });
-  }
+  //     });
+  // }
 
-  LoadCategory(event: any) {
+  // LoadCategory(event: any) {
 
-    if (this.ProductForm.value.mainCategoryID != "") {
-      let obj = {
-        MainCategoryID: Number(this.ProductForm.value.mainCategoryID),
-        Active: true
-      }
-      debugger;
-      this.spinner.show();
+  //   if (this.ProductForm.value.mainCategoryID != "") {
+  //     let obj = {
+  //       MainCategoryID: Number(this.ProductForm.value.mainCategoryID),
+  //       Active: true
+  //     }
+  //     debugger;
+  //     this.spinner.show();
 
-      this._CategoryService.GetAllCategory(obj).subscribe(res => {
-        //this.spinner.hide();
-        setTimeout(() => {
-          debugger
-          this.lstCategory = res;
-          if (event != "") {
-            const categoryID = this.ProductForm.get('categoryID');
-            categoryID.setValue('');
-            categoryID.updateValueAndValidity();
-          }
-        }, 500);
+  //     this._CategoryService.GetAllCategory(obj).subscribe(res => {
+  //       //this.spinner.hide();
+  //       setTimeout(() => {
+  //         debugger
+  //         this.lstCategory = res;
+  //         if (event != "") {
+  //           const categoryID = this.ProductForm.get('categoryID');
+  //           categoryID.setValue('');
+  //           categoryID.updateValueAndValidity();
+  //         }
+  //       }, 500);
 
-        debugger;
-        this.LoadSubCategory("");
-      });
-    }
-    else {
-      this.lstCategory = [];
-      const categoryID = this.ProductForm.get('categoryID');
-      categoryID.setValue('');
-      categoryID.updateValueAndValidity();
-      this.spinner.hide();
-    }
-  }
+  //       debugger;
+  //       this.LoadSubCategory("");
+  //     });
+  //   }
+  //   else {
+  //     this.lstCategory = [];
+  //     const categoryID = this.ProductForm.get('categoryID');
+  //     categoryID.setValue('');
+  //     categoryID.updateValueAndValidity();
+  //     this.spinner.hide();
+  //   }
+  // }
 
   LoadSupplier() {
     let obj = {
@@ -362,15 +363,15 @@ export class ProductDetailComponent implements OnInit {
     });
   }
 
-  LoadTag() {
-    let obj = {
-      Active: true
-    }
-    this.spinner.show();
-    this._TagService.GetTag(obj).subscribe(res => {
-      this.lstTag = res;
-    });
-  }
+  // LoadTag() {
+  //   let obj = {
+  //     Active: true
+  //   }
+  //   this.spinner.show();
+  //   this._TagService.GetTag(obj).subscribe(res => {
+  //     this.lstTag = res;
+  //   });
+  // }
 
   LoadFabric() {
     let obj = {
@@ -410,7 +411,7 @@ export class ProductDetailComponent implements OnInit {
     debugger
     if (this.ProductForm.value.categoryID != "") {
       let obj = {
-        categoryID: Number(this.ProductForm.value.categoryID),
+        categoryID: 1,//Number(this.ProductForm.value.categoryID),
         Active: true
       }
       this.spinner.show();
@@ -449,10 +450,10 @@ export class ProductDetailComponent implements OnInit {
     let maincategory = this._CategoryService.GetMainCategory(objmain);
     let product = this._productService.GetProductById(obj);
 
-    forkJoin([product, maincategory]).subscribe(res => {
+    forkJoin([product]).subscribe(res => {
       debugger
       // this._productService.GetProductById(obj).subscribe(res => {
-      this.lstMainCategory = res[1];
+      //this.lstMainCategory = res[1];
       this.product = res[0][0];
       setTimeout(() => {
         this.ProductForm = this.formBuilder.group({
@@ -461,8 +462,8 @@ export class ProductDetailComponent implements OnInit {
           shortDetails: [this.product.shortDetails, Validators.required],
           description: [this.product.description, Validators.required],
           supplierID: [this.product.supplierID, Validators.required],
-          mainCategoryID: [this.product.mainCategoryID, Validators.required],
-          categoryID: [this.product.categoryID, Validators.required],
+          mainCategoryID: [Number(this.product.mainCategoryID), Validators.required],
+          categoryID: [Number(this.product.categoryID), Validators.required],
           subCategoryID: [this.product.subCategoryID, Validators.required],
           brandId: [this.product.brandId, Validators.required],
           productAvailable: [this.product.productAvailable],
@@ -480,7 +481,7 @@ export class ProductDetailComponent implements OnInit {
           smallImg: [[this.product.frontImage], [Validators.required]],
           title: [this.product.title],
           subTitle: [this.product.subTitle],
-          tagId: [this.product.tagId],
+          tagId: [Number(this.product.tagId)],
           articalNo: [this.product.articalNo],
           fabricId: [this.product.fabricId],
           fabricTypeId: [this.product.fabricTypeId],
@@ -501,7 +502,7 @@ export class ProductDetailComponent implements OnInit {
         }
         this.LoadProductDetail();
         setTimeout(() => {
-          this.LoadCategory("");
+          this.LoadSubCategory("");
         }, 1000);
 
         this.LoadFabricType("");
