@@ -14,6 +14,9 @@ export const environment = {
   APIURL: 'http://localhost:56283',
   Report_Path: 'http://localhost:56283/ReportGenerate/',
 
+  
+  
+
   //*********************Production Server************* */
 
   //BASE_API_URL: 'http://208.109.12.71/EcommChairApiV3/api/',
