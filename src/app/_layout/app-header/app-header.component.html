@@ -9,7 +9,7 @@
 
 
     <ul class="navbar-nav">
-        <li> <img src="assets\images\logo.png" class="logo-img"> <span class="CSC-heading"> <b>VIKRAM CREATIONS PRIVATE LIMITED</b></span> </li>
+        <li> <img src="assets\images\logo.png" class="logo-img"> <span class="CSC-heading"> <b>ALI BABA CHAIR</b></span> </li>
 
     </ul>
     <div class="d-md-none">
@@ -36,7 +36,7 @@
                         <a href="home" class="dropdown-item" (click)="ChangeName('0')"><i
                         class="fa-tachometer icon-users material-dark-grey-primary"></i>Dashboard</a>
 
-                        <a href="MainCategory" class="dropdown-item" (click)="ChangeName('5')"><i
+                        <a href="Category" class="dropdown-item" (click)="ChangeName('5')"><i
                             class="icon-stack material-DarkGreen-primary"></i>Category</a>
                         <a href="fabric" class="dropdown-item" (click)="ChangeName('6')"><i
                                 class="icon-users material-yellow-primary"></i>Fabric</a>
@@ -46,8 +46,8 @@
                             class="icon-users material-green-primary"></i>User</a>
                         <a href="order" class="dropdown-item" (click)="ChangeName('4')"><i
                         class="icon-cash material-navyblue-primary"></i>Order</a>
-                        <a href="agent" class="dropdown-item" (click)="ChangeName('7')"><i
-                            class="icon-stack material-DarkGreen-primary"></i>Agent</a>
+                        <!-- <a href="agent" class="dropdown-item" (click)="ChangeName('7')"><i
+                            class="icon-stack material-DarkGreen-primary"></i>Agent</a> -->
                         <a href="brand" class="dropdown-item" (click)="ChangeName('1')"><i
                             class="icon-users material-yellow-primary"></i>Setting</a>
                         <a href="report/orderReport" class="dropdown-item" (click)="ChangeName('8')"><i
@@ -58,21 +58,21 @@
                 </li>
             </ul>
             <ul class="navbar-nav navbar-light-shade d-inline-box">
-                <li *ngIf="Category" class="nav-item ">
+                <!-- <li *ngIf="Category" class="nav-item ">
                     <a [routerLink]="'/MainCategory'" class="navbar-nav-link" routerLinkActive="active">
                         <span> Main Category</span>
                     </a>
-                </li>
+                </li> -->
                 <li *ngIf="Category" class="nav-item ">
                     <a [routerLink]="'/Category'" class="navbar-nav-link" routerLinkActive="active">
                         <span> Category</span>
                     </a>
                 </li>
-                <li *ngIf="Category" class="nav-item ">
+                <!-- <li *ngIf="Category" class="nav-item ">
                     <a [routerLink]="'/SubCategory'" class="navbar-nav-link" routerLinkActive="active">
                         <span> SubCategory</span>
                     </a>
-                </li>
+                </li> -->
                 <li *ngIf="admin" class="nav-item ">
                     <a [routerLink]="'/brand'" class="navbar-nav-link" routerLinkActive="active">
                         <span>Brand</span>
@@ -94,11 +94,11 @@
                         <span> Fabric Type</span>
                     </a>
                 </li>
-                <li *ngIf="fabric" class="nav-item ">
+                <!-- <li *ngIf="fabric" class="nav-item ">
                     <a [routerLink]="'/tagMaster'" class="navbar-nav-link" routerLinkActive="active">
                         <span> Tag Design</span>
                     </a>
-                </li>
+                </li> -->
 
                 <li *ngIf="product" class="nav-item ">
                     <a [routerLink]="'/product'" class="navbar-nav-link" routerLinkActive="active">

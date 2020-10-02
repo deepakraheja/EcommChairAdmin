@@ -40,9 +40,9 @@ const routes: Routes = [
     children: [
       { path: 'home', component: HomeComponent },
       { path: 'unauth', component: UnAuthComponent },
-      { path: 'MainCategory', component: MainCategoryComponent },
-      { path: 'Category', component: CategoryComponent },
-      { path: 'SubCategory', component: SubCategoryComponent },
+      // { path: 'MainCategory', component: MainCategoryComponent },
+      { path: 'Category', component: SubCategoryComponent },
+      // { path: 'SubCategory', component: SubCategoryComponent },
       { path: 'brand', component: BrandComponent },
       { path: 'product', component: ProductComponent },
       { path: 'productdetail', component: ProductDetailComponent },

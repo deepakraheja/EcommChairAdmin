@@ -21,7 +21,7 @@ export class SubCategoryComponent implements OnInit {
   dataSource = new MatTableDataSource<any>(this.lstData);
   lstCategory: any;
   title: string = "Add Module";
-  SelectcategoryID = new FormControl('');
+  SelectcategoryID = new FormControl('1');
   SelectMainCategoryID = new FormControl('1');
   lstMainCategory: any = [];
   constructor(
@@ -35,8 +35,8 @@ export class SubCategoryComponent implements OnInit {
     this.LoggedInUserId = this._LocalStorage.getValueOnLocalStorage("LoggedInUserId");
     this.CategoryForm = this.formBuilder.group({
       subCategoryID: [0],
-      mainCategoryID: ['', Validators.required],
-      categoryID: ['', Validators.required],
+      mainCategoryID: [1, Validators.required],
+      categoryID: [1, Validators.required],
       name: ['', Validators.required],
       description: [''],
       active: [false],
@@ -46,7 +46,7 @@ export class SubCategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fnGetMainCategory();
+    //this.fnGetMainCategory();
   }
 
   applyFilter(event: Event) {
@@ -84,7 +84,7 @@ export class SubCategoryComponent implements OnInit {
   LoadData(event: any) {
     debugger
     let obj = {
-      categoryID: this.SelectcategoryID.value == "" ? 0 : Number(this.SelectcategoryID.value),
+      categoryID: 1,//this.SelectcategoryID.value == "" ? 0 : Number(this.SelectcategoryID.value),
       Active: true
     }
     this.spinner.show();
@@ -97,7 +97,7 @@ export class SubCategoryComponent implements OnInit {
   LoadCategoryData(event: any) {
     debugger
     let obj = {
-      mainCategoryID: Number(this.SelectMainCategoryID.value),
+      mainCategoryID: 1,//Number(this.SelectMainCategoryID.value),
       Active: true
     }
     this.spinner.show();
@@ -105,14 +105,14 @@ export class SubCategoryComponent implements OnInit {
       debugger
       this.spinner.hide();
       this.lstCategory = res;
-      this.SelectcategoryID = new FormControl('');
+      this.SelectcategoryID = new FormControl('1');
       this.LoadData("");
     });
   }
 
   LoadPopUpCategoryData(event: any) {
     let obj = {
-      mainCategoryID: Number(this.CategoryForm.value.mainCategoryID),
+      mainCategoryID: 1,//Number(this.CategoryForm.value.mainCategoryID),
       Active: true
     }
     debugger
@@ -127,8 +127,8 @@ export class SubCategoryComponent implements OnInit {
   onAddNew(template: TemplateRef<any>, lst) {
     this.CategoryForm = this.formBuilder.group({
       subCategoryID: [0],
-      mainCategoryID: ['', Validators.required],
-      categoryID: ['', Validators.required],
+      mainCategoryID: [1, Validators.required],
+      categoryID: [1, Validators.required],
       name: ['', Validators.required],
       description: [''],
       active: [false],
