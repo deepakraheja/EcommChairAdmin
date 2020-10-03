@@ -59,7 +59,7 @@ export class ProductDetailComponent implements OnInit {
   displayedImagesColumns: string[] = ['Upload', 'color', 'View'];
   ImagesdataSource = new MatTableDataSource<any>(this.lstData);
 
-  displayedColumns: string[] = ['color', 'size', 'setNo', 'qty', 'price', 'salePrice', 'availableSize', 'availableColors', 'discount', 'Edit', 'Delete'];
+  displayedColumns: string[] = ['color', 'setNo', 'qty', 'price', 'salePrice', 'availableSize', 'availableColors', 'discount', 'Edit', 'Delete'];
   dataSource = new MatTableDataSource<any>(this.lstData);
 
   displayedSetImagesColumns: string[] = ['Upload', 'setNo', 'totalqty', 'View'];
@@ -135,7 +135,7 @@ export class ProductDetailComponent implements OnInit {
       salePrice: ['', Validators.required],
       availableSize: [true],
       availableColors: [true],
-      arraySize: ['', Validators.required],
+      arraySize: [[1], Validators.required],
       arrayColor: ['', Validators.required],
       discount: ['', Validators.required],
       // discountAvailable: [false],
@@ -186,7 +186,7 @@ export class ProductDetailComponent implements OnInit {
       salePrice: ['', Validators.required],
       availableSize: [true],
       availableColors: [true],
-      arraySize: ['', Validators.required],
+      arraySize: [[1], Validators.required],
       arrayColor: ['', Validators.required],
       discount: ['', Validators.required],
       // discountAvailable: [false],
