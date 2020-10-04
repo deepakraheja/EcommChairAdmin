@@ -742,6 +742,10 @@ export class ProductDetailComponent implements OnInit {
     this.BannerImage = [];
     if (event.target.files && event.target.files[0]) {
       var filesAmount = event.target.files.length;
+      if(event.target.files[0].size/1024>500){
+        this._toasterService.error('Photo should be less then 500kb.');
+        return;
+      }
       for (let i = 0; i < filesAmount; i++) {
         var reader = new FileReader();
         reader.onload = (event: any) => {
@@ -761,9 +765,15 @@ export class ProductDetailComponent implements OnInit {
   }
 
   UploadSmallImg(event) {
+    debugger
     this.SmallImage = [];
     if (event.target.files && event.target.files[0]) {
       var filesAmount = event.target.files.length;
+      debugger
+      if(event.target.files[0].size/1024>500){
+        this._toasterService.error('Photo should be less then 500kb.');
+        return;
+      }
       for (let i = 0; i < filesAmount; i++) {
         var reader = new FileReader();
         reader.onload = (event: any) => {
@@ -790,6 +800,10 @@ export class ProductDetailComponent implements OnInit {
         reader.onload = (event: any) => {
           debugger
           //console.log(event.target.result);
+          if(event.total/1024>500){
+            this._toasterService.error('Photo should be less then 500kb.');
+            return;
+          }
           this.PopUpProductImg.push(event.target.result);
           this.PopUpPreviewUrl = event.target.result;
           // this.EditProductDetailForm.updateValueAndValidity();
