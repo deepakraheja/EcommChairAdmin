@@ -124,7 +124,14 @@ export class ProductDetailComponent implements OnInit {
       fabricTypeId: ['0'],
       setType: [1],
       minimum: [''],
-      videoURL: ['']
+      videoURL: [''],
+      seatingHeight: [''],
+      backSize: [''],
+      totalHeight: [''],
+      width: [''],
+      depth: [''],
+      overallDimension: [''],
+      assemblyType: ['']
     });
 
     this.ProductDetailForm = this.formBuilder.group({
@@ -487,7 +494,14 @@ export class ProductDetailComponent implements OnInit {
           fabricTypeId: [this.product.fabricTypeId],
           setType: [this.product.setType],
           minimum: [this.product.minimum],
-          videoURL: [this.product.videoURL]
+          videoURL: [this.product.videoURL],
+          seatingHeight: [this.product.seatingHeight],
+          backSize: [this.product.backSize],
+          totalHeight: [this.product.totalHeight],
+          width: [this.product.width],
+          depth: [this.product.depth],
+          overallDimension: [this.product.overallDimension],
+          assemblyType: [this.product.assemblyType]
 
         });
 
@@ -597,7 +611,14 @@ export class ProductDetailComponent implements OnInit {
         fabricTypeId: Number(this.ProductForm.value.fabricTypeId),
         setType: Number(this.ProductForm.value.setType),
         minimum: this.ProductForm.value.setType == "3" ? Number(this.ProductForm.value.minimum) : 0,
-        videoURL: this.ProductForm.value.videoURL
+        videoURL: this.ProductForm.value.videoURL,
+        seatingHeight: this.ProductForm.value.seatingHeight,
+        backSize: this.ProductForm.value.backSize,
+        totalHeight: this.ProductForm.value.totalHeight,
+        width: this.ProductForm.value.width,
+        depth: this.ProductForm.value.depth,
+        overallDimension: this.ProductForm.value.overallDimension,
+        assemblyType: this.ProductForm.value.assemblyType
       };
       this._productService.SaveProduct(obj).subscribe(res => {
         this.spinner.hide();
@@ -742,7 +763,7 @@ export class ProductDetailComponent implements OnInit {
     this.BannerImage = [];
     if (event.target.files && event.target.files[0]) {
       var filesAmount = event.target.files.length;
-      if(event.target.files[0].size/1024>500){
+      if (event.target.files[0].size / 1024 > 500) {
         this._toasterService.error('Photo should be less then 500kb.');
         return;
       }
@@ -770,7 +791,7 @@ export class ProductDetailComponent implements OnInit {
     if (event.target.files && event.target.files[0]) {
       var filesAmount = event.target.files.length;
       debugger
-      if(event.target.files[0].size/1024>500){
+      if (event.target.files[0].size / 1024 > 500) {
         this._toasterService.error('Photo should be less then 500kb.');
         return;
       }
@@ -800,7 +821,7 @@ export class ProductDetailComponent implements OnInit {
         reader.onload = (event: any) => {
           debugger
           //console.log(event.target.result);
-          if(event.total/1024>500){
+          if (event.total / 1024 > 500) {
             this._toasterService.error('Photo should be less then 500kb.');
             return;
           }
