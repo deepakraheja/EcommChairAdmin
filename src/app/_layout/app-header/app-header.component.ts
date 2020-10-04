@@ -112,7 +112,7 @@ export class AppHeaderComponent implements OnInit {
       this.report = false;
     }
     if (this._LocalStorage.getValueOnLocalStorage("Selected") == "6") {
-      this.menuname = "Fabric";
+      this.menuname = "Material";
       this.menuIconClass = "icon-stack material-DarkGreen-primary bg-white-icon bg-DarkGreen-icon";
       this.materialprimary = "navbar navbar-expand-md navbar-dark material-DarkGreen-primary";
       this.materialsecondary = "material-DarkGreen-secondary space-all";

@@ -35,7 +35,7 @@
                             <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 col-md-12">
 
                                 <ng-container matColumnDef="fabricType">
-                                    <th mat-header-cell *matHeaderCellDef>Fabric Type</th>
+                                    <th mat-header-cell *matHeaderCellDef>Back Material</th>
                                     <td mat-cell *matCellDef="let element"> {{element.fabricType}} </td>
                                 </ng-container>
                                 <ng-container matColumnDef="description">
@@ -75,7 +75,7 @@
 
 <ng-template #templateFabric>
     <div class="col-md-12 add-info-head modal-text-heading">
-        <h2 mat-dialog-title>Add / Edit Fabric Type</h2>
+        <h2 mat-dialog-title>Add / Edit Back Material</h2>
 
         <div class="header-elements">
             <div class="list-icons" style="color: red;">
@@ -99,7 +99,7 @@
                     </div> -->
                     <div class="col-md-5">
                         <mat-form-field appearance="outline">
-                            <mat-label>Fabric Type <span class="error">*</span></mat-label>
+                            <mat-label>Back Material <span class="error">*</span></mat-label>
                             <input type="text" matInput formControlName="fabricType" maxlength="50">
                         </mat-form-field>
                     </div>
