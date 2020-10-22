@@ -40,6 +40,7 @@ export class ProductDetailComponent implements OnInit {
   lstCategory: any = [];
   lstSubCategory: any = [];
   lstSupplier: any = [];
+  lstHSN: any = [];
   lstTag: any = [];
   lstFabric: any = [];
   lstFabricType: any = [];
@@ -118,6 +119,7 @@ export class ProductDetailComponent implements OnInit {
       smallImg: ['', [Validators.required]],
       title: [''],
       subTitle: [''],
+      lookupHSNId:['0'],
       tagId: [0],
       articalNo: [''],
       fabricId: ['0'],
@@ -229,6 +231,9 @@ export class ProductDetailComponent implements OnInit {
 
   ngOnInit(): void {
     //this.LoadProductDetail();
+    this._lookupService.GetHSN().subscribe(res => {
+      this.lstHSN = res;
+    });
     this._lookupService.GetActiveColor().subscribe(res => {
       this.lstColor = res;
     });
@@ -488,6 +493,7 @@ export class ProductDetailComponent implements OnInit {
           smallImg: [[this.product.frontImage], [Validators.required]],
           title: [this.product.title],
           subTitle: [this.product.subTitle],
+          lookupHSNId:[this.product.lookupHSNId],
           tagId: [Number(this.product.tagId)],
           articalNo: [this.product.articalNo],
           fabricId: [this.product.fabricId],
@@ -605,6 +611,7 @@ export class ProductDetailComponent implements OnInit {
         smallImg: this.ProductForm.value.smallImg,
         title: this.ProductForm.value.title,
         subTitle: this.ProductForm.value.subTitle,
+        lookupHSNId:Number(this.ProductForm.value.lookupHSNId),
         tagId: Number(this.ProductForm.value.tagId),
         articalNo: this.ProductForm.value.articalNo,
         fabricId: Number(this.ProductForm.value.fabricId),
@@ -716,9 +723,9 @@ export class ProductDetailComponent implements OnInit {
         availableColors: this.EditProductDetailForm.value.availableColors,
         size: this.EditProductDetailForm.value.size,
         sizeId: this.EditProductDetailForm.value.sizeId,
-        setNo: this.EditProductDetailForm.value.setNo,
+        setNo: Number(this.EditProductDetailForm.value.setNo),
         lookupColorId: Number(this.EditProductDetailForm.value.lookupColorId),
-        discount: Number(this.EditProductDetailForm.value.discount),
+        discount: Number(this.EditProductDetailForm.value.discount.toFixed(4)),
         discountAvailable: Number(this.EditProductDetailForm.value.discount) > 0 ? true : false,//this.EditProductDetailForm.value.discountAvailable,
         CreatedBy: Number(this.LoggedInUserId),
         Modifiedby: Number(this.LoggedInUserId),
@@ -763,10 +770,10 @@ export class ProductDetailComponent implements OnInit {
     this.BannerImage = [];
     if (event.target.files && event.target.files[0]) {
       var filesAmount = event.target.files.length;
-      if (event.target.files[0].size / 1024 > 500) {
-        this._toasterService.error('Photo should be less then 500kb.');
-        return;
-      }
+      // if (event.target.files[0].size / 1024 > 500) {
+      //   this._toasterService.error('Photo should be less then 500kb.');
+      //   return;
+      // }
       for (let i = 0; i < filesAmount; i++) {
         var reader = new FileReader();
         reader.onload = (event: any) => {
@@ -791,10 +798,10 @@ export class ProductDetailComponent implements OnInit {
     if (event.target.files && event.target.files[0]) {
       var filesAmount = event.target.files.length;
       debugger
-      if (event.target.files[0].size / 1024 > 500) {
-        this._toasterService.error('Photo should be less then 500kb.');
-        return;
-      }
+      // if (event.target.files[0].size / 1024 > 500) {
+      //   this._toasterService.error('Photo should be less then 500kb.');
+      //   return;
+      // }
       for (let i = 0; i < filesAmount; i++) {
         var reader = new FileReader();
         reader.onload = (event: any) => {
@@ -821,10 +828,10 @@ export class ProductDetailComponent implements OnInit {
         reader.onload = (event: any) => {
           debugger
           //console.log(event.target.result);
-          if (event.total / 1024 > 500) {
-            this._toasterService.error('Photo should be less then 500kb.');
-            return;
-          }
+          // if (event.total / 1024 > 500) {
+          //   this._toasterService.error('Photo should be less then 500kb.');
+          //   return;
+          // }
           this.PopUpProductImg.push(event.target.result);
           this.PopUpPreviewUrl = event.target.result;
           // this.EditProductDetailForm.updateValueAndValidity();

@@ -160,6 +160,10 @@ export class MngUserComponent implements OnInit {
       isAgent: [lst.isAgent],
       isVIPMember: [lst.isVIPMember]
     });
+    if (this.UserForm.value.isAgent)
+      this.selected = 1;
+    if (this.UserForm.value.isVIPMember)
+      this.selected = 2;
     this.formControlValueChanged();
     const dialogRef = this.dialog.open(template, {
       width: '700px',
@@ -194,6 +198,21 @@ export class MngUserComponent implements OnInit {
           this._toasterService.error("Server error, Please try again after some time.");
         }
       });
+    }
+  }
+
+  ChangeMember(val) {
+    if (val == 1) {
+      this.selected = 1;
+      const isVIPMember = this.UserForm.get('isVIPMember');
+      isVIPMember.setValue(false);
+      isVIPMember.updateValueAndValidity();
+    }
+    if (val == 2) {
+      this.selected = 2;
+      const isAgent = this.UserForm.get('isAgent');
+      isAgent.setValue(false);
+      isAgent.updateValueAndValidity();
     }
   }
 

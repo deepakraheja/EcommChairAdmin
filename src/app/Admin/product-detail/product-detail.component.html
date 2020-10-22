@@ -131,6 +131,19 @@
                                                 </div> -->
                                                 <div class="col-md-3">
                                                     <mat-form-field appearance="outline">
+                                                        <mat-label>HSN/SAC
+                                                        </mat-label>
+                                                        <mat-select formControlName="lookupHSNId">
+                                                            <mat-option value="0">Select</mat-option>
+                                                            <mat-option *ngFor="let row of lstHSN"
+                                                                [value]="row.lookupHSNId">
+                                                                {{row.hsnCode}}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <mat-form-field appearance="outline">
                                                         <mat-label>Seat Material</mat-label>
                                                         <mat-select formControlName="fabricId">
                                                             <mat-option value="0">Select</mat-option>
@@ -159,49 +172,56 @@
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Seating Height
                                                         </mat-label>
-                                                        <input type="text" placeholder="Seating Height" matInput formControlName="seatingHeight">
+                                                        <input type="text" placeholder="Seating Height" matInput
+                                                            formControlName="seatingHeight">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Back Size
                                                         </mat-label>
-                                                        <input type="text" placeholder="Back Size" matInput formControlName="backSize">
+                                                        <input type="text" placeholder="Back Size" matInput
+                                                            formControlName="backSize">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Total Height
                                                         </mat-label>
-                                                        <input type="text" placeholder="Total Height" matInput formControlName="totalHeight">
+                                                        <input type="text" placeholder="Total Height" matInput
+                                                            formControlName="totalHeight">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Width
                                                         </mat-label>
-                                                        <input type="text" placeholder="Width" matInput formControlName="width">
+                                                        <input type="text" placeholder="Width" matInput
+                                                            formControlName="width">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Depth
                                                         </mat-label>
-                                                        <input type="text" placeholder="Depth" matInput formControlName="depth">
+                                                        <input type="text" placeholder="Depth" matInput
+                                                            formControlName="depth">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Overall Dimension
                                                         </mat-label>
-                                                        <input type="text" placeholder="Overall Dimension" matInput formControlName="overallDimension">
+                                                        <input type="text" placeholder="Overall Dimension" matInput
+                                                            formControlName="overallDimension">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Assembly Type
                                                         </mat-label>
-                                                        <input type="text" placeholder="Assembly Type" matInput formControlName="assemblyType">
+                                                        <input type="text" placeholder="Assembly Type" matInput
+                                                            formControlName="assemblyType">
                                                     </mat-form-field>
                                                 </div>
 
