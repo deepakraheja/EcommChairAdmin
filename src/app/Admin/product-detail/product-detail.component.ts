@@ -119,7 +119,7 @@ export class ProductDetailComponent implements OnInit {
       smallImg: ['', [Validators.required]],
       title: [''],
       subTitle: [''],
-      lookupHSNId:['0'],
+      lookupHSNId: ['0'],
       tagId: [0],
       articalNo: [''],
       fabricId: ['0'],
@@ -493,7 +493,7 @@ export class ProductDetailComponent implements OnInit {
           smallImg: [[this.product.frontImage], [Validators.required]],
           title: [this.product.title],
           subTitle: [this.product.subTitle],
-          lookupHSNId:[this.product.lookupHSNId],
+          lookupHSNId: [this.product.lookupHSNId],
           tagId: [Number(this.product.tagId)],
           articalNo: [this.product.articalNo],
           fabricId: [this.product.fabricId],
@@ -530,7 +530,7 @@ export class ProductDetailComponent implements OnInit {
           this.route.paramMap.subscribe((params: ParamMap) => {
             debugger
             if (params.get('productId') == null || params.get('productId') == undefined)
-              $('#tab4').click();
+            document.getElementById('tab4').click();
           });
         }, 1500);
       }, 500);
@@ -576,14 +576,14 @@ export class ProductDetailComponent implements OnInit {
         this.ProductForm.value.categoryID == '' ||
         this.ProductForm.value.subCategoryID == '' ||
         this.ProductForm.value.supplierID == '') {
-        $('#tab1').click();
+        document.getElementById('tab1').click();
       }
       else if (this.ProductForm.value.smallImg.length == 0) {
-        $('#tab5').click();
+        document.getElementById('tab5').click();
       }
       else if (this.ProductForm.value.shortDetails == '' ||
         this.ProductForm.value.description == '') {
-        $('#tab2').click();
+        document.getElementById('tab2').click();
         //$('#shortDetails').focus();
       }
       return;
@@ -611,7 +611,7 @@ export class ProductDetailComponent implements OnInit {
         smallImg: this.ProductForm.value.smallImg,
         title: this.ProductForm.value.title,
         subTitle: this.ProductForm.value.subTitle,
-        lookupHSNId:Number(this.ProductForm.value.lookupHSNId),
+        lookupHSNId: Number(this.ProductForm.value.lookupHSNId),
         tagId: Number(this.ProductForm.value.tagId),
         articalNo: this.ProductForm.value.articalNo,
         fabricId: Number(this.ProductForm.value.fabricId),
