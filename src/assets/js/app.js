@@ -10,7 +10,7 @@
 // Setup module
 // ------------------------------
 
-var App = function () {
+var App = function() {
 
 
     //
@@ -51,11 +51,10 @@ var App = function () {
                     navSubmenuReversedClass = 'nav-item-submenu-reversed';
 
                 totalHeight += $this.find('.' + navSubmenuClass).filter(':visible').outerHeight();
-                if($this.children('.' + navSubmenuClass).length) {
-                    if(($this.children('.' + navSubmenuClass).offset().top + $this.find('.' + navSubmenuClass).filter(':visible').outerHeight()) > document.body.clientHeight) {
+                if ($this.children('.' + navSubmenuClass).length) {
+                    if (($this.children('.' + navSubmenuClass).offset().top + $this.find('.' + navSubmenuClass).filter(':visible').outerHeight()) > document.body.clientHeight) {
                         $this.addClass(navSubmenuReversedClass)
-                    }
-                    else {
+                    } else {
                         $this.removeClass(navSubmenuReversedClass)
                     }
                 }
@@ -63,12 +62,12 @@ var App = function () {
         }
 
         // If sidebar is resized by default
-        if($('body').hasClass('sidebar-xs')) {
+        if ($('body').hasClass('sidebar-xs')) {
             revertBottomMenus();
         }
 
         // Toggle min sidebar class
-        $('.sidebar-main-toggle').on('click', function (e) {
+        $('.sidebar-main-toggle').on('click', function(e) {
             e.preventDefault();
 
             $('body').toggleClass('sidebar-xs').removeClass('sidebar-mobile-main');
@@ -78,7 +77,7 @@ var App = function () {
 
     // Toggle main sidebar
     var _sidebarMainToggle = function() {
-        $(document).ready('click', '.sidebar-main-hide', function (e) {
+        $(document).ready('click', '.sidebar-main-hide', function(e) {
             e.preventDefault();
             $('body').toggleClass('sidebar-main-hidden');
         });
@@ -86,7 +85,7 @@ var App = function () {
 
     // Toggle secondary sidebar
     var _sidebarSecondaryToggle = function() {
-        $(document).ready('click', '.sidebar-secondary-toggle', function (e) {
+        $(document).ready('click', '.sidebar-secondary-toggle', function(e) {
             e.preventDefault();
             $('body').toggleClass('sidebar-secondary-hidden');
         });
@@ -95,7 +94,7 @@ var App = function () {
 
     // Show right, resize main
     var _sidebarRightMainToggle = function() {
-        $(document).ready('click', '.sidebar-right-main-toggle', function (e) {
+        $(document).ready('click', '.sidebar-right-main-toggle', function(e) {
             e.preventDefault();
 
             // Right sidebar visibility
@@ -109,8 +108,7 @@ var App = function () {
 
                 // Hide children lists if they are opened, since sliding animation adds inline CSS
                 $('.sidebar-main .nav-sidebar').children('.nav-item').children('.nav-group-sub').css('display', '');
-            }
-            else {
+            } else {
                 $('body').removeClass('sidebar-xs');
             }
         });
@@ -118,17 +116,16 @@ var App = function () {
 
     // Show right, hide main
     var _sidebarRightMainHide = function() {
-        $(document).ready('click', '.sidebar-right-main-hide', function (e) {
+        $(document).ready('click', '.sidebar-right-main-hide', function(e) {
             e.preventDefault();
 
             // Opposite sidebar visibility
             $('body').toggleClass('sidebar-right-visible');
-            
+
             // If visible
             if ($('body').hasClass('sidebar-right-visible')) {
                 $('body').addClass('sidebar-main-hidden');
-            }
-            else {
+            } else {
                 $('body').removeClass('sidebar-main-hidden');
             }
         });
@@ -136,7 +133,7 @@ var App = function () {
 
     // Toggle right sidebar
     var _sidebarRightToggle = function() {
-        $(document).ready('click', '.sidebar-right-toggle', function (e) {
+        $(document).ready('click', '.sidebar-right-toggle', function(e) {
             e.preventDefault();
 
             $('body').toggleClass('sidebar-right-visible');
@@ -145,7 +142,7 @@ var App = function () {
 
     // Show right, hide secondary
     var _sidebarRightSecondaryToggle = function() {
-        $(document).ready('click', '.sidebar-right-secondary-toggle', function (e) {
+        $(document).ready('click', '.sidebar-right-secondary-toggle', function(e) {
             e.preventDefault();
 
             // Opposite sidebar visibility
@@ -154,8 +151,7 @@ var App = function () {
             // If visible
             if ($('body').hasClass('sidebar-right-visible')) {
                 $('body').addClass('sidebar-secondary-hidden');
-            }
-            else {
+            } else {
                 $('body').removeClass('sidebar-secondary-hidden');
             }
         });
@@ -164,7 +160,7 @@ var App = function () {
 
     // Toggle content sidebar
     var _sidebarComponentToggle = function() {
-        $(document).ready('click', '.sidebar-component-toggle', function (e) {
+        $(document).ready('click', '.sidebar-component-toggle', function(e) {
             e.preventDefault();
             $('body').toggleClass('sidebar-component-hidden');
         });
@@ -177,15 +173,14 @@ var App = function () {
 
     // Expand sidebar to full screen on mobile
     var _sidebarMobileFullscreen = function() {
-        $('.sidebar-mobile-expand').on('click', function (e) {
+        $('.sidebar-mobile-expand').on('click', function(e) {
             e.preventDefault();
             var $sidebar = $(this).parents('.sidebar'),
                 sidebarFullscreenClass = 'sidebar-fullscreen'
 
-            if(!$sidebar.hasClass(sidebarFullscreenClass)) {
+            if (!$sidebar.hasClass(sidebarFullscreenClass)) {
                 $sidebar.addClass(sidebarFullscreenClass);
-            }
-            else {
+            } else {
                 $sidebar.removeClass(sidebarFullscreenClass);
             }
         });
@@ -197,7 +192,7 @@ var App = function () {
             e.preventDefault();
             $('body').toggleClass('sidebar-mobile-main').removeClass('sidebar-mobile-secondary sidebar-mobile-right');
 
-            if($('.sidebar-main').hasClass('sidebar-fullscreen')) {
+            if ($('.sidebar-main').hasClass('sidebar-fullscreen')) {
                 $('.sidebar-main').removeClass('sidebar-fullscreen');
             }
         });
@@ -205,12 +200,12 @@ var App = function () {
 
     // Toggle secondary sidebar on mobile
     var _sidebarMobileSecondaryToggle = function() {
-        $('.sidebar-mobile-secondary-toggle').on('click', function (e) {
+        $('.sidebar-mobile-secondary-toggle').on('click', function(e) {
             e.preventDefault();
             $('body').toggleClass('sidebar-mobile-secondary').removeClass('sidebar-mobile-main sidebar-mobile-right');
 
             // Fullscreen mode
-            if($('.sidebar-secondary').hasClass('sidebar-fullscreen')) {
+            if ($('.sidebar-secondary').hasClass('sidebar-fullscreen')) {
                 $('.sidebar-secondary').removeClass('sidebar-fullscreen');
             }
         });
@@ -218,12 +213,12 @@ var App = function () {
 
     // Toggle right sidebar on mobile
     var _sidebarMobileRightToggle = function() {
-        $('.sidebar-mobile-right-toggle').on('click', function (e) {
+        $('.sidebar-mobile-right-toggle').on('click', function(e) {
             e.preventDefault();
             $('body').toggleClass('sidebar-mobile-right').removeClass('sidebar-mobile-main sidebar-mobile-secondary');
 
             // Hide sidebar if in fullscreen mode on mobile
-            if($('.sidebar-right').hasClass('sidebar-fullscreen')) {
+            if ($('.sidebar-right').hasClass('sidebar-fullscreen')) {
                 $('.sidebar-right').removeClass('sidebar-fullscreen');
             }
         });
@@ -231,7 +226,7 @@ var App = function () {
 
     // Toggle component sidebar on mobile
     var _sidebarMobileComponentToggle = function() {
-        $('.sidebar-mobile-component-toggle').on('click', function (e) {
+        $('.sidebar-mobile-component-toggle').on('click', function(e) {
             e.preventDefault();
             $('body').toggleClass('sidebar-mobile-component');
         });
@@ -254,7 +249,7 @@ var App = function () {
 
         // Configure collapsible functionality
         $('.' + navClass).each(function() {
-            $(this).find('.' + navItemClass).has('.' + navSubmenuClass).children('.' + navItemClass + ' > ' + '.' + navLinkClass).not('.disabled').on('click', function (e) {
+            $(this).find('.' + navItemClass).has('.' + navSubmenuClass).children('.' + navItemClass + ' > ' + '.' + navLinkClass).not('.disabled').on('click', function(e) {
                 e.preventDefault();
 
                 // Simplify stuff
@@ -262,10 +257,9 @@ var App = function () {
                     $navSidebarMini = $('.sidebar-xs').not('.sidebar-mobile-main').find('.sidebar-main .' + navClass).children('.' + navItemClass);
 
                 // Collapsible
-                if($target.parent('.' + navItemClass).hasClass(navItemOpenClass)) {
+                if ($target.parent('.' + navItemClass).hasClass(navItemOpenClass)) {
                     $target.parent('.' + navItemClass).not($navSidebarMini).removeClass(navItemOpenClass).children('.' + navSubmenuClass).slideUp(navSlidingSpeed);
-                }
-                else {
+                } else {
                     $target.parent('.' + navItemClass).not($navSidebarMini).addClass(navItemOpenClass).children('.' + navSubmenuClass).slideDown(navSlidingSpeed);
                 }
 
@@ -317,7 +311,7 @@ var App = function () {
 
         // Demo tooltips, remove in production
         var demoTooltipSelector = '[data-popup="tooltip-demo"]';
-        if($(demoTooltipSelector).is(':visible')) {
+        if ($(demoTooltipSelector).is(':visible')) {
             $(demoTooltipSelector).tooltip('show');
             setTimeout(function() {
                 $(demoTooltipSelector).tooltip('hide');
@@ -336,13 +330,13 @@ var App = function () {
 
     // Reload card (uses BlockUI extension)
     var _cardActionReload = function() {
-        $('.card [data-action=reload]:not(.disabled)').on('click', function (e) {
+        $('.card [data-action=reload]:not(.disabled)').on('click', function(e) {
             e.preventDefault();
             var $target = $(this),
                 block = $target.closest('.card');
-            
+
             // Block card
-            $(block).block({ 
+            $(block).block({
                 message: '<i class="icon-spinner2 spinner"></i>',
                 overlayCSS: {
                     backgroundColor: '#fff',
@@ -358,9 +352,9 @@ var App = function () {
             });
 
             // For demo purposes
-            window.setTimeout(function () {
-               $(block).unblock();
-            }, 2000); 
+            window.setTimeout(function() {
+                $(block).unblock();
+            }, 2000);
         });
     };
 
@@ -375,7 +369,7 @@ var App = function () {
         $cardCollapsedClass.find('[data-action=collapse]').addClass('rotate-180');
 
         // Collapse on click
-        $('.card [data-action=collapse]:not(.disabled)').on('click', function (e) {
+        $('.card [data-action=collapse]:not(.disabled)').on('click', function(e) {
             var $target = $(this),
                 slidingSpeed = 150;
 
@@ -388,13 +382,13 @@ var App = function () {
 
     // Remove card
     var _cardActionRemove = function() {
-        $('.card [data-action=remove]').on('click', function (e) {
+        $('.card [data-action=remove]').on('click', function(e) {
             e.preventDefault();
             var $target = $(this),
                 slidingSpeed = 150;
 
             // If not disabled
-            if(!$target.hasClass('disabled')) {
+            if (!$target.hasClass('disabled')) {
                 $target.closest('.card').slideUp({
                     duration: slidingSpeed,
                     start: function() {
@@ -410,7 +404,7 @@ var App = function () {
 
     // Card fullscreen mode
     var _cardActionFullscreen = function() {
-        $('.card [data-action=fullscreen]').on('click', function (e) {
+        $('.card [data-action=fullscreen]').on('click', function(e) {
             e.preventDefault();
 
             // Define vars
@@ -429,8 +423,7 @@ var App = function () {
                 cardFullscreen.children('.' + collapsedClass).removeClass('show');
                 $('body').removeClass(overflowHiddenClass);
                 $target.siblings('[data-action=move], [data-action=remove], [data-action=collapse]').removeClass('d-none');
-            }
-            else {
+            } else {
                 $target.attr(fullscreenAttr, 'active');
                 cardFullscreen.removeAttr('style').children('.collapse:not(.show)').addClass('show ' + collapsedClass);
                 $('body').addClass(overflowHiddenClass);
