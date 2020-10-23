@@ -9,25 +9,19 @@
                         <div class="card-body record-emp-deatil p-0">
                             <div class="d-md-flex mt-0">
                                 <form [formGroup]="ProductForm">
-                                    <ul
-                                        class="nav nav-tabs side-nav nav-tabs-vertical flex-column wmin-md-200 mb-md-0 border-bottom-0 left-side-div">
-                                        <li class="nav-item"><a href="#ProductInfo-tab1" id="tab1"
-                                                class="nav-link active" data-toggle="tab"><i class="icon-info22"></i>
+                                    <ul class="nav nav-tabs side-nav nav-tabs-vertical flex-column wmin-md-200 mb-md-0 border-bottom-0 left-side-div">
+                                        <li class="nav-item"><a href="#ProductInfo-tab1" id="tab1" class="nav-link active" data-toggle="tab"><i class="icon-info22"></i>
                                                 &nbsp; Product
                                                 Information</a></li>
-                                        <li class="nav-item"><a href="#ProductFeatures-tab3" id="tab3" class="nav-link"
-                                                data-toggle="tab"><i class="icon-user-tie"></i>&nbsp; Product Features
+                                        <li class="nav-item"><a href="#ProductFeatures-tab3" id="tab3" class="nav-link" data-toggle="tab"><i class="icon-user-tie"></i>&nbsp; Product Features
                                             </a>
                                         </li>
-                                        <li class="nav-item"><a href="#ProductImages-tab5" id="tab5" class="nav-link"
-                                                data-toggle="tab"><i class="icon-user-tie"></i>&nbsp; Product Front
+                                        <li class="nav-item"><a href="#ProductImages-tab5" id="tab5" class="nav-link" data-toggle="tab"><i class="icon-user-tie"></i>&nbsp; Product Front
                                                 Image </a>
                                         </li>
-                                        <li class="nav-item"><a href="#ProductNotes-tab2" id="tab2" class="nav-link"
-                                                data-toggle="tab"><i class="icon-address-book3"></i>&nbsp; Product
+                                        <li class="nav-item"><a href="#ProductNotes-tab2" id="tab2" class="nav-link" data-toggle="tab"><i class="icon-address-book3"></i>&nbsp; Product
                                                 Notes</a></li>
-                                        <li class="nav-item" *ngIf="f.productID.value>0"><a href="#ProductDetails-tab4"
-                                                id="tab4" class="nav-link" data-toggle="tab"><i
+                                        <li class="nav-item" *ngIf="f.productID.value>0"><a href="#ProductDetails-tab4" id="tab4" class="nav-link" data-toggle="tab"><i
                                                     class="icon-user-tie"></i>&nbsp; Product Catalogues</a>
                                         </li>
                                     </ul>
@@ -44,8 +38,7 @@
                                                 <div class="col-md-3">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Product Name <span class="error">*</span></mat-label>
-                                                        <input type="text" matInput formControlName="productName"
-                                                            id="productName">
+                                                        <input type="text" matInput formControlName="productName" id="productName">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-md-3">
@@ -53,8 +46,7 @@
                                                         <mat-label>Brand Name <span class="error">*</span></mat-label>
                                                         <mat-select formControlName="brandId" id="brandId">
                                                             <mat-option value="">Select</mat-option>
-                                                            <mat-option *ngFor="let row of lstBrand"
-                                                                [value]="row.brandId">
+                                                            <mat-option *ngFor="let row of lstBrand" [value]="row.brandId">
                                                                 {{row.name}}
                                                             </mat-option>
                                                         </mat-select>
@@ -90,8 +82,7 @@
                                                         </mat-label>
                                                         <mat-select formControlName="subCategoryID" id="subCategoryID">
                                                             <mat-option value="">Select</mat-option>
-                                                            <mat-option *ngFor="let row of lstSubCategory"
-                                                                [value]="row.subCategoryID">
+                                                            <mat-option *ngFor="let row of lstSubCategory" [value]="row.subCategoryID">
                                                                 {{row.name}}
                                                             </mat-option>
                                                         </mat-select>
@@ -103,8 +94,7 @@
                                                         </mat-label>
                                                         <mat-select formControlName="supplierID" id="supplierID">
                                                             <mat-option value="">Select</mat-option>
-                                                            <mat-option *ngFor="let row of lstSupplier"
-                                                                [value]="row.supplierID">
+                                                            <mat-option *ngFor="let row of lstSupplier" [value]="row.supplierID">
                                                                 {{row.companyName}}
                                                             </mat-option>
                                                         </mat-select>
@@ -135,8 +125,7 @@
                                                         </mat-label>
                                                         <mat-select formControlName="lookupHSNId">
                                                             <mat-option value="0">Select</mat-option>
-                                                            <mat-option *ngFor="let row of lstHSN"
-                                                                [value]="row.lookupHSNId">
+                                                            <mat-option *ngFor="let row of lstHSN" [value]="row.lookupHSNId">
                                                                 {{row.hsnCode}}
                                                             </mat-option>
                                                         </mat-select>
@@ -147,8 +136,7 @@
                                                         <mat-label>Seat Material</mat-label>
                                                         <mat-select formControlName="fabricId">
                                                             <mat-option value="0">Select</mat-option>
-                                                            <mat-option *ngFor="let row of lstFabric"
-                                                                [value]="row.fabricId">
+                                                            <mat-option *ngFor="let row of lstFabric" [value]="row.fabricId">
                                                                 {{row.name}}
                                                             </mat-option>
                                                         </mat-select>
@@ -159,8 +147,7 @@
                                                         <mat-label>Back Material</mat-label>
                                                         <mat-select formControlName="fabricTypeId">
                                                             <mat-option value="0">Select</mat-option>
-                                                            <mat-option *ngFor="let row of lstFabricType"
-                                                                [value]="row.fabricTypeId">
+                                                            <mat-option *ngFor="let row of lstFabricType" [value]="row.fabricTypeId">
                                                                 {{row.fabricType}}
                                                             </mat-option>
                                                         </mat-select>
@@ -172,62 +159,54 @@
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Seating Height
                                                         </mat-label>
-                                                        <input type="text" placeholder="Seating Height" matInput
-                                                            formControlName="seatingHeight">
+                                                        <input type="text" placeholder="Seating Height" matInput formControlName="seatingHeight">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Back Size
                                                         </mat-label>
-                                                        <input type="text" placeholder="Back Size" matInput
-                                                            formControlName="backSize">
+                                                        <input type="text" placeholder="Back Size" matInput formControlName="backSize">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Total Height
                                                         </mat-label>
-                                                        <input type="text" placeholder="Total Height" matInput
-                                                            formControlName="totalHeight">
+                                                        <input type="text" placeholder="Total Height" matInput formControlName="totalHeight">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Width
                                                         </mat-label>
-                                                        <input type="text" placeholder="Width" matInput
-                                                            formControlName="width">
+                                                        <input type="text" placeholder="Width" matInput formControlName="width">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Depth
                                                         </mat-label>
-                                                        <input type="text" placeholder="Depth" matInput
-                                                            formControlName="depth">
+                                                        <input type="text" placeholder="Depth" matInput formControlName="depth">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Overall Dimension
                                                         </mat-label>
-                                                        <input type="text" placeholder="Overall Dimension" matInput
-                                                            formControlName="overallDimension">
+                                                        <input type="text" placeholder="Overall Dimension" matInput formControlName="overallDimension">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Assembly Type
                                                         </mat-label>
-                                                        <input type="text" placeholder="Assembly Type" matInput
-                                                            formControlName="assemblyType">
+                                                        <input type="text" placeholder="Assembly Type" matInput formControlName="assemblyType">
                                                     </mat-form-field>
                                                 </div>
 
                                                 <div class="col-md-4 mt-3">
-                                                    <mat-radio-group aria-label="Select an option"
-                                                        formControlName="setType" [disabled]="IsDisabled">
+                                                    <mat-radio-group aria-label="Select an option" formControlName="setType" [disabled]="IsDisabled">
                                                         <mat-radio-button [value]="1">Without Set</mat-radio-button>
                                                         &nbsp;
                                                         <mat-radio-button [value]="2">With Set</mat-radio-button>&nbsp;
@@ -238,10 +217,7 @@
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Minimum
                                                         </mat-label>
-                                                        <input type="text" [disabled]="IsDisabled" placeholder="Minimum"
-                                                            matInput formControlName="minimum" maxlength="3"
-                                                            [mask]="DecimalMask" [dropSpecialCharacters]="false"
-                                                            [showMaskTyped]="showMask" (focus)="addMask($event);">
+                                                        <input type="text" [disabled]="IsDisabled" placeholder="Minimum" matInput formControlName="minimum" maxlength="3" [mask]="DecimalMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-md-2 mt-3">
@@ -275,10 +251,8 @@
                                             <h6 style="font-weight: 700;">Product Notes</h6>
                                             <mat-divider></mat-divider> -->
                                             <div class="col-md-12 text-center">
-                                                <button type="button" (click)="onBack()"
-                                                    class="btn btn-secondary btn-lg">Back</button> &nbsp;
-                                                <button type="button" class="btn btn-primary btn-lg"
-                                                    (click)="Save()">Save</button> &nbsp;
+                                                <button type="button" (click)="onBack()" class="btn btn-secondary btn-lg">Back</button> &nbsp;
+                                                <button type="button" class="btn btn-primary btn-lg" (click)="Save()">Save</button> &nbsp;
                                             </div>
                                         </form>
                                     </div>
@@ -287,8 +261,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <h6>Short Details <span class="error">*</span>
-                                                        <span style="float: right;"
-                                                            *ngIf="submitted && (f.shortDetails.errors || f.shortDetails.value=='')">
+                                                        <span style="float: right;" *ngIf="submitted && (f.shortDetails.errors || f.shortDetails.value=='')">
                                                             <span
                                                                 *ngIf="(f.shortDetails.errors.required || f.shortDetails.value=='')"
                                                                 style="color: red;">Short Details is required.</span>
@@ -298,13 +271,11 @@
                                                         <mat-label>Short Details <span class="error">*</span></mat-label>
                                                         <textarea type="text" id="shortDetails" matInput formControlName="shortDetails" style="height: 125px;"></textarea>
                                                     </mat-form-field> -->
-                                                    <angular-editor [config]="config" name="shortDetails"
-                                                        formControlName="shortDetails" required></angular-editor>
+                                                    <angular-editor [config]="config" name="shortDetails" formControlName="shortDetails" required></angular-editor>
                                                 </div>
                                                 <div class="col-md-12 mt-2">
                                                     <h6>Description <span class="error">*</span>
-                                                        <span style="float: right;"
-                                                            *ngIf="submitted && (f.description.errors || f.description.value=='')">
+                                                        <span style="float: right;" *ngIf="submitted && (f.description.errors || f.description.value=='')">
                                                             <span
                                                                 *ngIf="(f.description.errors.required || f.description.value=='')"
                                                                 style="color: red;">Description is required.</span>
@@ -314,15 +285,12 @@
                                                         <mat-label>Description <span class="error">*</span></mat-label>
                                                         <textarea type="text" matInput formControlName="description" id="description" style="height: 125px;"></textarea>
                                                     </mat-form-field> -->
-                                                    <angular-editor [config]="config" name="description"
-                                                        formControlName="description" required></angular-editor>
+                                                    <angular-editor [config]="config" name="description" formControlName="description" required></angular-editor>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 text-center mt-3">
-                                                <button type="button" (click)="onBack()"
-                                                    class="btn btn-secondary btn-lg">Back</button> &nbsp;
-                                                <button type="button" class="btn btn-primary btn-lg"
-                                                    (click)="Save()">Save</button> &nbsp;
+                                                <button type="button" (click)="onBack()" class="btn btn-secondary btn-lg">Back</button> &nbsp;
+                                                <button type="button" class="btn btn-primary btn-lg" (click)="Save()">Save</button> &nbsp;
                                             </div>
                                         </form>
                                     </div>
@@ -356,24 +324,20 @@
                                                         <mat-label>Video URL
                                                             <!-- <span class="error">*</span> -->
                                                         </mat-label>
-                                                        <input type="text" placeholder="Video URL" matInput
-                                                            formControlName="videoURL">
+                                                        <input type="text" placeholder="Video URL" matInput formControlName="videoURL">
                                                     </mat-form-field>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 text-center">
-                                                <button type="button" (click)="onBack()"
-                                                    class="btn btn-secondary btn-lg">Back</button> &nbsp;
-                                                <button type="button" class="btn btn-primary btn-lg"
-                                                    (click)="Save()">Save</button> &nbsp;
+                                                <button type="button" (click)="onBack()" class="btn btn-secondary btn-lg">Back</button> &nbsp;
+                                                <button type="button" class="btn btn-primary btn-lg" (click)="Save()">Save</button> &nbsp;
                                             </div>
                                         </form>
                                     </div>
                                     <div class="tab-pane fade" id="ProductDetails-tab4">
                                         <form [formGroup]="ProductDetailForm">
                                             <h6 style="font-weight: 700;">Click (+) button to fill Product MRP</h6>
-                                            <button mat-mini-fab color="primary" style="float: right;margin-top: -45px;"
-                                                (click)="IsShow==true?IsShow=false:IsShow=true">
+                                            <button mat-mini-fab color="primary" style="float: right;margin-top: -45px;" (click)="IsShow==true?IsShow=false:IsShow=true">
                                                 <mat-icon *ngIf="IsShow==false">add</mat-icon>
                                                 <mat-icon *ngIf="IsShow==true" style="margin-top: -14px;">minimize
                                                 </mat-icon>
@@ -388,8 +352,7 @@
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Color <span class="error">*</span></mat-label>
                                                         <mat-select formControlName="arrayColor" multiple>
-                                                            <mat-option *ngFor="let row of lstColor"
-                                                                [value]="row.lookupColorId">
+                                                            <mat-option *ngFor="let row of lstColor" [value]="row.lookupColorId">
                                                                 {{row.color}}
                                                             </mat-option>
                                                         </mat-select>
@@ -406,8 +369,7 @@
                                                             <mat-option value="XL">XL</mat-option>
                                                             <mat-option value="XXL">XXL</mat-option>
                                                             <mat-option value="XXXL">XXXL</mat-option> -->
-                                                            <mat-option *ngFor="let row of lstSize"
-                                                                [value]="row.sizeId">
+                                                            <mat-option *ngFor="let row of lstSize" [value]="row.sizeId">
                                                                 {{row.name}}
                                                             </mat-option>
                                                         </mat-select>
@@ -416,39 +378,26 @@
                                                 <div class="col-md-2">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Stock Qty <span class="error">*</span></mat-label>
-                                                        <input type="text" matInput formControlName="qty" maxlength="10"
-                                                            [mask]="NumberMask" [dropSpecialCharacters]="false"
-                                                            [showMaskTyped]="showMask" (focus)="addMask($event);">
+                                                        <input type="text" matInput formControlName="qty" maxlength="10" [mask]="NumberMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>MRP <span class="error">*</span></mat-label>
-                                                        <input type="text" matInput formControlName="price"
-                                                            maxlength="10" [mask]="DecimalMask"
-                                                            [dropSpecialCharacters]="false" [showMaskTyped]="showMask"
-                                                            (focus)="addMask($event);"
-                                                            (keyup)="CalculateDiscount($event)">
+                                                        <input type="text" matInput formControlName="price" maxlength="10" [mask]="DecimalMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);" (keyup)="CalculateDiscount($event)">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Listing Price <span class="error">*</span>
                                                         </mat-label>
-                                                        <input type="text" matInput formControlName="salePrice"
-                                                            maxlength="10" [mask]="DecimalMask"
-                                                            [dropSpecialCharacters]="false" [showMaskTyped]="showMask"
-                                                            (focus)="addMask($event);"
-                                                            (keyup)="CalculateDiscount($event)">
+                                                        <input type="text" matInput formControlName="salePrice" maxlength="10" [mask]="DecimalMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);" (keyup)="CalculateDiscount($event)">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Discount (%) <span class="error">*</span></mat-label>
-                                                        <input type="text" matInput formControlName="discount" readonly
-                                                            maxlength="10" [mask]="DecimalMask"
-                                                            [dropSpecialCharacters]="false" [showMaskTyped]="showMask"
-                                                            (focus)="addMask($event);">
+                                                        <input type="text" matInput formControlName="discount" readonly maxlength="10" [mask]="DecimalMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);">
                                                     </mat-form-field>
                                                 </div>
                                                 <!-- <div class="col-md-2 mt-2">
@@ -456,28 +405,21 @@
                                                 </div> -->
 
                                                 <div class="col-md-12 text-center">
-                                                    <button type="button" class="btn btn-primary btn-lg"
-                                                        (click)="SaveProductDetails()">Save</button> &nbsp;
-                                                    <button type="button" class="btn btn-secondary btn-lg"
-                                                        (click)="ResetProductDetails()">Reset</button> &nbsp;
-                                                    <button type="button" (click)="onBack()"
-                                                        class="btn btn-secondary btn-lg">Back</button>
+                                                    <button type="button" class="btn btn-primary btn-lg" (click)="SaveProductDetails()">Save</button> &nbsp;
+                                                    <button type="button" class="btn btn-secondary btn-lg" (click)="ResetProductDetails()">Reset</button> &nbsp;
+                                                    <button type="button" (click)="onBack()" class="btn btn-secondary btn-lg">Back</button>
                                                 </div>
                                             </div>
                                             <hr *ngIf="f.setType.value!=2">
-                                            <h6 style="font-weight: 700;" *ngIf="f.setType.value!=2">Upload Product
-                                                Photos
+                                            <h6 style="font-weight: 700;" *ngIf="f.setType.value!=2">Upload Product Photos
                                             </h6>
                                             <div class="row" *ngIf="f.setType.value!=2">
-                                                <div class="col-md-12" style="max-height: 400px; overflow: auto;"
-                                                    [formGroup]="EditProductDetailForm">
-                                                    <table mat-table [dataSource]="ImagesdataSource" matSort
-                                                        class="mat-elevation-z8 col-md-12">
+                                                <div class="col-md-12" style="max-height: 400px; overflow: auto;" [formGroup]="EditProductDetailForm">
+                                                    <table mat-table [dataSource]="ImagesdataSource" matSort class="mat-elevation-z8 col-md-12">
                                                         <ng-container matColumnDef="Upload">
                                                             <th mat-header-cell *matHeaderCellDef>Upload</th>
                                                             <td mat-cell *matCellDef="let element">
-                                                                <a href="javaScript:void(0);"
-                                                                    (click)="OpenImagePopUp(templateImagesShow,element)">Upload
+                                                                <a href="javaScript:void(0);" (click)="OpenImagePopUp(templateImagesShow,element)">Upload
                                                                     photo</a>
                                                             </td>
                                                         </ng-container>
@@ -490,21 +432,15 @@
                                                         <ng-container matColumnDef="View">
                                                             <th mat-header-cell *matHeaderCellDef>Photos</th>
                                                             <td mat-cell *matCellDef="let element">
-                                                                <img class="example-header-image"
-                                                                    style="height: 45px; width: 45px; margin-right: 5px;"
-                                                                    *ngFor='let url of element.productImg;'
-                                                                    [src]="ImagePath+'/'+f.productID.value+'/productColorImage/'+element.productSizeColorId+'/'+url">
+                                                                <img class="example-header-image" style="height: 45px; width: 45px; margin-right: 5px;" *ngFor='let url of element.productImg;' [src]="ImagePath+'/'+f.productID.value+'/productColorImage/'+element.productSizeColorId+'/'+url">
                                                             </td>
                                                         </ng-container>
 
-                                                        <tr mat-header-row
-                                                            *matHeaderRowDef="displayedImagesColumns; sticky:true;">
+                                                        <tr mat-header-row *matHeaderRowDef="displayedImagesColumns; sticky:true;">
                                                         </tr>
-                                                        <tr mat-row
-                                                            *matRowDef="let row; columns: displayedImagesColumns;"></tr>
+                                                        <tr mat-row *matRowDef="let row; columns: displayedImagesColumns;"></tr>
                                                     </table>
-                                                    <div *ngIf="ImagesdataSource.filteredData.length === 0">No records
-                                                        found
+                                                    <div *ngIf="ImagesdataSource.filteredData.length === 0">No records found
                                                     </div>
                                                 </div>
                                             </div>
@@ -512,10 +448,8 @@
                                             <hr>
                                             <h6 style="font-weight: 700;">Product Stock Details</h6>
                                             <div class="row">
-                                                <div class="col-md-12" style="max-height: 400px; overflow: auto;"
-                                                    [formGroup]="EditProductDetailForm">
-                                                    <table mat-table [dataSource]="dataSource" matSort
-                                                        class="mat-elevation-z8 col-md-12">
+                                                <div class="col-md-12" style="max-height: 400px; overflow: auto;" [formGroup]="EditProductDetailForm">
+                                                    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 col-md-12">
                                                         <!-- <ng-container matColumnDef="Upload">
                                                             <th mat-header-cell *matHeaderCellDef>Upload Img</th>
                                                             <td mat-cell *matCellDef="let element">
@@ -540,14 +474,8 @@
                                                                 <span *ngIf="element.isEdit==false">
                                                                     {{f.setType.value==2?element.setNo:''}}
                                                                 </span>
-                                                                <mat-form-field appearance="outline"
-                                                                    *ngIf="element.isEdit==true && f.setType.value==2"
-                                                                    style="width: 60px !important;">
-                                                                    <input type="text" matInput formControlName="setNo"
-                                                                        maxlength="10" [mask]="DecimalMask"
-                                                                        [dropSpecialCharacters]="false"
-                                                                        [showMaskTyped]="showMask"
-                                                                        (focus)="addMask($event);">
+                                                                <mat-form-field appearance="outline" *ngIf="element.isEdit==true && f.setType.value==2" style="width: 60px !important;">
+                                                                    <input type="text" matInput formControlName="setNo" maxlength="10" [mask]="DecimalMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);">
                                                                 </mat-form-field>
                                                             </td>
                                                         </ng-container>
@@ -556,14 +484,8 @@
                                                             <td mat-cell *matCellDef="let element">
                                                                 <span *ngIf="element.isEdit==false"> {{element.qty}}
                                                                 </span>
-                                                                <mat-form-field appearance="outline"
-                                                                    *ngIf="element.isEdit==true"
-                                                                    style="width: 60px !important;">
-                                                                    <input type="text" matInput formControlName="qty"
-                                                                        maxlength="10" [mask]="DecimalMask"
-                                                                        [dropSpecialCharacters]="false"
-                                                                        [showMaskTyped]="showMask"
-                                                                        (focus)="addMask($event);">
+                                                                <mat-form-field appearance="outline" *ngIf="element.isEdit==true" style="width: 60px !important;">
+                                                                    <input type="text" matInput formControlName="qty" maxlength="10" [mask]="DecimalMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);">
                                                                 </mat-form-field>
                                                             </td>
                                                         </ng-container>
@@ -574,15 +496,8 @@
                                                                 <!-- <span> {{element.price}}</span> -->
                                                                 <span *ngIf="element.isEdit==false"> {{element.price}}
                                                                 </span>
-                                                                <mat-form-field appearance="outline"
-                                                                    *ngIf="element.isEdit==true"
-                                                                    style="width: 60px !important;">
-                                                                    <input type="text" matInput formControlName="price"
-                                                                        maxlength="10" [mask]="DecimalMask"
-                                                                        [dropSpecialCharacters]="false"
-                                                                        [showMaskTyped]="showMask"
-                                                                        (focus)="addMask($event);"
-                                                                        (keyup)="UpdateDiscount($event)">
+                                                                <mat-form-field appearance="outline" *ngIf="element.isEdit==true" style="width: 60px !important;">
+                                                                    <input type="text" matInput formControlName="price" maxlength="10" [mask]="DecimalMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);" (keyup)="UpdateDiscount($event)">
                                                                 </mat-form-field>
                                                             </td>
                                                         </ng-container>
@@ -592,20 +507,12 @@
                                                                 <!-- {{element.salePrice}} -->
                                                                 <span *ngIf="element.isEdit==false">
                                                                     {{element.salePrice}} </span>
-                                                                <mat-form-field appearance="outline"
-                                                                    *ngIf="element.isEdit==true"
-                                                                    style="width: 60px !important;">
-                                                                    <input type="text" matInput
-                                                                        formControlName="salePrice" maxlength="10"
-                                                                        [mask]="DecimalMask"
-                                                                        [dropSpecialCharacters]="false"
-                                                                        [showMaskTyped]="showMask"
-                                                                        (focus)="addMask($event);"
-                                                                        (keyup)="UpdateDiscount($event)">
+                                                                <mat-form-field appearance="outline" *ngIf="element.isEdit==true" style="width: 60px !important;">
+                                                                    <input type="text" matInput formControlName="salePrice" maxlength="10" [mask]="DecimalMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);" (keyup)="UpdateDiscount($event)">
                                                                 </mat-form-field>
                                                             </td>
                                                         </ng-container>
-                                                        <ng-container matColumnDef="availableSize">
+                                                        <!-- <ng-container matColumnDef="availableSize">
                                                             <th mat-header-cell *matHeaderCellDef>Avl Size</th>
                                                             <td mat-cell *matCellDef="let element">
                                                                 <span *ngIf="element.isEdit==false">
@@ -613,7 +520,7 @@
                                                                 <mat-checkbox formControlName="availableSize"
                                                                     *ngIf="element.isEdit==true"></mat-checkbox>
                                                             </td>
-                                                        </ng-container>
+                                                        </ng-container> -->
 
                                                         <ng-container matColumnDef="availableColors">
                                                             <th mat-header-cell *matHeaderCellDef>Avl Colors</th>
@@ -621,8 +528,7 @@
                                                                 <!-- {{element.availableColors?'Yes':'No'}}  -->
                                                                 <span *ngIf="element.isEdit==false">
                                                                     {{element.availableColors?'Yes':'No'}} </span>
-                                                                <mat-checkbox formControlName="availableColors"
-                                                                    *ngIf="element.isEdit==true"></mat-checkbox>
+                                                                <mat-checkbox formControlName="availableColors" *ngIf="element.isEdit==true"></mat-checkbox>
                                                             </td>
                                                         </ng-container>
 
@@ -632,15 +538,8 @@
                                                                 <!-- {{element.discount}}  -->
                                                                 <span *ngIf="element.isEdit==false">
                                                                     {{element.discount}} </span>
-                                                                <mat-form-field appearance="outline"
-                                                                    *ngIf="element.isEdit==true"
-                                                                    style="width: 60px !important;">
-                                                                    <input type="text" matInput
-                                                                        formControlName="discount" readonly
-                                                                        maxlength="10" [mask]="DecimalMask"
-                                                                        [dropSpecialCharacters]="false"
-                                                                        [showMaskTyped]="showMask"
-                                                                        (focus)="addMask($event);">
+                                                                <mat-form-field appearance="outline" *ngIf="element.isEdit==true" style="width: 60px !important;">
+                                                                    <input type="text" matInput formControlName="discount" readonly maxlength="10" [mask]="DecimalMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);">
                                                                 </mat-form-field>
                                                             </td>
                                                         </ng-container>
@@ -649,18 +548,14 @@
                                                         <ng-container matColumnDef="Edit">
                                                             <th mat-header-cell *matHeaderCellDef> Edit </th>
                                                             <td mat-cell *matCellDef="let element">
-                                                                <a href="javaScript:void(0);" (click)="Edit(element)"
-                                                                    *ngIf="element.isEdit==false">
+                                                                <a href="javaScript:void(0);" (click)="Edit(element)" *ngIf="element.isEdit==false">
                                                                     <i class="icon-pencil mr-2" aria-hidden="true"></i>
                                                                 </a>
-                                                                <a href="javaScript:void(0);"
-                                                                    (click)="UpdateProductDetails()"
-                                                                    *ngIf="element.isEdit==true">
+                                                                <a href="javaScript:void(0);" (click)="UpdateProductDetails()" *ngIf="element.isEdit==true">
                                                                     <!-- <i class="icon-check mr-2" aria-hidden="true"></i> -->
                                                                     <mat-icon style="color: green;">save</mat-icon>
                                                                 </a>
-                                                                <a href="javaScript:void(0);" (click)="Close(element)"
-                                                                    *ngIf="element.isEdit==true">
+                                                                <a href="javaScript:void(0);" (click)="Close(element)" *ngIf="element.isEdit==true">
                                                                     <!-- <i class="fa fa-times" aria-hidden="true"></i> -->
                                                                     <mat-icon style="color: red;">close</mat-icon>
                                                                 </a>
@@ -670,14 +565,12 @@
                                                             <th mat-header-cell *matHeaderCellDef> Delete </th>
                                                             <td mat-cell *matCellDef="let element">
                                                                 <a href="javaScript:void(0);" (click)="Delete(element)">
-                                                                    <i class="mi-delete mi-2x" style="color: red;"
-                                                                        aria-hidden="true"></i>
+                                                                    <i class="mi-delete mi-2x" style="color: red;" aria-hidden="true"></i>
                                                                 </a>
                                                             </td>
                                                         </ng-container>
 
-                                                        <tr mat-header-row
-                                                            *matHeaderRowDef="displayedColumns; sticky:true;"></tr>
+                                                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true;"></tr>
                                                         <tr mat-row *matRowDef="let row; columns: displayedColumns;">
                                                         </tr>
                                                     </table>
@@ -687,19 +580,15 @@
                                             </div>
                                             <br *ngIf="f.setType.value==2">
                                             <hr *ngIf="f.setType.value==2">
-                                            <h6 style="font-weight: 700;" *ngIf="f.setType.value==2">Upload Product Set
-                                                Photos
+                                            <h6 style="font-weight: 700;" *ngIf="f.setType.value==2">Upload Product Set Photos
                                             </h6>
                                             <div class="row" *ngIf="f.setType.value==2">
-                                                <div class="col-md-12" style="max-height: 400px; overflow: auto;"
-                                                    [formGroup]="EditProductDetailForm">
-                                                    <table mat-table [dataSource]="SetImagesdataSource" matSort
-                                                        class="mat-elevation-z8 col-md-12">
+                                                <div class="col-md-12" style="max-height: 400px; overflow: auto;" [formGroup]="EditProductDetailForm">
+                                                    <table mat-table [dataSource]="SetImagesdataSource" matSort class="mat-elevation-z8 col-md-12">
                                                         <ng-container matColumnDef="Upload">
                                                             <th mat-header-cell *matHeaderCellDef>Upload</th>
                                                             <td mat-cell *matCellDef="let element">
-                                                                <a href="javaScript:void(0);"
-                                                                    (click)="OpenImagePopUp(templateImagesShow,element)">Upload</a>
+                                                                <a href="javaScript:void(0);" (click)="OpenImagePopUp(templateImagesShow,element)">Upload</a>
                                                             </td>
                                                         </ng-container>
                                                         <ng-container matColumnDef="setNo">
@@ -717,22 +606,16 @@
                                                         <ng-container matColumnDef="View">
                                                             <th mat-header-cell *matHeaderCellDef>Photos</th>
                                                             <td mat-cell *matCellDef="let element">
-                                                                <img class="example-header-image"
-                                                                    style="height: 45px; width: 45px; margin-right: 5px;"
-                                                                    *ngFor='let url of element.productImg;'
-                                                                    [src]="ImagePath+'/'+f.productID.value+'/productSetImage/'+element.setNo+'/'+url">
+                                                                <img class="example-header-image" style="height: 45px; width: 45px; margin-right: 5px;" *ngFor='let url of element.productImg;' [src]="ImagePath+'/'+f.productID.value+'/productSetImage/'+element.setNo+'/'+url">
                                                             </td>
                                                         </ng-container>
 
-                                                        <tr mat-header-row
-                                                            *matHeaderRowDef="displayedSetImagesColumns; sticky:true;">
+                                                        <tr mat-header-row *matHeaderRowDef="displayedSetImagesColumns; sticky:true;">
                                                         </tr>
-                                                        <tr mat-row
-                                                            *matRowDef="let row; columns: displayedSetImagesColumns;">
+                                                        <tr mat-row *matRowDef="let row; columns: displayedSetImagesColumns;">
                                                         </tr>
                                                     </table>
-                                                    <div *ngIf="SetImagesdataSource.filteredData.length === 0">No
-                                                        records found</div>
+                                                    <div *ngIf="SetImagesdataSource.filteredData.length === 0">No records found</div>
                                                 </div>
                                             </div>
                                         </form>
@@ -745,49 +628,37 @@
 
                                                 <div class="form-group row" style="margin-left: 1px; display: none;">
                                                     Banner Image :
-                                                    <label for="BannerImg" class="mi-file-upload mi-2x"
-                                                        style="color: blue;"> </label> &nbsp;
-                                                    <input id="BannerImg" type="file" style="display: none;"
-                                                        (change)="UploadBannerImg($event)" />
+                                                    <label for="BannerImg" class="mi-file-upload mi-2x" style="color: blue;"> </label> &nbsp;
+                                                    <input id="BannerImg" type="file" style="display: none;" (change)="UploadBannerImg($event)" />
                                                     <!-- <div *ngIf="submitted && (f.bannerImg.errors || f.bannerImg.value==[])">
                                                         <div *ngIf="(f.bannerImg.errors.required || f.bannerImg.value==[])" style="color: red;">File is required.</div>
                                                     </div> -->
                                                     <div *ngFor='let url of BannerImage; index as i;'>
-                                                        <img class="example2-header-image" [src]="url"
-                                                            (click)="ShowImage(url);">
-                                                        <label class="mi-delete mi-1x" style="color: red;"
-                                                            (click)="removeImg(i,'banner');"></label>
+                                                        <img class="example2-header-image" [src]="url" (click)="ShowImage(url);">
+                                                        <label class="mi-delete mi-1x" style="color: red;" (click)="removeImg(i,'banner');"></label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row" style="margin-left: 1px;">
 
                                                     <h4> Front Image :</h4>
-                                                    <button (click)="file.click()" class="fHbZUJ"
-                                                        style="width:158px;height:50px">
+                                                    <button (click)="file.click()" class="fHbZUJ" style="width:158px;height:50px">
                                                         <i class="fa fa-upload"></i>
                                                         <div class="sc-pQGev lbdMzz"></div><span>Upload Photo</span>
                                                     </button>
                                                     <!-- <label for="SmallImg" class="mi-file-upload mi-2x"
                                                         style="color: blue;"> </label> &nbsp; -->
-                                                    <input #file id="SmallImg" type="file" style="display: none;"
-                                                        (change)="UploadSmallImg($event)" />
-                                                    <div
-                                                        *ngIf="submitted && (f.smallImg.errors || f.smallImg.value==[])">
-                                                        <div *ngIf="(f.smallImg.errors.required || f.smallImg.value==[])"
-                                                            style="color: red;">File is required.</div>
+                                                    <input #file id="SmallImg" type="file" style="display: none;" (change)="UploadSmallImg($event)" />
+                                                    <div *ngIf="submitted && (f.smallImg.errors || f.smallImg.value==[])">
+                                                        <div *ngIf="(f.smallImg.errors.required || f.smallImg.value==[])" style="color: red;">File is required.</div>
                                                     </div>
                                                     <div *ngFor='let url of SmallImage; index as i'>
-                                                        <img class="example2-header-image" [src]="url"
-                                                            (click)="ShowImage(url);">
-                                                        <label class="mi-delete mi-1x" style="color: red;"
-                                                            (click)="removeImg(i,'small');"></label>
+                                                        <img class="example2-header-image" [src]="url" (click)="ShowImage(url);">
+                                                        <label class="mi-delete mi-1x" style="color: red;" (click)="removeImg(i,'small');"></label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12 mt-3 text-center">
-                                                    <button type="button" (click)="onBack()"
-                                                        class="btn btn-secondary btn-lg">Back</button> &nbsp;
-                                                    <button type="button" class="btn btn-primary btn-lg"
-                                                        (click)="Save()">Save</button> &nbsp;
+                                                    <button type="button" (click)="onBack()" class="btn btn-secondary btn-lg">Back</button> &nbsp;
+                                                    <button type="button" class="btn btn-primary btn-lg" (click)="Save()">Save</button> &nbsp;
                                                 </div>
 
 
@@ -797,8 +668,7 @@
                                                     <div class="col-md-12">
                                                         <mat-card class="example-card">
 
-                                                            <img mat-card-image [src]="previewUrl"
-                                                                style="height: auto;max-width: 50%;">
+                                                            <img mat-card-image [src]="previewUrl" style="height: auto;max-width: 50%;">
                                                         </mat-card>
                                                     </div>
                                                 </div>
@@ -829,22 +699,19 @@
                     <div class="col-md-4">
                         <div class="form-group row" style="margin-left: 1px;">
 
-                            Product Images :<button (click)="file.click()" class="fHbZUJ"
-                                style="width:158px;height:50px">
+                            Product Images :<button (click)="file.click()" class="fHbZUJ" style="width:158px;height:50px">
                                 <i class="fa fa-upload"></i>
                                 <div class="sc-pQGev lbdMzz"></div><span>Upload Photo</span>
                             </button>
                             <!-- <label for="ProductImg" class="mi-file-upload mi-2x" style="color: blue;"> </label> &nbsp; -->
-                            <input #file id="ProductImg" type="file" style="display: none;"
-                                (change)="UploadProductImages($event)" multiple="" />
+                            <input #file id="ProductImg" type="file" style="display: none;" (change)="UploadProductImages($event)" multiple="" />
                             <br />
                             <br />
                             <br />
                             <br />
                             <div *ngFor='let url of PopUpProductImg; index as i;'>
                                 <img class="example-header-image" [src]="url" (click)="ShowPopUpImage(url);">
-                                <label class="mi-delete mi-1x" style="color: red;"
-                                    (click)="removeImg(i,'product');"></label>
+                                <label class="mi-delete mi-1x" style="color: red;" (click)="removeImg(i,'product');"></label>
                             </div>
                             <!-- <div *ngFor='let url of PopUpProductImg; index as i;'>
                                 <img class="example-header-image" [src]="url" (click)="ShowPopUpImage(url);">

@@ -60,7 +60,7 @@ export class ProductDetailComponent implements OnInit {
   displayedImagesColumns: string[] = ['Upload', 'color', 'View'];
   ImagesdataSource = new MatTableDataSource<any>(this.lstData);
 
-  displayedColumns: string[] = ['color', 'setNo', 'qty', 'price', 'salePrice', 'availableSize', 'availableColors', 'discount', 'Edit', 'Delete'];
+  displayedColumns: string[] = ['color', 'setNo', 'qty', 'price', 'salePrice', 'availableColors', 'discount', 'Edit', 'Delete'];
   dataSource = new MatTableDataSource<any>(this.lstData);
 
   displayedSetImagesColumns: string[] = ['Upload', 'setNo', 'totalqty', 'View'];
@@ -144,7 +144,7 @@ export class ProductDetailComponent implements OnInit {
       salePrice: ['', Validators.required],
       availableSize: [true],
       availableColors: [true],
-      arraySize: [[1], Validators.required],
+      arraySize: [[1]],
       arrayColor: ['', Validators.required],
       discount: ['', Validators.required],
       // discountAvailable: [false],
@@ -159,7 +159,7 @@ export class ProductDetailComponent implements OnInit {
       salePrice: ['', Validators.required],
       availableSize: [false],
       availableColors: [false],
-      size: ['', Validators.required],
+      size: [''],
       sizeId: ['', Validators.required],
       setNo: this.ProductForm.value.setType != 2 ? [''] : ['', Validators.required],
       lookupColorId: ['', Validators.required],
@@ -195,7 +195,7 @@ export class ProductDetailComponent implements OnInit {
       salePrice: ['', Validators.required],
       availableSize: [true],
       availableColors: [true],
-      arraySize: [[1], Validators.required],
+      arraySize: [[1]],
       arrayColor: ['', Validators.required],
       discount: ['', Validators.required],
       // discountAvailable: [false],
@@ -928,7 +928,7 @@ export class ProductDetailComponent implements OnInit {
       salePrice: [element.salePrice, Validators.required],
       availableSize: [element.availableSize],
       availableColors: [element.availableColors],
-      size: [element.size, Validators.required],
+      size: [element.size],
       sizeId: [element.sizeId, Validators.required],
       setNo: this.ProductForm.value.setType != 2 ? [element.setNo] : [element.setNo, Validators.required],
       lookupColorId: [element.lookupColorId, Validators.required],
