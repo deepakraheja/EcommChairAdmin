@@ -174,10 +174,11 @@ background: #F57C00 !important;
 }
 
 .logo-img {
-    width: 48px;
-    padding: 0px 8px;
-    margin-top: 4px;
+    width: 142px;
+    padding: 0px 0px;
+    margin-top: -11px;
 }
+
 
 .dropdown-list {
     display: block !important;
