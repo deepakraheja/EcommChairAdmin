@@ -60,7 +60,7 @@ export class ProductDetailComponent implements OnInit {
   displayedImagesColumns: string[] = ['Upload', 'color', 'View'];
   ImagesdataSource = new MatTableDataSource<any>(this.lstData);
 
-  displayedColumns: string[] = ['color', 'setNo', 'qty', 'price', 'salePrice', 'availableColors', 'discount', 'Edit', 'Delete'];
+  displayedColumns: string[] = ['color', 'setNo', 'qty', 'price', 'shippingPrice', 'businessPrice', 'availableColors', 'Edit', 'Delete'];
   dataSource = new MatTableDataSource<any>(this.lstData);
 
   displayedSetImagesColumns: string[] = ['Upload', 'setNo', 'totalqty', 'View'];
@@ -149,6 +149,8 @@ export class ProductDetailComponent implements OnInit {
       discount: ['', Validators.required],
       // discountAvailable: [false],
       //productImg: ['', [Validators.required]],
+      shippingPrice: ['', Validators.required],
+      businessPrice: ['', Validators.required]
     });
 
     this.EditProductDetailForm = this.formBuilder.group({
@@ -165,6 +167,8 @@ export class ProductDetailComponent implements OnInit {
       lookupColorId: ['', Validators.required],
       discount: ['', Validators.required],
       discountAvailable: [false],
+      shippingPrice: ['', Validators.required],
+      businessPrice: ['', Validators.required]
       //productImg: ['', [Validators.required]],
     });
 
@@ -198,6 +202,8 @@ export class ProductDetailComponent implements OnInit {
       arraySize: [[1]],
       arrayColor: ['', Validators.required],
       discount: ['', Validators.required],
+      shippingPrice: ['', Validators.required],
+      businessPrice: ['', Validators.required]
       // discountAvailable: [false],
       //productImg: ['', [Validators.required]],
     });
@@ -530,7 +536,7 @@ export class ProductDetailComponent implements OnInit {
           this.route.paramMap.subscribe((params: ParamMap) => {
             debugger
             if (params.get('productId') == null || params.get('productId') == undefined)
-            document.getElementById('tab4').click();
+              document.getElementById('tab4').click();
           });
         }, 1500);
       }, 500);
@@ -674,6 +680,8 @@ export class ProductDetailComponent implements OnInit {
         arrayColor: this.ProductDetailForm.value.arrayColor,
         discount: Number(this.ProductDetailForm.value.discount),
         discountAvailable: Number(this.ProductDetailForm.value.discount) > 0 ? true : false,
+        shippingPrice: Number(this.ProductDetailForm.value.shippingPrice),
+        businessPrice: Number(this.ProductDetailForm.value.businessPrice),
         // productImg: this.ProductDetailForm.value.productImg,
         CreatedBy: Number(this.LoggedInUserId),
         // CreatedDate:this.ProductForm.value.productName],
@@ -727,6 +735,8 @@ export class ProductDetailComponent implements OnInit {
         lookupColorId: Number(this.EditProductDetailForm.value.lookupColorId),
         discount: Number(this.EditProductDetailForm.value.discount.toFixed(4)),
         discountAvailable: Number(this.EditProductDetailForm.value.discount) > 0 ? true : false,//this.EditProductDetailForm.value.discountAvailable,
+        shippingPrice: Number(this.EditProductDetailForm.value.shippingPrice),
+        businessPrice: Number(this.EditProductDetailForm.value.businessPrice),
         CreatedBy: Number(this.LoggedInUserId),
         Modifiedby: Number(this.LoggedInUserId),
       };
@@ -934,6 +944,8 @@ export class ProductDetailComponent implements OnInit {
       lookupColorId: [element.lookupColorId, Validators.required],
       discount: [element.discount, Validators.required],
       discountAvailable: [element.discountAvailable],
+      shippingPrice: [element.shippingPrice, Validators.required],
+      businessPrice: [element.businessPrice, Validators.required],
       //productImg: [element.productImg, [Validators.required]],
     });
 
@@ -1019,6 +1031,11 @@ export class ProductDetailComponent implements OnInit {
 
   CalculateDiscount(event: any) {
     debugger
+
+    const salePrice = this.ProductDetailForm.get('salePrice');
+    salePrice.setValue(this.ProductDetailForm.value.price);
+    salePrice.updateValueAndValidity();
+
     if (this.ProductDetailForm.value.salePrice != "" && this.ProductDetailForm.value.price != "") {
       if (Number(this.ProductDetailForm.value.salePrice) > Number(this.ProductDetailForm.value.price)) {
         const discount = this.ProductDetailForm.get('discount');
@@ -1038,6 +1055,11 @@ export class ProductDetailComponent implements OnInit {
 
   UpdateDiscount(event: any) {
     debugger
+
+    const salePrice = this.EditProductDetailForm.get('salePrice');
+    salePrice.setValue(this.EditProductDetailForm.value.price);
+    salePrice.updateValueAndValidity();
+
     if (this.EditProductDetailForm.value.salePrice != "" && this.EditProductDetailForm.value.price != "") {
       if (Number(this.EditProductDetailForm.value.salePrice) > Number(this.EditProductDetailForm.value.price)) {
         const discount = this.EditProductDetailForm.get('discount');
