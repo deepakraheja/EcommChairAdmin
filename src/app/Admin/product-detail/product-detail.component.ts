@@ -97,7 +97,7 @@ export class ProductDetailComponent implements OnInit {
       productID: [0],
       productName: ['', Validators.required],
       shortDetails: ['', Validators.required],
-      description: ['', Validators.required],
+      description: [''],
       supplierID: ['', Validators.required],
       mainCategoryID: [1, Validators.required],
       categoryID: [1, Validators.required],
@@ -119,7 +119,7 @@ export class ProductDetailComponent implements OnInit {
       smallImg: ['', [Validators.required]],
       title: [''],
       subTitle: [''],
-      lookupHSNId: ['0'],
+      lookupHSNId: ['1'],
       tagId: [0],
       articalNo: [''],
       fabricId: ['0'],
@@ -478,7 +478,7 @@ export class ProductDetailComponent implements OnInit {
           productID: [this.product.productID],
           productName: [this.product.productName, [Validators.required]],
           shortDetails: [this.product.shortDetails, Validators.required],
-          description: [this.product.description, Validators.required],
+          description: [this.product.description],
           supplierID: [this.product.supplierID, Validators.required],
           mainCategoryID: [Number(this.product.mainCategoryID), Validators.required],
           categoryID: [Number(this.product.categoryID), Validators.required],
@@ -872,7 +872,7 @@ export class ProductDetailComponent implements OnInit {
         //   const bannerImg = this.ProductForm.value.bannerImg;
         //   bannerImg.splice(index, 1);
         //   this.ProductForm.updateValueAndValidity();
-        //   this._toasterService.success("Image has bee deleted successfully.");
+        //   this._toasterService.success("Image has been deleted successfully.");
         // }
         if (type == 'small') {
 
@@ -887,7 +887,7 @@ export class ProductDetailComponent implements OnInit {
             smallImg.setValue([]);
             smallImg.updateValueAndValidity();
             this.previewUrl = "";
-            this._toasterService.success("Image has bee deleted successfully.");
+            this._toasterService.success("Image has been deleted successfully.");
           });
 
 
@@ -907,7 +907,7 @@ export class ProductDetailComponent implements OnInit {
           };
           this._productService.DeleteProductImage(obj).subscribe(a => {
             this.PopUpProductImg.splice(index, 1);
-            this._toasterService.success("Image has bee deleted successfully.");
+            this._toasterService.success("Image has been deleted successfully.");
           });
           //this._toasterService.warning("Please, click on the Save button for permanent remove image from server.");
         }

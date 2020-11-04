@@ -9,6 +9,10 @@ import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/Service/user.service';
 import { DatePipe } from '@angular/common';
 import { MatPaginator } from '@angular/material/paginator';
+import { min } from 'rxjs/operators';
+import { ConfirmBoxComponent } from 'src/app/confirm-box/confirm-box.component';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-mng-user',
@@ -16,18 +20,26 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./mng-user.component.css']
 })
 export class MngUserComponent implements OnInit {
+  UserDocumentPath = environment.UserDocumentPath;
+  APIURL = environment.APIURL;
   UserForm: FormGroup;
   lstData: any = [];
   LoggedInUserId: string;
   LoggedInUserType: string;
   selected: any;
-  displayedColumns: string[] = ['name', 'email', 'mobileNo', 'additionalDiscount', 'statusId', 'isAgent', 'isVIPMember', 'createdDate', 'approvedByUserName', 'approvedDate', 'Edit'];
+  displayedColumns: string[] = ['name', 'email', 'mobileNo', 'additionalDiscount', 'statusId', 'isPersonal','Upload', 'createdDate', 'approvedByUserName', 'approvedDate', 'Edit'];
   dataSource = new MatTableDataSource<any>(this.lstData);
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   showMask = false;
   PhoneMask = null;
   DecimalMask = null;
   PinCodeMask = null;
+  NumberMask = null;
+  SelectAccountType = '';
+  public PopUpPreviewUrl: any;
+  PopUpDocumentImg = [];
+  SelectedUserId=0;
+  bsModalRef: BsModalRef;
   constructor(
     private formBuilder: FormBuilder,
     private _LocalStorage: LocalStorageService,
@@ -35,7 +47,8 @@ export class MngUserComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private _toasterService: ToastrService,
     private _userService: UserService,
-    private _datePipe: DatePipe
+    private _datePipe: DatePipe,
+    private modalService: BsModalService,
   ) {
     this.LoggedInUserId = this._LocalStorage.getValueOnLocalStorage("LoggedInUserId");
     this.UserForm = this.formBuilder.group({
@@ -47,7 +60,7 @@ export class MngUserComponent implements OnInit {
       //isApproval: [0, Validators.required],
       approvedBy: Number(this.LoggedInUserId),
       approvedDate: this._datePipe.transform(new Date().toString(), 'yyyy-MM-dd HH:mm:ss'),
-      additionalDiscount: ['', Validators.required],
+      additionalDiscount: ['', [Validators.required]],
       businessType: ['', Validators.required],
       industry: ['', Validators.required],
       businessLicenseType: ['', Validators.required],
@@ -61,7 +74,8 @@ export class MngUserComponent implements OnInit {
       city: ['', Validators.required],
       state: ['', Validators.required],
       isAgent: [false],
-      isVIPMember: [false]
+      isVIPMember: [false],
+      isPersonal: [false]
     });
     this.LoadData();
     this.formControlValueChanged();
@@ -110,6 +124,29 @@ export class MngUserComponent implements OnInit {
       panNo.updateValueAndValidity();
     }
 
+    const isPersonal = this.UserForm.get('isPersonal');
+    const businessType = this.UserForm.get('businessType');
+    const industry = this.UserForm.get('industry');
+    const businessName = this.UserForm.get('businessName');
+    if (isPersonal.value == true) {
+      businessLicenseType.clearValidators();
+      gstNo.clearValidators();
+      panNo.clearValidators();
+      AadharCard.clearValidators();
+
+      businessType.clearValidators();
+      industry.clearValidators();
+      businessName.clearValidators();
+
+      businessLicenseType.updateValueAndValidity();
+      gstNo.updateValueAndValidity();
+      panNo.updateValueAndValidity();
+      AadharCard.updateValueAndValidity();
+
+      businessType.updateValueAndValidity();
+      industry.updateValueAndValidity();
+      businessName.updateValueAndValidity();
+    }
   }
 
   applyFilter(event: Event) {
@@ -121,6 +158,7 @@ export class MngUserComponent implements OnInit {
     this.PhoneMask = "0000000000";
     this.DecimalMask = "0*.00";
     this.PinCodeMask = "000000";
+    this.NumberMask = "0";
     this.showMask = false;
   }
 
@@ -158,7 +196,8 @@ export class MngUserComponent implements OnInit {
       city: [lst.city, Validators.required],
       state: [lst.state, Validators.required],
       isAgent: [lst.isAgent],
-      isVIPMember: [lst.isVIPMember]
+      isVIPMember: [lst.isVIPMember],
+      isPersonal: [lst.isPersonal]
     });
     if (this.UserForm.value.isAgent)
       this.selected = 1;
@@ -216,6 +255,117 @@ export class MngUserComponent implements OnInit {
     }
   }
 
+  FilterAccountType(event: any) {
+    this.spinner.show();
+    this._userService.GetAllUsers().subscribe(res => {
+      this.spinner.hide();
+
+      debugger
+      if (this.SelectAccountType == '') {
+        this.dataSource = new MatTableDataSource<any>(res);
+        this.dataSource.paginator = this.paginator;
+      }
+      else {
+        var data = [];
+        if (this.SelectAccountType == 'true')
+          data = res.filter(a => a.isPersonal == true);
+        else
+          data = res.filter(a => a.isPersonal == false);
+        this.dataSource = new MatTableDataSource<any>(data);
+        this.dataSource.paginator = this.paginator;
+      }
+    });
+  }
+
+  OpenImagePopUp(template: TemplateRef<any>, lst) {
+    debugger
+    this.PopUpDocumentImg = [];
+    this.SelectedUserId = lst.userID;
+
+    lst.userDocument.forEach(element => {
+        this.PopUpDocumentImg.push(this.UserDocumentPath + this.SelectedUserId + '/' + element);
+    });
+    //SelectedProductImages
+    this.PopUpPreviewUrl = this.PopUpDocumentImg[0];
+
+    const dialogRef = this.dialog.open(template, {
+      width: '60vw',
+      height: '80vh',
+      data: lst
+    });
+    dialogRef.disableClose = true;
+    dialogRef.afterClosed().subscribe(result => {
+      this.SelectedUserId = 0;
+      this.LoadData();
+    });
+  }
+
+  UploadProductImages(event) {
+    if (event.target.files && event.target.files[0]) {
+      var filesAmount = event.target.files.length;
+      for (let i = 0; i < filesAmount; i++) {
+        var reader = new FileReader();
+        reader.onload = (event: any) => {
+          debugger
+          //console.log(event.target.result);
+          // if (event.total / 1024 > 500) {
+          //   this._toasterService.error('Photo should be less then 500kb.');
+          //   return;
+          // }
+          this.PopUpDocumentImg.push(event.target.result);
+          this.PopUpPreviewUrl = event.target.result;
+          // this.EditProductDetailForm.updateValueAndValidity();
+          // this.EditProductDetailForm.patchValue({
+          //   productImg: this.images
+          // });
+          // this.EditProductDetailForm.updateValueAndValidity();
+        }
+        reader.readAsDataURL(event.target.files[i]);
+      }
+    }
+  }
+
+  removeImg(index, type) {
+    const initialState = {
+      title: "Confirmation",
+      message: "Do you want to delete " + type + " image?",
+    };
+    this.bsModalRef = this.modalService.show(ConfirmBoxComponent, { ignoreBackdropClick: true, keyboard: true, class: 'modal-sm', initialState });
+    this.bsModalRef.content.closeBtnName = 'Close';
+    this.bsModalRef.content.onClose.subscribe(result => {
+      //console.log(`Dialog result: ${result}`);
+      if (result) {
+        debugger
+
+        if (type == 'product') {
+          debugger
+          let obj = {
+            ProductID: 0,
+            ImagePath: (this.PopUpDocumentImg[index]).split(this.APIURL)[1]
+          };
+          this._userService.DeleteUserDocument(obj).subscribe(a => {
+            this.PopUpDocumentImg.splice(index, 1);
+            this._toasterService.success("User document has been deleted successfully.");
+          });
+        }
+      }
+    });
+  }
+
+  ShowPopUpImage(val) {
+    this.PopUpPreviewUrl = val;
+  }
+
+  SaveUserDocument(){
+    let obj = {
+      UserID: Number(this.SelectedUserId),
+      UserDocument: this.PopUpDocumentImg
+    };
+    this.spinner.show();
+    this._userService.SaveUserDocumentImages(obj).subscribe(res => {
+      this.spinner.hide();
+      this.dialog.closeAll();
+      this._toasterService.success("User document has been uploaded successfully.");
+    });
+  }
 }
-
-

@@ -273,7 +273,7 @@
                                                     </mat-form-field> -->
                                                     <angular-editor [config]="config" name="shortDetails" formControlName="shortDetails" required></angular-editor>
                                                 </div>
-                                                <div class="col-md-12 mt-2">
+                                                <div class="col-md-12 mt-2" style="display: none;">
                                                     <h6>Description <span class="error">*</span>
                                                         <span style="float: right;" *ngIf="submitted && (f.description.errors || f.description.value=='')">
                                                             <span
