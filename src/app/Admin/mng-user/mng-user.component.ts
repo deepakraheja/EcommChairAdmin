@@ -27,7 +27,7 @@ export class MngUserComponent implements OnInit {
   LoggedInUserId: string;
   LoggedInUserType: string;
   selected: any;
-  displayedColumns: string[] = ['name', 'email', 'mobileNo', 'additionalDiscount', 'statusId', 'isPersonal','Upload', 'createdDate', 'approvedByUserName', 'approvedDate', 'Edit'];
+  displayedColumns: string[] = ['name', 'email', 'mobileNo', 'additionalDiscount', 'statusId', 'isPersonal', 'Upload', 'createdDate', 'approvedByUserName', 'approvedDate', 'Edit'];
   dataSource = new MatTableDataSource<any>(this.lstData);
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   showMask = false;
@@ -38,7 +38,7 @@ export class MngUserComponent implements OnInit {
   SelectAccountType = '';
   public PopUpPreviewUrl: any;
   PopUpDocumentImg = [];
-  SelectedUserId=0;
+  SelectedUserId = 0;
   bsModalRef: BsModalRef;
   constructor(
     private formBuilder: FormBuilder,
@@ -281,10 +281,11 @@ export class MngUserComponent implements OnInit {
     debugger
     this.PopUpDocumentImg = [];
     this.SelectedUserId = lst.userID;
-
-    lst.userDocument.forEach(element => {
+    if (lst.userDocument != null) {
+      lst.userDocument.forEach(element => {
         this.PopUpDocumentImg.push(this.UserDocumentPath + this.SelectedUserId + '/' + element);
-    });
+      });
+    }
     //SelectedProductImages
     this.PopUpPreviewUrl = this.PopUpDocumentImg[0];
 
@@ -356,7 +357,7 @@ export class MngUserComponent implements OnInit {
     this.PopUpPreviewUrl = val;
   }
 
-  SaveUserDocument(){
+  SaveUserDocument() {
     let obj = {
       UserID: Number(this.SelectedUserId),
       UserDocument: this.PopUpDocumentImg
