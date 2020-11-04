@@ -75,7 +75,8 @@ export class MngUserComponent implements OnInit {
       state: ['', Validators.required],
       isAgent: [false],
       isVIPMember: [false],
-      isPersonal: [false]
+      isPersonal: [false],
+      userDocument: []
     });
     this.LoadData();
     this.formControlValueChanged();
@@ -197,7 +198,8 @@ export class MngUserComponent implements OnInit {
       state: [lst.state, Validators.required],
       isAgent: [lst.isAgent],
       isVIPMember: [lst.isVIPMember],
-      isPersonal: [lst.isPersonal]
+      isPersonal: [lst.isPersonal],
+      userDocument: [lst.userDocument]
     });
     if (this.UserForm.value.isAgent)
       this.selected = 1;
@@ -222,6 +224,11 @@ export class MngUserComponent implements OnInit {
       return;
     }
     else {
+      debugger
+      if (this.UserForm.value.isPersonal == false && this.UserForm.value.userDocument == null) {
+        this._toasterService.error("Please upload user document.");
+        return;
+      }
       this.spinner.show();
       this._userService.UpdateUser(this.UserForm.value).subscribe(res => {
         this.spinner.hide();
