@@ -60,7 +60,7 @@ export class ProductDetailComponent implements OnInit {
   displayedImagesColumns: string[] = ['Upload', 'color', 'View'];
   ImagesdataSource = new MatTableDataSource<any>(this.lstData);
 
-  displayedColumns: string[] = ['color', 'setNo', 'qty', 'price', 'shippingPrice', 'businessPrice', 'availableColors', 'Edit', 'Delete'];
+  displayedColumns: string[] = ['color', 'setNo', 'qty', 'price', 'shippingPrice', 'gst', 'salePrice', 'discount', 'businessPrice', 'availableColors', 'Edit', 'Delete'];
   dataSource = new MatTableDataSource<any>(this.lstData);
 
   displayedSetImagesColumns: string[] = ['Upload', 'setNo', 'totalqty', 'View'];
@@ -187,8 +187,6 @@ export class ProductDetailComponent implements OnInit {
       if (this.ProductId > 0)
         this.LoadProduct();
     });
-
-
   }
   ResetProductDetails() {
     this.ProductDetailForm = this.formBuilder.group({
@@ -208,7 +206,6 @@ export class ProductDetailComponent implements OnInit {
       //productImg: ['', [Validators.required]],
     });
   }
-
 
   config: AngularEditorConfig = {
     editable: true,
@@ -233,7 +230,6 @@ export class ProductDetailComponent implements OnInit {
       },
     ]
   }
-
 
   ngOnInit(): void {
     //this.LoadProductDetail();
@@ -661,11 +657,11 @@ export class ProductDetailComponent implements OnInit {
       this._toasterService.error("All the * marked fields are mandatory");
       return;
     }
-    else if (Number(this.ProductDetailForm.value.salePrice) > Number(this.ProductDetailForm.value.price)) {
-      this.ProductDetailForm.markAllAsTouched();
-      this._toasterService.error("Product sale price should be greater than or equal to the price.");
-      return;
-    }
+    // else if (Number(this.ProductDetailForm.value.salePrice) > Number(this.ProductDetailForm.value.price)) {
+    //   this.ProductDetailForm.markAllAsTouched();
+    //   this._toasterService.error("Product sale price should be greater than or equal to the price.");
+    //   return;
+    // }
     else {
       this.spinner.show();
       let obj = {
@@ -713,11 +709,11 @@ export class ProductDetailComponent implements OnInit {
       this._toasterService.error("All the * marked fields are mandatory");
       return;
     }
-    else if (Number(this.EditProductDetailForm.value.salePrice) > Number(this.EditProductDetailForm.value.price)) {
-      this.EditProductDetailForm.markAllAsTouched();
-      this._toasterService.error("Product sale price should be greater than or equal to the price.");
-      return;
-    }
+    // else if (Number(this.EditProductDetailForm.value.salePrice) > Number(this.EditProductDetailForm.value.price)) {
+    //   this.EditProductDetailForm.markAllAsTouched();
+    //   this._toasterService.error("Product sale price should be greater than or equal to the price.");
+    //   return;
+    // }
     else {
       this.spinner.show();
       let obj = {
@@ -733,7 +729,7 @@ export class ProductDetailComponent implements OnInit {
         sizeId: this.EditProductDetailForm.value.sizeId,
         setNo: Number(this.EditProductDetailForm.value.setNo),
         lookupColorId: Number(this.EditProductDetailForm.value.lookupColorId),
-        discount: Number(this.EditProductDetailForm.value.discount.toFixed(4)),
+        discount: Number(this.EditProductDetailForm.value.discount),
         discountAvailable: Number(this.EditProductDetailForm.value.discount) > 0 ? true : false,//this.EditProductDetailForm.value.discountAvailable,
         shippingPrice: Number(this.EditProductDetailForm.value.shippingPrice),
         businessPrice: Number(this.EditProductDetailForm.value.businessPrice),
@@ -1029,51 +1025,97 @@ export class ProductDetailComponent implements OnInit {
     });
   }
 
+  CalculateSalePrice(event: any) {
+    debugger
+    const salePrice = this.ProductDetailForm.get('salePrice');
+    const businessPrice = this.ProductDetailForm.get('businessPrice');
+
+    if (this.ProductDetailForm.value.price != '') {
+      let val = Number(this.ProductDetailForm.value.price) + (Number(this.ProductDetailForm.value.price) * 18 / 100) + Number(this.ProductDetailForm.value.shippingPrice)
+      salePrice.setValue(Number(val));
+      salePrice.updateValueAndValidity();
+      businessPrice.setValue(Number(this.ProductDetailForm.value.price));
+      businessPrice.updateValueAndValidity();
+    }
+    else {
+      salePrice.setValue(0);
+      salePrice.updateValueAndValidity();
+      businessPrice.setValue(Number(this.ProductDetailForm.value.price));
+      businessPrice.updateValueAndValidity();
+    }
+    this.CalculateDiscount('');
+  }
+
   CalculateDiscount(event: any) {
     debugger
+    const businessPrice = this.ProductDetailForm.get('businessPrice');
+    const discount = this.ProductDetailForm.get('discount');
 
-    const salePrice = this.ProductDetailForm.get('salePrice');
-    salePrice.setValue(this.ProductDetailForm.value.price);
-    salePrice.updateValueAndValidity();
-
-    if (this.ProductDetailForm.value.salePrice != "" && this.ProductDetailForm.value.price != "") {
-      if (Number(this.ProductDetailForm.value.salePrice) > Number(this.ProductDetailForm.value.price)) {
-        const discount = this.ProductDetailForm.get('discount');
+    if (this.ProductDetailForm.value.discount != '') {
+      if (Number(this.ProductDetailForm.value.price) < Number(this.ProductDetailForm.value.discount)) {
         discount.setValue(0);
         discount.updateValueAndValidity();
+        businessPrice.setValue(Number(this.ProductDetailForm.value.price));
+        businessPrice.updateValueAndValidity();
         this.ProductDetailForm.markAllAsTouched();
-        this._toasterService.error("Product sale price should be greater than or equal to the price.");
+        this._toasterService.error("Product ex-factory price should be greater than the discount.");
       }
       else {
-        const discount = this.ProductDetailForm.get('discount');
-        var Decrease = (Number(this.ProductDetailForm.value.price) - Number(this.ProductDetailForm.value.salePrice));
-        discount.setValue(Number(Decrease) / Number(this.ProductDetailForm.value.price) * 100);
-        discount.updateValueAndValidity();
+        var Decrease = (Number(this.ProductDetailForm.value.price) - Number(this.ProductDetailForm.value.discount));
+        businessPrice.setValue(Number(Decrease));
+        businessPrice.updateValueAndValidity();
       }
     }
+    else {
+      businessPrice.setValue(Number(this.ProductDetailForm.value.price));
+      businessPrice.updateValueAndValidity();
+    }
+  }
+
+  UpdateSalePrice(event: any) {
+    debugger
+    const salePrice = this.EditProductDetailForm.get('salePrice');
+    const businessPrice = this.EditProductDetailForm.get('businessPrice');
+
+    if (this.EditProductDetailForm.value.price != '') {
+      let val = Number(this.EditProductDetailForm.value.price) + (Number(this.EditProductDetailForm.value.price) * 18 / 100) + Number(this.EditProductDetailForm.value.shippingPrice)
+      salePrice.setValue(Number(val));
+      salePrice.updateValueAndValidity();
+      businessPrice.setValue(Number(this.EditProductDetailForm.value.price));
+      businessPrice.updateValueAndValidity();
+    }
+    else {
+      salePrice.setValue(0);
+      salePrice.updateValueAndValidity();
+      businessPrice.setValue(Number(this.EditProductDetailForm.value.price));
+      businessPrice.updateValueAndValidity();
+    }
+    this.UpdateDiscount('');
   }
 
   UpdateDiscount(event: any) {
     debugger
+    const businessPrice = this.EditProductDetailForm.get('businessPrice');
+    const discount = this.EditProductDetailForm.get('discount');
 
-    const salePrice = this.EditProductDetailForm.get('salePrice');
-    salePrice.setValue(this.EditProductDetailForm.value.price);
-    salePrice.updateValueAndValidity();
-
-    if (this.EditProductDetailForm.value.salePrice != "" && this.EditProductDetailForm.value.price != "") {
-      if (Number(this.EditProductDetailForm.value.salePrice) > Number(this.EditProductDetailForm.value.price)) {
-        const discount = this.EditProductDetailForm.get('discount');
+    if (this.EditProductDetailForm.value.discount != '') {
+      if (Number(this.EditProductDetailForm.value.price) < Number(this.EditProductDetailForm.value.discount)) {
         discount.setValue(0);
         discount.updateValueAndValidity();
+        businessPrice.setValue(Number(this.EditProductDetailForm.value.price));
+        businessPrice.updateValueAndValidity();
         this.EditProductDetailForm.markAllAsTouched();
-        this._toasterService.error("Product sale price should be greater than or equal to the price.");
+        this._toasterService.error("Product ex-factory price should be greater than the discount.");
       }
       else {
-        const discount = this.EditProductDetailForm.get('discount');
-        var Decrease = (Number(this.EditProductDetailForm.value.price) - Number(this.EditProductDetailForm.value.salePrice));
-        discount.setValue(Number(Decrease) / Number(this.EditProductDetailForm.value.price) * 100);
-        discount.updateValueAndValidity();
+        var Decrease = (Number(this.EditProductDetailForm.value.price) - Number(this.EditProductDetailForm.value.discount));
+        businessPrice.setValue(Number(Decrease));
+        businessPrice.updateValueAndValidity();
       }
+    }
+    else {
+      businessPrice.setValue(Number(this.EditProductDetailForm.value.price));
+      businessPrice.updateValueAndValidity();
     }
   }
 }
