@@ -324,8 +324,8 @@
                     </div> -->
                     <div class="col-md-4">
                         <mat-form-field appearance="outline">
-                            <mat-label>Additional Discount <span class="error">*</span></mat-label>
-                            <input type="text" matInput formControlName="additionalDiscount" maxlength="1" [mask]="NumberMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);">
+                            <mat-label>Additional Discount (%) <span class="error">*</span></mat-label>
+                            <input type="text" matInput formControlName="additionalDiscount" maxlength="4" [mask]="DecimalMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);">
                         </mat-form-field>
                     </div>
                     <!-- <div class="col-md-4 mt-2">

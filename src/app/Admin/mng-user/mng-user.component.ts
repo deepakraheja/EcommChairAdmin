@@ -157,7 +157,7 @@ export class MngUserComponent implements OnInit {
 
   addMask(obj: Object) {
     this.PhoneMask = "0000000000";
-    this.DecimalMask = "0*.00";
+    this.DecimalMask = "0.00";
     this.PinCodeMask = "000000";
     this.NumberMask = "0";
     this.showMask = false;
@@ -226,7 +226,7 @@ export class MngUserComponent implements OnInit {
     else {
       debugger
       if (this.UserForm.value.isPersonal == false && this.UserForm.value.userDocument == null) {
-        this._toasterService.error("Please upload user document.");
+        this._toasterService.error("Please upload business document.");
         return;
       }
       this.spinner.show();

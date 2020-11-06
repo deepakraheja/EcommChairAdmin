@@ -17,7 +17,6 @@ import { FabricService } from 'src/app/Service/Fabric.service';
 import { TagService } from 'src/app/Service/tag.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { forkJoin } from 'rxjs';
-import { CoreEnvironment } from '@angular/compiler/src/compiler_facade_interface';
 import { environment } from 'src/environments/environment';
 declare var $;
 @Component({
@@ -60,7 +59,7 @@ export class ProductDetailComponent implements OnInit {
   displayedImagesColumns: string[] = ['Upload', 'color', 'View'];
   ImagesdataSource = new MatTableDataSource<any>(this.lstData);
 
-  displayedColumns: string[] = ['color', 'setNo', 'qty', 'price', 'shippingPrice', 'gst', 'salePrice', 'discount', 'businessPrice', 'availableColors', 'Edit', 'Delete'];
+  displayedColumns: string[] = ['color', 'setNo', 'qty', 'price', 'shippingPrice', 'gst', 'salePrice', 'businessDiscount', 'businessPrice', 'availableColors', 'Edit', 'Delete'];
   dataSource = new MatTableDataSource<any>(this.lstData);
 
   displayedSetImagesColumns: string[] = ['Upload', 'setNo', 'totalqty', 'View'];
@@ -146,11 +145,12 @@ export class ProductDetailComponent implements OnInit {
       availableColors: [true],
       arraySize: [[1]],
       arrayColor: ['', Validators.required],
-      discount: ['', Validators.required],
+      discount: ['0', Validators.required],
       // discountAvailable: [false],
       //productImg: ['', [Validators.required]],
       shippingPrice: ['', Validators.required],
-      businessPrice: ['', Validators.required]
+      businessPrice: ['', Validators.required],
+      businessDiscount: ['', Validators.required]
     });
 
     this.EditProductDetailForm = this.formBuilder.group({
@@ -165,10 +165,11 @@ export class ProductDetailComponent implements OnInit {
       sizeId: ['', Validators.required],
       setNo: this.ProductForm.value.setType != 2 ? [''] : ['', Validators.required],
       lookupColorId: ['', Validators.required],
-      discount: ['', Validators.required],
+      discount: ['0', Validators.required],
       discountAvailable: [false],
       shippingPrice: ['', Validators.required],
-      businessPrice: ['', Validators.required]
+      businessPrice: ['', Validators.required],
+      businessDiscount: ['', Validators.required]
       //productImg: ['', [Validators.required]],
     });
 
@@ -199,9 +200,10 @@ export class ProductDetailComponent implements OnInit {
       availableColors: [true],
       arraySize: [[1]],
       arrayColor: ['', Validators.required],
-      discount: ['', Validators.required],
+      discount: ['0', Validators.required],
       shippingPrice: ['', Validators.required],
-      businessPrice: ['', Validators.required]
+      businessPrice: ['', Validators.required],
+      businessDiscount: ['', Validators.required]
       // discountAvailable: [false],
       //productImg: ['', [Validators.required]],
     });
@@ -678,6 +680,7 @@ export class ProductDetailComponent implements OnInit {
         discountAvailable: Number(this.ProductDetailForm.value.discount) > 0 ? true : false,
         shippingPrice: Number(this.ProductDetailForm.value.shippingPrice),
         businessPrice: Number(this.ProductDetailForm.value.businessPrice),
+        businessDiscount: Number(this.ProductDetailForm.value.businessDiscount),
         // productImg: this.ProductDetailForm.value.productImg,
         CreatedBy: Number(this.LoggedInUserId),
         // CreatedDate:this.ProductForm.value.productName],
@@ -733,6 +736,7 @@ export class ProductDetailComponent implements OnInit {
         discountAvailable: Number(this.EditProductDetailForm.value.discount) > 0 ? true : false,//this.EditProductDetailForm.value.discountAvailable,
         shippingPrice: Number(this.EditProductDetailForm.value.shippingPrice),
         businessPrice: Number(this.EditProductDetailForm.value.businessPrice),
+        businessDiscount: Number(this.EditProductDetailForm.value.businessDiscount),
         CreatedBy: Number(this.LoggedInUserId),
         Modifiedby: Number(this.LoggedInUserId),
       };
@@ -942,6 +946,7 @@ export class ProductDetailComponent implements OnInit {
       discountAvailable: [element.discountAvailable],
       shippingPrice: [element.shippingPrice, Validators.required],
       businessPrice: [element.businessPrice, Validators.required],
+      businessDiscount: [element.businessDiscount, Validators.required],
       //productImg: [element.productImg, [Validators.required]],
     });
 
@@ -1031,7 +1036,7 @@ export class ProductDetailComponent implements OnInit {
     const businessPrice = this.ProductDetailForm.get('businessPrice');
 
     if (this.ProductDetailForm.value.price != '') {
-      let val = Number(this.ProductDetailForm.value.price) + (Number(this.ProductDetailForm.value.price) * 18 / 100) + Number(this.ProductDetailForm.value.shippingPrice)
+      let val = Number(this.ProductDetailForm.value.price) + Number(this.ProductDetailForm.value.shippingPrice) + ((Number(this.ProductDetailForm.value.price) + Number(this.ProductDetailForm.value.shippingPrice)) * 18 / 100)
       salePrice.setValue(Number(val));
       salePrice.updateValueAndValidity();
       businessPrice.setValue(Number(this.ProductDetailForm.value.price));
@@ -1049,19 +1054,19 @@ export class ProductDetailComponent implements OnInit {
   CalculateDiscount(event: any) {
     debugger
     const businessPrice = this.ProductDetailForm.get('businessPrice');
-    const discount = this.ProductDetailForm.get('discount');
+    const businessDiscount = this.ProductDetailForm.get('businessDiscount');
 
-    if (this.ProductDetailForm.value.discount != '') {
-      if (Number(this.ProductDetailForm.value.price) < Number(this.ProductDetailForm.value.discount)) {
-        discount.setValue(0);
-        discount.updateValueAndValidity();
+    if (this.ProductDetailForm.value.businessDiscount != '') {
+      if (Number(this.ProductDetailForm.value.price) < Number(this.ProductDetailForm.value.businessDiscount)) {
+        businessDiscount.setValue(0);
+        businessDiscount.updateValueAndValidity();
         businessPrice.setValue(Number(this.ProductDetailForm.value.price));
         businessPrice.updateValueAndValidity();
         this.ProductDetailForm.markAllAsTouched();
-        this._toasterService.error("Product ex-factory price should be greater than the discount.");
+        this._toasterService.error("Product ex-factory price should be greater than the business Discount.");
       }
       else {
-        var Decrease = (Number(this.ProductDetailForm.value.price) - Number(this.ProductDetailForm.value.discount));
+        var Decrease = (Number(this.ProductDetailForm.value.price) - Number(this.ProductDetailForm.value.businessDiscount));
         businessPrice.setValue(Number(Decrease));
         businessPrice.updateValueAndValidity();
       }
@@ -1078,7 +1083,7 @@ export class ProductDetailComponent implements OnInit {
     const businessPrice = this.EditProductDetailForm.get('businessPrice');
 
     if (this.EditProductDetailForm.value.price != '') {
-      let val = Number(this.EditProductDetailForm.value.price) + (Number(this.EditProductDetailForm.value.price) * 18 / 100) + Number(this.EditProductDetailForm.value.shippingPrice)
+      let val = Number(this.EditProductDetailForm.value.price) + Number(this.EditProductDetailForm.value.shippingPrice) + ((Number(this.EditProductDetailForm.value.price) + Number(this.EditProductDetailForm.value.shippingPrice)) * 18 / 100)
       salePrice.setValue(Number(val));
       salePrice.updateValueAndValidity();
       businessPrice.setValue(Number(this.EditProductDetailForm.value.price));
@@ -1096,19 +1101,19 @@ export class ProductDetailComponent implements OnInit {
   UpdateDiscount(event: any) {
     debugger
     const businessPrice = this.EditProductDetailForm.get('businessPrice');
-    const discount = this.EditProductDetailForm.get('discount');
+    const businessDiscount = this.EditProductDetailForm.get('businessDiscount');
 
-    if (this.EditProductDetailForm.value.discount != '') {
-      if (Number(this.EditProductDetailForm.value.price) < Number(this.EditProductDetailForm.value.discount)) {
-        discount.setValue(0);
-        discount.updateValueAndValidity();
+    if (this.EditProductDetailForm.value.businessDiscount != '') {
+      if (Number(this.EditProductDetailForm.value.price) < Number(this.EditProductDetailForm.value.businessDiscount)) {
+        businessDiscount.setValue(0);
+        businessDiscount.updateValueAndValidity();
         businessPrice.setValue(Number(this.EditProductDetailForm.value.price));
         businessPrice.updateValueAndValidity();
         this.EditProductDetailForm.markAllAsTouched();
-        this._toasterService.error("Product ex-factory price should be greater than the discount.");
+        this._toasterService.error("Product ex-factory price should be greater than the business Discount.");
       }
       else {
-        var Decrease = (Number(this.EditProductDetailForm.value.price) - Number(this.EditProductDetailForm.value.discount));
+        var Decrease = (Number(this.EditProductDetailForm.value.price) - Number(this.EditProductDetailForm.value.businessDiscount));
         businessPrice.setValue(Number(Decrease));
         businessPrice.updateValueAndValidity();
       }
