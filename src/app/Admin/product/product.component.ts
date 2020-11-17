@@ -12,6 +12,9 @@ import { CoreEnvironment } from '@angular/compiler/src/compiler_facade_interface
 import { environment } from 'src/environments/environment';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { DatePipe } from '@angular/common';
+import { ReviewService } from 'src/app/Service/review.service';
 
 @Component({
   selector: 'app-product',
@@ -26,11 +29,19 @@ export class ProductComponent implements OnInit {
   LoggedInUserType: string;
   lstSupplier: any = [];
   // displayedColumns: string[] = ['productName', 'brandName', 'subcategoryName', 'stockQty', 'price', 'salePrice', 'active', 'Edit'];
-  displayedColumns: string[] = ['frontImage', 'productName', 'brandName', 'subcategoryName', 'supplierName', 'setType', 'active', 'Edit'];
+  displayedColumns: string[] = ['frontImage', 'productName', 'brandName', 'subcategoryName', 'supplierName', 'setType', 'review', 'active', 'Edit'];
   dataSource = new MatTableDataSource<any>(this.lstData);
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   SelectsupplierID = new FormControl('');
+  SelectedProductName: string = "";
+  SelectedProductId: number = 0;
+  ReviewForm: FormGroup;
+  submitted = false;
+  displayedColumnsReview: string[] = ['titles', 'rating', 'notes'];
+  dataSourceReview = new MatTableDataSource<any>(this.lstData);
+  showMask = false;
+  DecimalMask = null;
   constructor(
     private formBuilder: FormBuilder,
     private _LocalStorage: LocalStorageService,
@@ -39,14 +50,55 @@ export class ProductComponent implements OnInit {
     private _toasterService: ToastrService,
     private _ProductService: ProductService,
     private router: Router,
-    private _supplierService: SupplierService
+    private _supplierService: SupplierService,
+    private _datePipe: DatePipe,
+    private _reviewService: ReviewService
   ) {
+    this.LoggedInUserId = this._LocalStorage.getValueOnLocalStorage("LoggedInUserId");
+    this.ReviewForm = this.formBuilder.group({
+      reviewId: [0],
+      productID: [0],
+      titles: ['', Validators.required],
+      rating: ['', Validators.required],
+      notes: ['', Validators.required],
+      createdDate: this._datePipe.transform(new Date().toString(), 'yyyy-MM-dd HH:mm:ss'),
+      createdBy: Number(this.LoggedInUserId),
+    });
 
     this.LoadData("");
     this.LoadSupplier();
   }
 
   ngOnInit(): void {
+  }
+  get f() { return this.ReviewForm.controls; }
+  config: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '6rem',
+    minHeight: '6rem',
+    placeholder: 'Enter text here...',
+    translate: 'no',
+    customClasses: [
+      {
+        name: "quote",
+        class: "quote",
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: "titleText",
+        class: "titleText",
+        tag: "h1",
+      },
+    ]
+  }
+
+  addMask(obj: Object) {
+    this.DecimalMask = "0.00";
+    this.showMask = false;
   }
 
   applyFilter(event: Event) {
@@ -86,6 +138,58 @@ export class ProductComponent implements OnInit {
     this.router.navigate(['/productdetail/' + lst.productID]);
   }
 
+  OpenReviewPopUp(template: TemplateRef<any>, lst) {
+    debugger
+    this.SelectedProductName = lst.productName;
+    this.SelectedProductId = lst.productID;
+    this.ReviewForm = this.formBuilder.group({
+      reviewId: [0],
+      productID: Number(lst.productID),
+      titles: ['', Validators.required],
+      rating: ['', Validators.required],
+      notes: ['', Validators.required],
+      createdDate: this._datePipe.transform(new Date().toString(), 'yyyy-MM-dd HH:mm:ss'),
+      createdBy: Number(this.LoggedInUserId),
+    });
+    let obj = {
+      productID: Number(this.ReviewForm.value.productID)
+    }
+    debugger
+    this.spinner.show();
+    this._reviewService.GetReview(obj).subscribe(res => {
+      debugger
+      this.spinner.hide();
+      this.dataSourceReview = new MatTableDataSource<any>(res);
+      const dialogRef = this.dialog.open(template, {
+        width: '60vw',
+        height: '80vh',
+        data: this.ReviewForm
+      });
+      dialogRef.disableClose = true;
+      dialogRef.afterClosed().subscribe(result => {
+        this.SelectedProductName = "";
+        this.SelectedProductId = 0;
+        // this.LoadProductDetail();
+      });
+    });
+
+    
+  }
+
+  SaveProductReview() {
+    this.submitted = true;
+    if (this.ReviewForm.invalid) {
+      this.ReviewForm.markAllAsTouched();
+      this._toasterService.error("All the * marked fields are mandatory");
+      return;
+    }
+    this.spinner.show();
+    this._reviewService.SaveReview(this.ReviewForm.value).subscribe(res => {
+      this.spinner.hide();
+      this.dialog.closeAll();
+      this._toasterService.success("Product review has been saved successfully.");
+    });
+  }
 
 }
 

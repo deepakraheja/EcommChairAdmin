@@ -19,7 +19,7 @@
                             </mat-form-field>
                         </div>
                         <div class="col-md-9 text-right pb-3"><button mat-raised-button (click)="onAddNew();" class="btn btn-warning btn-lg">Add New
-                                </button></div>
+                            </button></div>
                     </div>
 
                     <div class="new-section">
@@ -61,15 +61,21 @@
                                 </ng-container>
                                 <ng-container matColumnDef="setType">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header>SetType</th>
-                                    <td mat-cell *matCellDef="let element"> {{element.setType==1?'Without Set':(element.setType==2?'With Set':'Minimum')}} </td>
+                                    <td mat-cell *matCellDef="let element">
+                                        {{element.setType==1?'Without Set':(element.setType==2?'With Set':'Minimum')}}
+                                    </td>
                                 </ng-container>
-                                <!-- <ng-container matColumnDef="subTitle">
-                                    <th mat-header-cell *matHeaderCellDef>SubTitle</th>
-                                    <td mat-cell *matCellDef="let element"> {{element.subTitle}} </td>
-                                </ng-container> -->
+                                <ng-container matColumnDef="review">
+                                    <th mat-header-cell *matHeaderCellDef>Review</th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <a href="javaScript:void(0);" (click)="OpenReviewPopUp(templateReview,element)">
+                                            Review</a>
+                                    </td>
+                                </ng-container>
                                 <ng-container matColumnDef="active">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Active</th>
-                                    <td mat-cell *matCellDef="let element"> {{element.active?'Active':'In-Active'}} </td>
+                                    <td mat-cell *matCellDef="let element"> {{element.active?'Active':'In-Active'}}
+                                    </td>
                                 </ng-container>
                                 <ng-container matColumnDef="Edit">
                                     <th mat-header-cell *matHeaderCellDef> Edit </th>
@@ -97,3 +103,74 @@
         </div>
     </div>
 </div>
+
+
+<ng-template #templateReview>
+    <div class="col-md-12 add-info-head modal-text-heading">
+        <h2 mat-dialog-title>Product Review ({{SelectedProductName}})</h2>
+    </div>
+    <mat-dialog-content class="mat-typography">
+        <form class="w-100" [formGroup]="ReviewForm">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Title <span class="error">*</span></mat-label>
+                            <input type="text" placeholder="Title" matInput formControlName="titles">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Rating <span class="error">*</span>
+                            </mat-label>
+                            <input type="text" placeholder="Rating" matInput formControlName="rating" maxlength="4" [mask]="DecimalMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2">
+                        <button mat-button class="btn btn-primary btn-lg" (click)="SaveProductReview();">Save</button>
+                    </div>
+                    <div class="col-md-2">
+                        <button mat-button mat-dialog-close class="btn btn-secondary btn-lg">Cancel</button>
+                    </div>
+                    <div class="col-md-12">
+                        <h6>Notes<span class="error">*</span>
+                            <span style="float: right;" *ngIf="submitted && (f.notes.errors || f.notes.value=='')">
+                                <span *ngIf="(f.notes.errors.required || f.notes.value=='')" style="color: red;">Notes
+                                    is required.</span>
+                            </span>
+                        </h6>
+                        <angular-editor [config]="config" name="notes" formControlName="notes" required>
+                        </angular-editor>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <h2>All Reviews</h2>
+                    <div class="col-md-12">
+                        <table mat-table [dataSource]="dataSourceReview" matSort class="mat-elevation-z8 col-md-12">
+                            <ng-container matColumnDef="titles">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Titles</th>
+                                <td mat-cell *matCellDef="let element"> {{element.titles}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="rating">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>rating</th>
+                                <td mat-cell *matCellDef="let element"> {{element.rating}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="notes">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>notes</th>
+                                <td mat-cell *matCellDef="let element"> {{element.notes}} </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumnsReview; sticky:true;"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumnsReview;"></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </mat-dialog-content>
+    <!-- <mat-dialog-actions align="center">
+        <button mat-button class="btn btn-primary btn-lg" (click)="SaveProductReview();">Save</button>
+        <button mat-button mat-dialog-close class="btn btn-secondary btn-lg">Cancel</button>
+    </mat-dialog-actions> -->
+
+</ng-template>
