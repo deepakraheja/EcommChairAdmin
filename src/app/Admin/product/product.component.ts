@@ -173,7 +173,7 @@ export class ProductComponent implements OnInit {
       });
     });
 
-    
+
   }
 
   SaveProductReview() {
@@ -185,8 +185,18 @@ export class ProductComponent implements OnInit {
     }
     this.spinner.show();
     this._reviewService.SaveReview(this.ReviewForm.value).subscribe(res => {
+      this.dataSourceReview = new MatTableDataSource<any>(res);
       this.spinner.hide();
-      this.dialog.closeAll();
+      this.ReviewForm = this.formBuilder.group({
+        reviewId: [0],
+        productID: Number(this.SelectedProductId),
+        titles: ['', Validators.required],
+        rating: ['', Validators.required],
+        notes: ['', Validators.required],
+        createdDate: this._datePipe.transform(new Date().toString(), 'yyyy-MM-dd HH:mm:ss'),
+        createdBy: Number(this.LoggedInUserId),
+      });
+      //this.dialog.closeAll();
       this._toasterService.success("Product review has been saved successfully.");
     });
   }
