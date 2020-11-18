@@ -585,8 +585,8 @@ export class ProductDetailComponent implements OnInit {
       else if (this.ProductForm.value.smallImg.length == 0) {
         document.getElementById('tab5').click();
       }
-      else if (this.ProductForm.value.shortDetails == '' ||
-        this.ProductForm.value.description == '') {
+      else if (this.ProductForm.value.shortDetails == '') {
+        //this.ProductForm.value.description == '') {
         document.getElementById('tab2').click();
         //$('#shortDetails').focus();
       }
