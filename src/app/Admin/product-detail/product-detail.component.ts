@@ -99,7 +99,7 @@ export class ProductDetailComponent implements OnInit {
       //description: [''],
       supplierID: ['', Validators.required],
       mainCategoryID: [1, Validators.required],
-      categoryID: [1, Validators.required],
+      categoryID: [1, Validators.required], 
       subCategoryID: ['', Validators.required],
       brandId: ['', Validators.required],
 
