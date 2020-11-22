@@ -42,6 +42,8 @@ export class ProductComponent implements OnInit {
   dataSourceReview = new MatTableDataSource<any>(this.lstData);
   showMask = false;
   DecimalMask = null;
+  PinCodeMark = null;
+  NumberMask = null;
   constructor(
     private formBuilder: FormBuilder,
     private _LocalStorage: LocalStorageService,
@@ -61,6 +63,11 @@ export class ProductComponent implements OnInit {
       titles: ['', Validators.required],
       rating: ['', Validators.required],
       notes: ['', Validators.required],
+      name: ['', Validators.required],
+      pinCode: ['', Validators.required],
+      state: [''],
+      city: ['', Validators.required],
+      postOffice: ['', Validators.required],
       createdDate: this._datePipe.transform(new Date().toString(), 'yyyy-MM-dd HH:mm:ss'),
       createdBy: Number(this.LoggedInUserId),
     });
@@ -98,6 +105,8 @@ export class ProductComponent implements OnInit {
 
   addMask(obj: Object) {
     this.DecimalMask = "0.00";
+    this.PinCodeMark = "000000";
+    this.NumberMask = "0*";
     this.showMask = false;
   }
 
@@ -148,6 +157,11 @@ export class ProductComponent implements OnInit {
       titles: ['', Validators.required],
       rating: ['', Validators.required],
       notes: ['', Validators.required],
+      name: ['', Validators.required],
+      pinCode: ['', Validators.required],
+      state: [''],
+      city: ['', Validators.required],
+      postOffice: ['', Validators.required],
       createdDate: this._datePipe.transform(new Date().toString(), 'yyyy-MM-dd HH:mm:ss'),
       createdBy: Number(this.LoggedInUserId),
     });
@@ -193,6 +207,11 @@ export class ProductComponent implements OnInit {
         titles: ['', Validators.required],
         rating: ['', Validators.required],
         notes: ['', Validators.required],
+        name: ['', Validators.required],
+        pinCode: ['', Validators.required],
+        state: [''],
+        city: ['', Validators.required],
+        postOffice: ['', Validators.required],
         createdDate: this._datePipe.transform(new Date().toString(), 'yyyy-MM-dd HH:mm:ss'),
         createdBy: Number(this.LoggedInUserId),
       });

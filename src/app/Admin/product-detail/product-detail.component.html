@@ -204,6 +204,22 @@
                                                         <input type="text" placeholder="Assembly Type" matInput formControlName="assemblyType">
                                                     </mat-form-field>
                                                 </div>
+                                                <div class="col-md-3">
+                                                    <mat-form-field appearance="outline">
+                                                        <mat-label>Warranty
+                                                        </mat-label>
+                                                        <input type="text" placeholder="Warranty" matInput formControlName="warranty" maxlength="1" [mask]="NumberMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);">
+                                                    </mat-form-field>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <mat-form-field appearance="outline">
+                                                        <mat-label>MOQ
+                                                        </mat-label>
+                                                        <input type="text" placeholder="MOQ" matInput formControlName="moq" maxlength="1" [mask]="NumberMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);">
+                                                    </mat-form-field>
+                                                </div>
+
 
                                                 <div class="col-md-4 mt-3" style="display: none;">
                                                     <mat-radio-group aria-label="Select an option" formControlName="setType" [disabled]="IsDisabled">

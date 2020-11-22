@@ -113,18 +113,52 @@
         <form class="w-100" [formGroup]="ReviewForm">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <mat-form-field appearance="outline">
                             <mat-label>Title <span class="error">*</span></mat-label>
                             <input type="text" placeholder="Title" matInput formControlName="titles">
                         </mat-form-field>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <mat-form-field appearance="outline">
                             <mat-label>Rating <span class="error">*</span>
                             </mat-label>
-                            <input type="text" placeholder="Rating" matInput formControlName="rating" maxlength="4" [mask]="DecimalMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);">
+                            <input type="text" placeholder="Rating" matInput formControlName="rating" maxlength="1" [mask]="NumberMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);">
                         </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Name <span class="error">*</span></mat-label>
+                            <input type="text" placeholder="name" matInput formControlName="name">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>PinCode</mat-label>
+                            <input matInput placeholder="PinCode" id="dest_addr_pin" formControlName="pinCode" minlength="6" [mask]="PinCodeMark" [dropSpecialCharacters]="true" [showMaskTyped]="showMask" (focus)="addMask($event);" onchange="getPostOffice()">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>State</mat-label>
+                            <input matInput placeholder="State" formControlName="state" id="dest_addr_state">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>City</mat-label>
+                            <input matInput placeholder="City" list="cityLst" formControlName="city" id="dest_addr_city" onblur="load_PostOffice()">
+                        </mat-form-field>
+                        <datalist id="cityLst">
+                        </datalist>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Post Office</mat-label>
+                            <input matInput placeholder="Post Office" list="postOfficeLst" id="dest_post_office" formControlName="postOffice">
+                        </mat-form-field>
+                        <datalist id="postOfficeLst">
+                        </datalist>
                     </div>
                     <div class="col-md-2">
                         <button mat-button class="btn btn-primary btn-lg" (click)="SaveProductReview();">Save</button>
