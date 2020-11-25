@@ -123,7 +123,7 @@
                         <mat-form-field appearance="outline">
                             <mat-label>Rating <span class="error">*</span>
                             </mat-label>
-                            <input type="text" placeholder="Rating" matInput formControlName="rating" maxlength="1" [mask]="NumberMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);">
+                            <input type="text" placeholder="Rating" matInput formControlName="rating" [mask]="DecimalMask" [dropSpecialCharacters]="false" [showMaskTyped]="true" (focus)="addMask($event);">
                         </mat-form-field>
                     </div>
                     <div class="col-md-3">
@@ -186,12 +186,30 @@
                                 <td mat-cell *matCellDef="let element"> {{element.titles}} </td>
                             </ng-container>
                             <ng-container matColumnDef="rating">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header>rating</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Rating</th>
                                 <td mat-cell *matCellDef="let element"> {{element.rating}} </td>
                             </ng-container>
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+                                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="city">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>City</th>
+                                <td mat-cell *matCellDef="let element"> {{element.city}} </td>
+                            </ng-container>
                             <ng-container matColumnDef="notes">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header>notes</th>
-                                <td mat-cell *matCellDef="let element"> {{element.notes}} </td>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Notes</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <p class="text-black mb-0" [innerHTML]="element.notes | safe: 'html'"></p>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Delete">
+                                <th mat-header-cell *matHeaderCellDef> Delete </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <a href="javaScript:void(0);" (click)="DeleteReview(element)">
+                                        <i class="mi-delete mi-2x" style="color: red;" aria-hidden="true"></i>
+                                    </a>
+                                </td>
                             </ng-container>
                             <tr mat-header-row *matHeaderRowDef="displayedColumnsReview; sticky:true;"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumnsReview;"></tr>

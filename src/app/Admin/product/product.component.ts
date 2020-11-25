@@ -15,6 +15,8 @@ import { MatSort } from '@angular/material/sort';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { DatePipe } from '@angular/common';
 import { ReviewService } from 'src/app/Service/review.service';
+import { ConfirmBoxComponent } from 'src/app/confirm-box/confirm-box.component';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-product',
@@ -38,12 +40,13 @@ export class ProductComponent implements OnInit {
   SelectedProductId: number = 0;
   ReviewForm: FormGroup;
   submitted = false;
-  displayedColumnsReview: string[] = ['titles', 'rating', 'notes'];
+  displayedColumnsReview: string[] = ['titles', 'rating', 'name', 'city', 'notes', 'Delete'];
   dataSourceReview = new MatTableDataSource<any>(this.lstData);
   showMask = false;
   DecimalMask = null;
   PinCodeMark = null;
   NumberMask = null;
+  bsModalRef: BsModalRef;
   constructor(
     private formBuilder: FormBuilder,
     private _LocalStorage: LocalStorageService,
@@ -54,7 +57,8 @@ export class ProductComponent implements OnInit {
     private router: Router,
     private _supplierService: SupplierService,
     private _datePipe: DatePipe,
-    private _reviewService: ReviewService
+    private _reviewService: ReviewService,
+    private modalService: BsModalService,
   ) {
     this.LoggedInUserId = this._LocalStorage.getValueOnLocalStorage("LoggedInUserId");
     this.ReviewForm = this.formBuilder.group({
@@ -175,8 +179,8 @@ export class ProductComponent implements OnInit {
       this.spinner.hide();
       this.dataSourceReview = new MatTableDataSource<any>(res);
       const dialogRef = this.dialog.open(template, {
-        width: '60vw',
-        height: '80vh',
+        width: '90vw',
+        height: '90vh',
         data: this.ReviewForm
       });
       dialogRef.disableClose = true;
@@ -217,6 +221,30 @@ export class ProductComponent implements OnInit {
       });
       //this.dialog.closeAll();
       this._toasterService.success("Product review has been saved successfully.");
+    });
+  }
+  DeleteReview(element) {
+    debugger
+    const initialState = {
+      title: "Confirmation",
+      message: "Do you want to delete this record?",
+    };
+    this.bsModalRef = this.modalService.show(ConfirmBoxComponent, { ignoreBackdropClick: true, keyboard: true, class: 'modal-sm', initialState });
+    this.bsModalRef.content.closeBtnName = 'Close';
+    this.bsModalRef.content.onClose.subscribe(result => {
+      //console.log(`Dialog result: ${result}`);
+      if (result) {
+        let obj = {
+          ReviewId: element.reviewId,
+          ProductID: Number(this.SelectedProductId)
+        };
+        this.spinner.show();
+        this._reviewService.DeleteReview(obj).subscribe(res => {
+          this.spinner.hide();
+          this.dataSourceReview = new MatTableDataSource<any>(res);
+          this._toasterService.success("Record has been deleted successfully.");
+        });
+      }
     });
   }
 
