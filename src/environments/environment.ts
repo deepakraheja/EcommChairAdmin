@@ -9,22 +9,24 @@ export const environment = {
 
   /*********************Local Server************* */
 
-  // ImagePath: 'http://localhost:56283/ProductImage/',
-  // BASE_API_URL: 'http://localhost:56283/api/',
-  // APIURL: 'http://localhost:56283',
-  // Report_Path: 'http://localhost:56283/ReportGenerate/',
-  // UserDocumentPath: 'http://localhost:56283/UserDocument/',
+  ImagePath: 'http://localhost:56283/ProductImage/',
+  BASE_API_URL: 'http://localhost:56283/api/',
+  APIURL: 'http://localhost:56283',
+  Report_Path: 'http://localhost:56283/ReportGenerate/',
+  UserDocumentPath: 'http://localhost:56283/UserDocument/',
+  Invoice_URL:'http://localhost:56283/TempPDF/',
 
 
 
 
   //*********************Production Server************* */
 
-  BASE_API_URL: 'http://208.109.12.71/EcommChairApiV3/api/',
-  ImagePath: 'http://208.109.12.71/EcommChairApiV3/ProductImage/',
-  APIURL: 'http://208.109.12.71/EcommChairApiV3',
-  Report_Path: 'http://208.109.12.71/EcommChairApiV3/ReportGenerate/',
-  UserDocumentPath: 'http://208.109.12.71/EcommChairApiV3/UserDocument/',
+  // BASE_API_URL: 'http://208.109.12.71/EcommChairApiV3/api/',
+  // ImagePath: 'http://208.109.12.71/EcommChairApiV3/ProductImage/',
+  // APIURL: 'http://208.109.12.71/EcommChairApiV3',
+  // Report_Path: 'http://208.109.12.71/EcommChairApiV3/ReportGenerate/',
+  // UserDocumentPath: 'http://208.109.12.71/EcommChairApiV3/UserDocument/',
+  // Invoice_URL: 'http://208.109.12.71/EcommChairApiV3/TempPDF/',
 
 };
 
