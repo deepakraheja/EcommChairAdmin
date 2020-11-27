@@ -18,7 +18,17 @@
                                 </mat-select>
                             </mat-form-field>
                         </div>
-                        <div class="col-md-9 text-right pb-3"><button mat-raised-button (click)="onAddNew();" class="btn btn-warning btn-lg">Add New
+                        <div class="col-md-2">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Status</mat-label>
+                                <mat-select [formControl]="SelectStatus" (selectionChange)="LoadData($event)">
+                                    <mat-option value="">All</mat-option>
+                                    <mat-option value="1">Active</mat-option>
+                                    <mat-option value="0">In-Active</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-7 text-right pb-3"><button mat-raised-button (click)="onAddNew();" class="btn btn-warning btn-lg">Add New
                             </button></div>
                     </div>
 
@@ -59,11 +69,19 @@
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Supplier</th>
                                     <td mat-cell *matCellDef="let element"> {{element.supplierName}} </td>
                                 </ng-container>
-                                <ng-container matColumnDef="setType">
+                                <!-- <ng-container matColumnDef="setType">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header>SetType</th>
                                     <td mat-cell *matCellDef="let element">
                                         {{element.setType==1?'Without Set':(element.setType==2?'With Set':'Minimum')}}
                                     </td>
+                                </ng-container> -->
+                                <ng-container matColumnDef="moq">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>MOQ</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.moq}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="warranty">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Warranty</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.warranty}} </td>
                                 </ng-container>
                                 <ng-container matColumnDef="review">
                                     <th mat-header-cell *matHeaderCellDef>Review</th>

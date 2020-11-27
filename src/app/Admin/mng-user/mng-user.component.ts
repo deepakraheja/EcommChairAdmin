@@ -225,6 +225,10 @@ export class MngUserComponent implements OnInit {
     }
     else {
       debugger
+      if (this.UserForm.value.additionalDiscount >5) {
+        this._toasterService.error("Additional Discount should be equal or less then 5%.");
+        return;
+      }
       if (this.UserForm.value.isPersonal == false && this.UserForm.value.userDocument == null) {
         this._toasterService.error("Please upload business document.");
         return;

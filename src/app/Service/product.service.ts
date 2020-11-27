@@ -22,6 +22,14 @@ export class ProductService {
     );
   }
 
+  GetAllProductByStatusSupplierId(_obj: any): Observable<any> {
+    this._methodName = "GetAllProductByStatusSupplierId/";
+    this._param = _obj;
+    return this._http.post<any>(
+      this._url + this._methodName, this._param
+    );
+  }
+
   GetProductById(_obj: any): Observable<any> {
     this._methodName = "GetProductById/";
     this._param = _obj;

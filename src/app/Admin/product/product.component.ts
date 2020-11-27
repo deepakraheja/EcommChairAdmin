@@ -31,11 +31,12 @@ export class ProductComponent implements OnInit {
   LoggedInUserType: string;
   lstSupplier: any = [];
   // displayedColumns: string[] = ['productName', 'brandName', 'subcategoryName', 'stockQty', 'price', 'salePrice', 'active', 'Edit'];
-  displayedColumns: string[] = ['frontImage', 'productName', 'brandName', 'subcategoryName', 'supplierName', 'setType', 'review', 'active', 'Edit'];
+  displayedColumns: string[] = ['frontImage', 'productName', 'brandName', 'subcategoryName', 'supplierName', 'moq','warranty', 'review', 'active', 'Edit'];
   dataSource = new MatTableDataSource<any>(this.lstData);
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   SelectsupplierID = new FormControl('');
+  SelectStatus = new FormControl('');
   SelectedProductName: string = "";
   SelectedProductId: number = 0;
   ReviewForm: FormGroup;
@@ -130,16 +131,32 @@ export class ProductComponent implements OnInit {
     });
   }
   LoadData(event: any) {
-    let obj = {
-      SupplierID: this.SelectsupplierID.value == "" ? 0 : Number(this.SelectsupplierID.value)
+    debugger
+    if (this.SelectStatus.value == "") {
+      let obj = {
+        SupplierID: this.SelectsupplierID.value == "" ? 0 : Number(this.SelectsupplierID.value)
+      }
+      this.spinner.show();
+      this._ProductService.GetAllProductBySupplierId(obj).subscribe(res => {
+        this.spinner.hide();
+        this.dataSource = new MatTableDataSource<any>(res);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      });
     }
-    this.spinner.show();
-    this._ProductService.GetAllProductBySupplierId(obj).subscribe(res => {
-      this.spinner.hide();
-      this.dataSource = new MatTableDataSource<any>(res);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-    });
+    else {
+      let obj = {
+        SupplierID: this.SelectsupplierID.value == "" ? 0 : Number(this.SelectsupplierID.value),
+        Active: this.SelectStatus.value == "1" ? true : false,
+      }
+      this.spinner.show();
+      this._ProductService.GetAllProductByStatusSupplierId(obj).subscribe(res => {
+        this.spinner.hide();
+        this.dataSource = new MatTableDataSource<any>(res);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      });
+    }
   }
 
   onAddNew() {
