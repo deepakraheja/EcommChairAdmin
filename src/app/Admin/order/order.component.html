@@ -427,6 +427,13 @@
                                                         </a>
                                                     </div>
                                                 </div>
+                                                <div *ngIf="lstPro.statusId>=3" class="a-fixed-left-grid-col a-col-right" style="padding-left:1.5%;float:left;">
+                                                    <div class="a-row">
+                                                        <a class="a-link-normal" style="color: red;">
+                                                            Dispatched By : {{lstPro.transportName}}, Tracking Id : {{lstPro.bilty}}
+                                                        </a>
+                                                    </div>
+                                                </div>
                                                 <div class="a-fixed-left-grid-col a-col-right" style="padding-left:1.5%;float:left;">
                                                     <div class="a-row">
                                                         <a class="a-link-normal">

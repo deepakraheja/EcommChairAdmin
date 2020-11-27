@@ -53,7 +53,7 @@ export class OrderComponent implements OnInit {
     this.LoggedInUserId = this._LocalStorage.getValueOnLocalStorage("LoggedInUserId");
     this.LoadOrderStatus();
     this.OrderForm = this.formBuilder.group({
-      startDate: [this._datePipe.transform(new Date().toString(), 'yyyy-MM-dd')],
+      startDate: [this._datePipe.transform(this.addDays(new Date(),-7).toString(), 'yyyy-MM-dd')],
       endDate: [this._datePipe.transform(new Date().toString(), 'yyyy-MM-dd')],
       statusId: [0]
     });
@@ -72,6 +72,10 @@ export class OrderComponent implements OnInit {
     this._TransportService.GetTransport(obj).subscribe(res => {
       this.lstTransport = res;
     });
+  }
+  addDays(date: Date, days: number): Date {
+    date.setDate(date.getDate() + days);
+    return date;
   }
 
   ngOnInit(): void {
