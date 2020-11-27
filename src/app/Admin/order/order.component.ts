@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ConfirmBoxComponent } from 'src/app/confirm-box/confirm-box.component';
 import { TransportService } from 'src/app/Service/Transport.service';
+import { InvoiceService } from 'src/app/Service/invoice.service';
 
 @Component({
   selector: 'app-order',
@@ -25,9 +26,10 @@ export class OrderComponent implements OnInit {
   public lstOrderDetails: any = [];
   public lstOrderStatus: any = [];
   public ProductImage = environment.ImagePath;
+  public Invoice_URL = environment.Invoice_URL;
   OrderForm: FormGroup;
   DispatchedForm: FormGroup;
-  displayedColumns: string[] = ['orderNumber', 'View', 'orderDate', 'fName', 'phone', 'statusId', 'totalAmount'];
+  displayedColumns: string[] = ['orderNumber', 'View', 'orderDate', 'fName', 'phone', 'statusId', 'totalAmount', 'PrintOrder'];
   dataSource = new MatTableDataSource<any>(this.lstOrder);
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   LoggedInUserId: string;
@@ -45,7 +47,8 @@ export class OrderComponent implements OnInit {
     public _LocalStorage: LocalStorageService,
     public _toastrService: ToastrService,
     private modalService: BsModalService,
-    private _TransportService: TransportService
+    private _TransportService: TransportService,
+    private _InvoiceService: InvoiceService
   ) {
     this.LoggedInUserId = this._LocalStorage.getValueOnLocalStorage("LoggedInUserId");
     this.LoadOrderStatus();
@@ -290,5 +293,20 @@ export class OrderComponent implements OnInit {
       // this._toastrService.success('Status has been updated successfully.');
       this.ChangeStatusId = '';
     }
+  }
+
+  DownloadInvoice(lst) {
+    let obj = {
+      GUID: lst.guid
+    }
+    this.spinner.show();
+    debugger;
+    //window.open(this.WebSite_URL + 'report/orderInvoice/' + orderId, "_blank");
+    this._InvoiceService.OrderInvoiceByGUID(obj).subscribe(res => {
+      debugger;
+      this.spinner.hide();
+      window.open(this.Invoice_URL + res, "_blank");
+      this._toastrService.success("The invoice has been downloaded successfully.");
+    });
   }
 }
