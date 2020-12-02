@@ -31,7 +31,7 @@ export class ProductComponent implements OnInit {
   LoggedInUserType: string;
   lstSupplier: any = [];
   // displayedColumns: string[] = ['productName', 'brandName', 'subcategoryName', 'stockQty', 'price', 'salePrice', 'active', 'Edit'];
-  displayedColumns: string[] = ['frontImage', 'productName', 'brandName', 'subcategoryName', 'supplierName', 'moq','warranty', 'review', 'active', 'Edit'];
+  displayedColumns: string[] = ['frontImage', 'productName', 'brandName', 'subcategoryName', 'supplierName', 'moq', 'warranty', 'review', 'active', 'Edit'];
   dataSource = new MatTableDataSource<any>(this.lstData);
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -45,6 +45,7 @@ export class ProductComponent implements OnInit {
   dataSourceReview = new MatTableDataSource<any>(this.lstData);
   showMask = false;
   DecimalMask = null;
+  OneNumberMask = null;
   PinCodeMark = null;
   NumberMask = null;
   bsModalRef: BsModalRef;
@@ -112,6 +113,7 @@ export class ProductComponent implements OnInit {
     this.DecimalMask = "0.00";
     this.PinCodeMark = "000000";
     this.NumberMask = "0*";
+    this.OneNumberMask = "0";
     this.showMask = false;
   }
 

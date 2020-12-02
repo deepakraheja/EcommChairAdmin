@@ -141,7 +141,7 @@
                         <mat-form-field appearance="outline">
                             <mat-label>Rating <span class="error">*</span>
                             </mat-label>
-                            <input type="text" placeholder="Rating" matInput formControlName="rating" [mask]="DecimalMask" [dropSpecialCharacters]="false" [showMaskTyped]="true" (focus)="addMask($event);">
+                            <input type="text" placeholder="Rating" matInput formControlName="rating" [mask]="OneNumberMask" [dropSpecialCharacters]="false" [showMaskTyped]="true" (focus)="addMask($event);">
                         </mat-form-field>
                     </div>
                     <div class="col-md-3">
