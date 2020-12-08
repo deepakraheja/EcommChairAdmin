@@ -303,6 +303,39 @@
                                                     </mat-form-field> 
                                                     <angular-editor [config]="config" name="description" formControlName="description" required></angular-editor>
                                                 </div> -->
+                                                <div class="col-md-12 mt-2">
+                                                    <h6>Guarantee Notes
+                                                        <!-- <span class="error">*</span>
+                                                        <span style="float: right;" *ngIf="submitted && (f.guaranteeNotes.errors || f.guaranteeNotes.value=='')">
+                                                            <span
+                                                                *ngIf="(f.guaranteeNotes.errors.required || f.guaranteeNotes.value=='')"
+                                                                style="color: red;">Guarantee Notes is required.</span>
+                                                        </span> -->
+                                                    </h6>
+                                                    <angular-editor [config]="config" name="guaranteeNotes" formControlName="guaranteeNotes"></angular-editor>
+                                                </div>
+                                                <div class="col-md-12 mt-2">
+                                                    <h6>Delivery Information Notes
+                                                        <!-- <span class="error">*</span>
+                                                        <span style="float: right;" *ngIf="submitted && (f.deliveryInformationNotes.errors || f.deliveryInformationNotes.value=='')">
+                                                            <span
+                                                                *ngIf="(f.deliveryInformationNotes.errors.required || f.deliveryInformationNotes.value=='')"
+                                                                style="color: red;">Delivery Information Notes is required.</span>
+                                                        </span> -->
+                                                    </h6>
+                                                    <angular-editor [config]="config" name="deliveryInformationNotes" formControlName="deliveryInformationNotes"></angular-editor>
+                                                </div>
+                                                <div class="col-md-12 mt-2">
+                                                    <h6>Suggestion Notes
+                                                        <!-- <span class="error">*</span>
+                                                        <span style="float: right;" *ngIf="submitted && (f.suggestionNotes.errors || f.suggestionNotes.value=='')">
+                                                            <span
+                                                                *ngIf="(f.suggestionNotes.errors.required || f.suggestionNotes.value=='')"
+                                                                style="color: red;">Suggestion Notes is required.</span>
+                                                        </span> -->
+                                                    </h6>
+                                                    <angular-editor [config]="config" name="suggestionNotes" formControlName="suggestionNotes"></angular-editor>
+                                                </div>
                                             </div>
                                             <div class="col-md-12 text-center mt-3">
                                                 <button type="button" (click)="onBack()" class="btn btn-secondary btn-lg">Back</button> &nbsp;

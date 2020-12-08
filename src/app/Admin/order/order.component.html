@@ -69,7 +69,8 @@
                                 </ng-container>
                                 <ng-container matColumnDef="orderDate">
                                     <th mat-header-cell *matHeaderCellDef>Order Date</th>
-                                    <td mat-cell *matCellDef="let element"> {{element.orderDate | date :'MM/dd/yyyy HH:mm:ss'}} </td>
+                                    <td mat-cell *matCellDef="let element">
+                                        {{element.orderDate | date :'MM/dd/yyyy HH:mm:ss'}} </td>
                                 </ng-container>
                                 <ng-container matColumnDef="fName">
                                     <th mat-header-cell *matHeaderCellDef>Name</th>
@@ -88,7 +89,8 @@
                                 </ng-container>
                                 <ng-container matColumnDef="totalAmount">
                                     <th mat-header-cell *matHeaderCellDef>Total Amount</th>
-                                    <td mat-cell *matCellDef="let element"> {{element.totalAmount | currency:Currency.currency:'symbol'}} </td>
+                                    <td mat-cell *matCellDef="let element">
+                                        {{element.totalAmount | currency:Currency.currency:'symbol'}} </td>
                                 </ng-container>
                                 <ng-container matColumnDef="PrintOrder">
                                     <th mat-header-cell *matHeaderCellDef>Print Order</th>
@@ -336,7 +338,7 @@
                 </div>
                 <div class="col-md-6">
                     <h3 style="margin-bottom: 3px !important;"><u><b>
-                        Shipping Address</b></u>
+                                Shipping Address</b></u>
                     </h3>
                     <b>Name : </b> {{lstOrderDetails.fName}} {{lstOrderDetails.lName}}
                     <br>
@@ -355,7 +357,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3 style="margin-bottom: 3px !important;"><u><b>
-                        Product Details</b></u>
+                                Product Details</b></u>
                     </h3>
                 </div>
                 <div class="a-box shipment" *ngFor="let lstPro of lstOrderDetails.orderDetails">
@@ -370,9 +372,12 @@
                                     <li class="{{lstPro.statusId==1?'active':''}}"><span>New Order</span></li>
                                     <li class="{{lstPro.statusId==2?'active':''}}"><span>Processing</span></li>
                                     <li class="{{lstPro.statusId==3?'active':''}}"><span>Dispatched</span></li>
-                                    <li *ngIf="lstPro.statusId!=5" class="{{lstPro.statusId==4?'active':''}}"><span>Delivered</span></li>
-                                    <li *ngIf="lstPro.statusId==5" class="{{lstPro.statusId==5?'active':''}}"><span>Not Delivered</span></li>
-                                    <li *ngIf="lstPro.statusId==6" class="{{lstPro.statusId==6?'active':''}}"><span>Returned</span></li>
+                                    <li *ngIf="lstPro.statusId!=5" class="{{lstPro.statusId==4?'active':''}}">
+                                        <span>Delivered</span></li>
+                                    <li *ngIf="lstPro.statusId==5" class="{{lstPro.statusId==5?'active':''}}"><span>Not
+                                            Delivered</span></li>
+                                    <li *ngIf="lstPro.statusId==6" class="{{lstPro.statusId==6?'active':''}}">
+                                        <span>Returned</span></li>
                                 </ul>
 
                                 <!-- <div class="col-md-2" *ngFor="let row of lstOrderStatus">
@@ -422,15 +427,25 @@
                                                 <div class="a-text-center a-fixed-left-grid-col a-col-left" style="width:100px;margin-left:-100px;float:left;">
                                                     <div class="item-view-left-col-inner">
                                                         <a class="a-link-normal">
-                                                            <img *ngIf="lstPro?.setNo>0" [src]="ProductImage+'/'+lstPro?.productId+'/productSetImage/'+lstPro?.setNo+'/'+lstPro?.productImg[0]" width="150px" height="100px" alt="">
-                                                            <img *ngIf="lstPro?.setNo==0" [src]="ProductImage+'/'+lstPro?.productId+'/productColorImage/'+lstPro?.productSizeColorId+'/'+lstPro?.productImg[0]" width="150px" height="100px" alt="">
+                                                            <img *ngIf="lstPro?.setNo>0"
+                                                                [src]="ProductImage+'/'+lstPro?.productId+'/productSetImage/'+lstPro?.setNo+'/'+lstPro?.productImg[0]"
+                                                                width="150px" height="100px" alt="">
+                                                            <img *ngIf="lstPro?.setNo==0"
+                                                                [src]="ProductImage+'/'+lstPro?.productId+'/productColorImage/'+lstPro?.productSizeColorId+'/'+lstPro?.productImg[0]"
+                                                                width="150px" height="100px" alt="">
                                                         </a>
                                                     </div>
                                                 </div>
                                                 <div *ngIf="lstPro.statusId>=3" class="a-fixed-left-grid-col a-col-right" style="padding-left:1.5%;float:left;">
                                                     <div class="a-row">
                                                         <a class="a-link-normal" style="color: red;">
-                                                            Dispatched By : {{lstPro.transportName}}, Tracking Id : {{lstPro.bilty}}
+                                                            Dispatched By : {{lstPro.transportName}}, Tracking Id :
+                                                            {{lstPro.bilty}}
+                                                        </a>
+                                                    </div>
+                                                    <div class="a-row" *ngIf="lstPro.trackingURL!=''">
+                                                        <a class="a-link-normal" href="{{lstPro.trackingURL}}" target="_blank">
+                                                            Click here for Tracking URL
                                                         </a>
                                                     </div>
                                                 </div>
@@ -454,12 +469,15 @@
                                                         <span class="a-size-small a-color-secondary">
                                                             <span
                                                                 style="text-decoration: inherit; white-space: nowrap;">
-                                                               Total Amount : {{lstPro.quantity}} x {{lstPro.price | currency:Currency.currency:'symbol'}} = {{GetTotalAmount(lstPro) | currency:Currency.currency:'symbol'}}
+                                                                Total Amount : {{lstPro.quantity}} x
+                                                                {{lstPro.price | currency:Currency.currency:'symbol'}} =
+                                                                {{GetTotalAmount(lstPro) | currency:Currency.currency:'symbol'}}
                                                             </span>
                                                         </span>
                                                     </div>
                                                     <div class="a-row">
-                                                        <mat-checkbox [(ngModel)]="lstPro.isSelected">Select</mat-checkbox>
+                                                        <mat-checkbox [(ngModel)]="lstPro.isSelected">Select
+                                                        </mat-checkbox>
                                                         <!-- <span class="a-color-secondary a-text-bold">
                                                         </span>
                                                         <span class="a-color-secondary">
@@ -539,12 +557,21 @@
                             <mat-datepicker #dpDispatchDate disabled="false"></mat-datepicker>
                         </mat-form-field>
                     </div>
+                    <div class="col-md-12">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Tracking URL
+                                <span class="error">*</span>
+                            </mat-label>
+                            <input type="text" matInput formControlName="trackingURL">
+                        </mat-form-field>
+                    </div>
                     <div class="col-md-6">
                         <mat-form-field appearance="outline">
                             <mat-label>Tracking Id <span class="error">*</span></mat-label>
                             <input type="text" matInput formControlName="bilty" maxlength="50">
                         </mat-form-field>
                     </div>
+
                 </div>
             </div>
         </form>
@@ -552,8 +579,8 @@
     <mat-dialog-actions align="end">
         <div class="col-md-12 add-info-foot">
             <button mat-raised-button class="btn btn-success btn-lg" (click)="SaveDispatched()">
-            Save
-        </button>
+                Save
+            </button>
             <button mat-button mat-dialog-close class="btn btn-secondary btn-lg">Cancel</button>
         </div>
     </mat-dialog-actions>
@@ -572,7 +599,7 @@
         display: inline-block;
         padding: 0;
         text-align: center;
-        text-decoration: none!important;
+        text-decoration: none !important;
         vertical-align: middle
     }
     
@@ -685,7 +712,7 @@
     .a-button a,
     .a-button:hover a {
         color: #111;
-        text-decoration: none!important
+        text-decoration: none !important
     }
     
     .a-button+.a-button {
@@ -724,7 +751,7 @@
     .a-button.a-button-small:focus .a-button-inner,
     .a-button.a-button-small:focus:active .a-button-inner,
     .a-button.a-button-small:hover .a-button-inner {
-        height: 20px!important
+        height: 20px !important
     }
     
     .a-button-dropdown .a-button-text {
@@ -742,8 +769,8 @@
     
     .a-button-group .a-button-dropdown,
     .a-button-group .a-button-splitdropdown {
-        width: 26px!important;
-        min-width: 26px!important
+        width: 26px !important;
+        min-width: 26px !important
     }
     
     .a-button .a-icon-dropdown {
@@ -800,12 +827,12 @@
     }
     
     .a-button-primary.a-button-disabled {
-        background-color: #f9f3e5!important;
-        border-color: #e8e0cd!important
+        background-color: #f9f3e5 !important;
+        border-color: #e8e0cd !important
     }
     
     .a-button-primary.a-button-disabled .a-button-inner {
-        background-color: #f9f3e5!important
+        background-color: #f9f3e5 !important
     }
     
     .a-button-primary.a-button-disabled .a-button-text {
@@ -833,7 +860,7 @@
     }
     
     .a-button-disabled>.a-button-primary .a-button-inner {
-        background-color: #f9f3e5!important
+        background-color: #f9f3e5 !important
     }
     
     .a-button-group {

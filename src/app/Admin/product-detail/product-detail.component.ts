@@ -134,7 +134,10 @@ export class ProductDetailComponent implements OnInit {
       overallDimension: [''],
       assemblyType: [''],
       warranty: [''],
-      moq: ['']
+      moq: [''],
+      guaranteeNotes: [''],
+      deliveryInformationNotes: [''],
+      suggestionNotes: ['']
     });
 
     this.ProductDetailForm = this.formBuilder.group({
@@ -515,7 +518,10 @@ export class ProductDetailComponent implements OnInit {
           overallDimension: [this.product.overallDimension],
           assemblyType: [this.product.assemblyType],
           warranty: [this.product.warranty],
-          moq: [this.product.moq]
+          moq: [this.product.moq],
+          guaranteeNotes: [this.product.guaranteeNotes],
+          deliveryInformationNotes: [this.product.deliveryInformationNotes],
+          suggestionNotes: [this.product.suggestionNotes]
         });
 
         debugger
@@ -634,7 +640,10 @@ export class ProductDetailComponent implements OnInit {
         overallDimension: this.ProductForm.value.overallDimension,
         assemblyType: this.ProductForm.value.assemblyType,
         warranty: this.ProductForm.value.warranty,
-        moq: this.ProductForm.value.moq
+        moq: this.ProductForm.value.moq,
+        guaranteeNotes: this.ProductForm.value.guaranteeNotes,
+        deliveryInformationNotes: this.ProductForm.value.deliveryInformationNotes,
+        suggestionNotes: this.ProductForm.value.suggestionNotes
       };
       this._productService.SaveProduct(obj).subscribe(res => {
         this.spinner.hide();

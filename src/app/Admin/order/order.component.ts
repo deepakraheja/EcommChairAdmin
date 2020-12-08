@@ -53,7 +53,7 @@ export class OrderComponent implements OnInit {
     this.LoggedInUserId = this._LocalStorage.getValueOnLocalStorage("LoggedInUserId");
     this.LoadOrderStatus();
     this.OrderForm = this.formBuilder.group({
-      startDate: [this._datePipe.transform(this.addDays(new Date(),-7).toString(), 'yyyy-MM-dd')],
+      startDate: [this._datePipe.transform(this.addDays(new Date(), -7).toString(), 'yyyy-MM-dd')],
       endDate: [this._datePipe.transform(new Date().toString(), 'yyyy-MM-dd')],
       statusId: [0]
     });
@@ -63,7 +63,8 @@ export class OrderComponent implements OnInit {
       transportID: ['', Validators.required],
       dispatchDate: [this._datePipe.transform(new Date().toString(), 'yyyy-MM-dd')],
       bilty: ['', Validators.required],
-      statusId: [0]
+      statusId: [0],
+      trackingURL: ['', Validators.required]
     });
 
     let obj = {
@@ -196,7 +197,8 @@ export class OrderComponent implements OnInit {
               transportID: ['', Validators.required],
               dispatchDate: [this._datePipe.transform(new Date().toString(), 'yyyy-MM-dd')],
               bilty: ['', Validators.required],
-              statusId: [Number(this.ChangeStatusId)]
+              statusId: [Number(this.ChangeStatusId)],
+              trackingURL: ['', Validators.required]
             });
             const dialogRef = this.dialog.open(template, {
               width: '50vw',
@@ -220,9 +222,10 @@ export class OrderComponent implements OnInit {
                 OrderId: Number(element.orderId),
                 SetNo: Number(element.setNo),
                 ProductId: Number(element.productId),
-                transportID: 0,
-                dispatchDate: '',
-                bilty: ''
+                transportID: element.transportID,
+                dispatchDate: element.dispatchDate,
+                bilty: element.bilty,
+                trackingURL: element.trackingURL
               });
             });
 
@@ -283,7 +286,8 @@ export class OrderComponent implements OnInit {
           ProductId: Number(element.productId),
           transportID: Number(this.DispatchedForm.value.transportID),
           dispatchDate: this._datePipe.transform(new Date(this.DispatchedForm.value.dispatchDate).toString(), 'yyyy-MM-dd') + ' ' + this._datePipe.transform(new Date().toString(), 'HH:mm:ss'),
-          bilty: this.DispatchedForm.value.bilty
+          bilty: this.DispatchedForm.value.bilty,
+          trackingURL: this.DispatchedForm.value.trackingURL
         });
       });
       this.spinner.show();
