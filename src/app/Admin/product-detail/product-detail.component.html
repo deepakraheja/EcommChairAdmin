@@ -241,7 +241,7 @@
                                                 </div>
 
                                             </div>
-                                            <!-- <div class="row">
+                                            <div class="row">
                                                 <div class="col-md-6">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Banner Title
@@ -256,7 +256,7 @@
                                                         <input type="text" placeholder="Banner Subtitle" matInput formControlName="subTitle">
                                                     </mat-form-field>
                                                 </div>
-                                            </div> -->
+                                            </div>
 
                                             <!-- <h6 style="font-weight: 700;">Product Discount</h6>
                                             <mat-divider></mat-divider>
@@ -466,7 +466,8 @@
                                                 </div>
                                                 <div class="col-md-2">
                                                     <mat-form-field appearance="outline">
-                                                        <mat-label>Business Discount <span class="error">*</span></mat-label>
+                                                        <mat-label>Business Discount <span class="error">*</span>
+                                                        </mat-label>
                                                         <input type="text" matInput formControlName="businessDiscount" maxlength="10" [mask]="NumberMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);" (keyup)="CalculateDiscount($event)">
                                                     </mat-form-field>
                                                 </div>
@@ -747,10 +748,14 @@
                                         <div class="row">
                                             <div class="col-md-4">
 
-                                                <div class="form-group row" style="margin-left: 1px; display: none;">
-                                                    Banner Image :
-                                                    <label for="BannerImg" class="mi-file-upload mi-2x" style="color: blue;"> </label> &nbsp;
-                                                    <input id="BannerImg" type="file" style="display: none;" (change)="UploadBannerImg($event)" />
+                                                <div class="form-group row" style="margin-left: 1px;">
+                                                    <h4>Banner Image :</h4>
+                                                    <button (click)="BannerPhotos.click()" class="fHbZUJ" style="width:158px;height:50px">
+                                                        <i class="fa fa-upload"></i>
+                                                        <div class="sc-pQGev lbdMzz"></div><span>Upload Photo</span>
+                                                    </button>
+                                                    <!-- <label for="BannerImg" class="mi-file-upload mi-2x" style="color: blue;"> </label> &nbsp; -->
+                                                    <input #BannerPhotos id="BannerImg" type="file" style="display: none;" (change)="UploadBannerImg($event)" />
                                                     <!-- <div *ngIf="submitted && (f.bannerImg.errors || f.bannerImg.value==[])">
                                                         <div *ngIf="(f.bannerImg.errors.required || f.bannerImg.value==[])" style="color: red;">File is required.</div>
                                                     </div> -->
@@ -759,7 +764,7 @@
                                                         <label class="mi-delete mi-1x" style="color: red;" (click)="removeImg(i,'banner');"></label>
                                                     </div>
                                                 </div>
-                                                <div class="form-group row" style="margin-left: 1px;">
+                                                <div class="form-group row" style="margin-left: 1px;margin-top: 10px;">
 
                                                     <h4> Front Image :</h4>
                                                     <button (click)="file.click()" class="fHbZUJ" style="width:158px;height:50px">

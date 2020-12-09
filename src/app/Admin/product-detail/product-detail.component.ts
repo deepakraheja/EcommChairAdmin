@@ -533,6 +533,17 @@ export class ProductDetailComponent implements OnInit {
           this.previewUrl = this.SmallImage[0];
           //}
         }
+        //bannerImg
+        if (this.product.bannerImg == null) {
+          //this.previewUrl = null;
+        }
+        else {
+          this.previewUrl = this.product.bannerImg[0];
+          for (let index = 0; index < this.product.bannerImg.length; index++) {
+            this.BannerImage.push(this.ImagePath + '/' + this.ProductForm.value.productID + '/bannerImage/' + this.product.bannerImg[index]);
+          }
+          this.previewUrl = this.BannerImage[0];
+        }
         this.LoadProductDetail();
         setTimeout(() => {
           this.LoadSubCategory("");
@@ -888,23 +899,46 @@ export class ProductDetailComponent implements OnInit {
         //   this.ProductForm.updateValueAndValidity();
         //   this._toasterService.success("Image has been deleted successfully.");
         // }
-        if (type == 'small') {
+        if (type == 'banner') {
 
           let obj = {
             ProductID: Number(this.ProductForm.value.productID),
-            ImagePath: (this.SmallImage[index]).split(this.APIURL)[1]
+            ImagePath: (this.BannerImage[index]).split(this.APIURL)[1],
+            type: 'banner'
           };
           this._productService.DeleteProductImage(obj).subscribe(a => {
             debugger
-            this.SmallImage.splice(index, 1);
-            const smallImg = this.ProductForm.get('smallImg');
-            smallImg.setValue([]);
-            smallImg.updateValueAndValidity();
-            this.previewUrl = "";
+            if (type == 'banner') {
+              this.BannerImage.splice(index, 1);
+              const bannerImg = this.ProductForm.get('bannerImg');
+              bannerImg.setValue([]);
+              bannerImg.updateValueAndValidity();
+              this.previewUrl = "";
+            }
             this._toasterService.success("Image has been deleted successfully.");
           });
 
 
+          //this._toasterService.warning("Please, click on the Save button for permanent remove image from server.");
+        }
+        if (type == 'small') {
+
+          let obj = {
+            ProductID: Number(this.ProductForm.value.productID),
+            ImagePath: (this.SmallImage[index]).split(this.APIURL)[1],
+            type: 'small'
+          };
+          this._productService.DeleteProductImage(obj).subscribe(a => {
+            debugger
+            if (type == 'small') {
+              this.SmallImage.splice(index, 1);
+              const smallImg = this.ProductForm.get('smallImg');
+              smallImg.setValue([]);
+              smallImg.updateValueAndValidity();
+              this.previewUrl = "";
+            }
+            this._toasterService.success("Image has been deleted successfully.");
+          });
           //this._toasterService.warning("Please, click on the Save button for permanent remove image from server.");
         }
         if (type == 'product') {
