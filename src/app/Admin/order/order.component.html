@@ -552,7 +552,7 @@
                     <div class="col-md-6">
                         <mat-form-field appearance="outline">
                             <mat-label>DispatchDate</mat-label>
-                            <input matInput [matDatepicker]="dpDispatchDate" readonly formControlName="dispatchDate" (click)="dpDispatchDate.open()">
+                            <input matInput [min]="minDate" [matDatepicker]="dpDispatchDate" readonly formControlName="dispatchDate" (click)="dpDispatchDate.open()">
                             <mat-datepicker-toggle matSuffix [for]="dpDispatchDate"></mat-datepicker-toggle>
                             <mat-datepicker #dpDispatchDate disabled="false"></mat-datepicker>
                         </mat-form-field>

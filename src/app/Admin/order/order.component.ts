@@ -37,6 +37,7 @@ export class OrderComponent implements OnInit {
   public ChangeStatusId: any;
   public lstTransport: any = [];
   public SelectedLst: any = [];
+  minDate = new Date();
   constructor(
     private _OrderService: OrderService,
     private spinner: NgxSpinnerService,
