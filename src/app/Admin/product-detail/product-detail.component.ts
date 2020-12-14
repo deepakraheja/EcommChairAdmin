@@ -1024,7 +1024,7 @@ export class ProductDetailComponent implements OnInit {
         this._productService.DeleteProductSizeColor(obj).subscribe(res => {
           this.spinner.hide();
           if (res == -1) {
-            this._toasterService.error("This product item cann't delete becasue it may be use in cart or order.");
+            this._toasterService.error("This item can not deleted because it is either in cart or already purchased.");
           }
           else {
             this.LoadProductDetail();
