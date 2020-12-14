@@ -1023,8 +1023,13 @@ export class ProductDetailComponent implements OnInit {
         this.spinner.show();
         this._productService.DeleteProductSizeColor(obj).subscribe(res => {
           this.spinner.hide();
-          this.LoadProductDetail();
-          this._toasterService.success("Record has been deleted successfully.");
+          if (res == -1) {
+            this._toasterService.error("This product item cann't delete becasue it may be use in cart or order.");
+          }
+          else {
+            this.LoadProductDetail();
+            this._toasterService.success("Record has been deleted successfully.");
+          }
         });
       }
     });
