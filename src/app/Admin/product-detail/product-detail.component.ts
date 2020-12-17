@@ -632,6 +632,7 @@ export class ProductDetailComponent implements OnInit {
         hotOffer: this.ProductForm.value.hotOffer,
         active: this.ProductForm.value.active,
         bannerImg: this.ProductForm.value.bannerImg == "" ? [''] : this.ProductForm.value.bannerImg,
+        
         smallImg: this.ProductForm.value.smallImg,
         title: this.ProductForm.value.title,
         subTitle: this.ProductForm.value.subTitle,
