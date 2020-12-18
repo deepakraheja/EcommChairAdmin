@@ -61,18 +61,18 @@ export class MngUserComponent implements OnInit {
       approvedBy: Number(this.LoggedInUserId),
       approvedDate: this._datePipe.transform(new Date().toString(), 'yyyy-MM-dd HH:mm:ss'),
       additionalDiscount: ['', [Validators.required]],
-      businessType: ['', Validators.required],
-      industry: ['', Validators.required],
+      // businessType: ['', Validators.required],
+      // industry: ['', Validators.required],
       businessLicenseType: ['', Validators.required],
       gstNo: [''],
       panNo: [''],
       aadharCard: [''],
       businessName: ['', Validators.required],
-      address1: ['', Validators.required],
-      address2: [''],
-      pinCode: ['', Validators.required],
-      city: ['', Validators.required],
-      state: ['', Validators.required],
+      // address1: ['', Validators.required],
+      // address2: [''],
+      // pinCode: ['', Validators.required],
+      // city: ['', Validators.required],
+      // state: ['', Validators.required],
       isAgent: [false],
       isVIPMember: [false],
       isPersonal: [false],
@@ -126,8 +126,8 @@ export class MngUserComponent implements OnInit {
     }
 
     const isPersonal = this.UserForm.get('isPersonal');
-    const businessType = this.UserForm.get('businessType');
-    const industry = this.UserForm.get('industry');
+    //const businessType = this.UserForm.get('businessType');
+    //const industry = this.UserForm.get('industry');
     const businessName = this.UserForm.get('businessName');
     if (isPersonal.value == true) {
       businessLicenseType.clearValidators();
@@ -135,8 +135,8 @@ export class MngUserComponent implements OnInit {
       panNo.clearValidators();
       AadharCard.clearValidators();
 
-      businessType.clearValidators();
-      industry.clearValidators();
+      //businessType.clearValidators();
+      //industry.clearValidators();
       businessName.clearValidators();
 
       businessLicenseType.updateValueAndValidity();
@@ -144,8 +144,8 @@ export class MngUserComponent implements OnInit {
       panNo.updateValueAndValidity();
       AadharCard.updateValueAndValidity();
 
-      businessType.updateValueAndValidity();
-      industry.updateValueAndValidity();
+      //businessType.updateValueAndValidity();
+      //industry.updateValueAndValidity();
       businessName.updateValueAndValidity();
     }
   }
@@ -184,18 +184,18 @@ export class MngUserComponent implements OnInit {
       approvedBy: Number(this.LoggedInUserId),
       approvedDate: this._datePipe.transform(new Date().toString(), 'yyyy-MM-dd HH:mm:ss'),
       additionalDiscount: [lst.additionalDiscount, Validators.required],
-      businessType: [lst.businessType, Validators.required],
-      industry: [lst.industry, Validators.required],
+      //businessType: [lst.businessType, Validators.required],
+      //industry: [lst.industry, Validators.required],
       businessLicenseType: [lst.businessLicenseType, Validators.required],
       gstNo: [lst.gstNo],
       panNo: [lst.panNo],
       aadharCard: [lst.aadharCard],
       businessName: [lst.businessName, Validators.required],
-      address1: [lst.address1, Validators.required],
-      address2: [lst.address2],
-      pinCode: [lst.pinCode, Validators.required],
-      city: [lst.city, Validators.required],
-      state: [lst.state, Validators.required],
+      // address1: [lst.address1, Validators.required],
+      // address2: [lst.address2],
+      // pinCode: [lst.pinCode, Validators.required],
+      // city: [lst.city, Validators.required],
+      // state: [lst.state, Validators.required],
       isAgent: [lst.isAgent],
       isVIPMember: [lst.isVIPMember],
       isPersonal: [lst.isPersonal],
