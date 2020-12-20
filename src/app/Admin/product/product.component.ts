@@ -26,12 +26,13 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 export class ProductComponent implements OnInit {
   public ImagePath = environment.ImagePath;
   ProductForm: FormGroup;
+  EditProductDetailForm: FormGroup;
   lstData: any = [];
   LoggedInUserId: string;
   LoggedInUserType: string;
   lstSupplier: any = [];
   // displayedColumns: string[] = ['productName', 'brandName', 'subcategoryName', 'stockQty', 'price', 'salePrice', 'active', 'Edit'];
-  displayedColumns: string[] = ['frontImage', 'productName', 'brandName', 'subcategoryName', 'supplierName', 'moq', 'warranty', 'review', 'active', 'Edit'];
+  displayedColumns: string[] = ['frontImage', 'productName', 'brandName', 'subcategoryName', 'supplierName', 'moq', 'warranty', 'review', 'stock', 'active', 'Edit'];
   dataSource = new MatTableDataSource<any>(this.lstData);
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -45,10 +46,14 @@ export class ProductComponent implements OnInit {
   dataSourceReview = new MatTableDataSource<any>(this.lstData);
   showMask = false;
   DecimalMask = null;
+  StockDecimalMask = null;
   OneNumberMask = null;
   PinCodeMark = null;
   NumberMask = null;
   bsModalRef: BsModalRef;
+  lstDataProductStock: any = [];
+  displayedProductStockColumns: string[] = ['color', 'qty', 'price', 'shippingPrice', 'gst', 'salePrice', 'businessDiscount', 'businessPrice', 'availableColors', 'Edit', 'Delete'];
+  dataSourceProductStock = new MatTableDataSource<any>(this.lstDataProductStock);
   constructor(
     private formBuilder: FormBuilder,
     private _LocalStorage: LocalStorageService,
@@ -85,6 +90,7 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
   }
   get f() { return this.ReviewForm.controls; }
+  get f2() { return this.EditProductDetailForm.controls; }
   config: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
@@ -115,6 +121,7 @@ export class ProductComponent implements OnInit {
     this.NumberMask = "0*";
     this.OneNumberMask = "0";
     this.showMask = false;
+    this.StockDecimalMask = "0*.00";
   }
 
   applyFilter(event: Event) {
@@ -265,6 +272,201 @@ export class ProductComponent implements OnInit {
         });
       }
     });
+  }
+
+  OpenStockPopUp(template: TemplateRef<any>, lst) {
+    debugger
+    this.SelectedProductName = lst.productName;
+    this.SelectedProductId = lst.productID;
+    let obj = {
+      ProductId: Number(this.SelectedProductId)
+    };
+    this._ProductService.GetProductSizeColorById(obj).subscribe(res => {
+      //this.spinner.hide();
+      this.lstDataProductStock = res;
+      this.dataSourceProductStock = new MatTableDataSource<any>(res);
+      this.spinner.hide();
+      const dialogRef = this.dialog.open(template, {
+        width: '90vw',
+        height: '90vh',
+        data: this.lstDataProductStock
+      });
+      dialogRef.disableClose = true;
+      dialogRef.afterClosed().subscribe(result => {
+        this.SelectedProductName = "";
+        this.SelectedProductId = 0;
+        // this.LoadProductDetail();
+      });
+    });
+  }
+
+  EditStock(element) {
+    debugger
+    //this.images = [];
+    this.lstDataProductStock.forEach(element => {
+      element.isEdit = false;
+    });
+    element.isEdit = true;
+    this.EditProductDetailForm = this.formBuilder.group({
+      productSizeColorId: [element.productSizeColorId],
+      productSizeId: [element.productSizeId],
+      productId: [element.productId],
+      qty: [element.qty, Validators.required],
+      price: [element.price, Validators.required],
+      salePrice: [element.salePrice, Validators.required],
+      availableSize: [element.availableSize],
+      availableColors: [element.availableColors],
+      size: [element.size],
+      sizeId: [element.sizeId, Validators.required],
+      setNo: [element.setNo],
+      lookupColorId: [element.lookupColorId, Validators.required],
+      discount: [element.discount, Validators.required],
+      discountAvailable: [element.discountAvailable],
+      shippingPrice: [element.shippingPrice, Validators.required],
+      businessPrice: [element.businessPrice, Validators.required],
+      businessDiscount: [element.businessDiscount, Validators.required],
+      //productImg: [element.productImg, [Validators.required]],
+    });
+
+  }
+
+  Close(element) {
+    element.isEdit = false;
+  }
+  Delete(element) {
+    debugger
+    const initialState = {
+      title: "Confirmation",
+      message: "Do you want to delete this record?",
+    };
+    this.bsModalRef = this.modalService.show(ConfirmBoxComponent, { ignoreBackdropClick: true, keyboard: true, class: 'modal-sm', initialState });
+    this.bsModalRef.content.closeBtnName = 'Close';
+    this.bsModalRef.content.onClose.subscribe(result => {
+      //console.log(`Dialog result: ${result}`);
+      if (result) {
+        let obj = {
+          ProductSizeColorId: element.productSizeColorId,
+          ProductSizeId: element.productSizeId,
+          ProductId: Number(this.SelectedProductId),
+          SetNo: Number(element.setNo)
+        };
+        this.spinner.show();
+        this._ProductService.DeleteProductSizeColor(obj).subscribe(res => {
+          this.spinner.hide();
+          if (res == -1) {
+            this._toasterService.error("This item can not deleted because it is either in cart or already purchased.");
+          }
+          else {
+            this.LoadProductDetail();
+            this._toasterService.success("Record has been deleted successfully.");
+          }
+        });
+      }
+    });
+  }
+
+  LoadProductDetail() {
+    this.spinner.show();
+    let obj = {
+      ProductId: this.SelectedProductId
+    };
+    this._ProductService.GetProductSizeColorById(obj).subscribe(res => {
+      //this.spinner.hide();
+      this.lstDataProductStock = res;
+      this.dataSourceProductStock = new MatTableDataSource<any>(res);
+      this.spinner.hide();
+    });
+  }
+
+  UpdateProductDetails() {
+    this.submitted = true;
+    debugger
+    if (this.EditProductDetailForm.invalid) {
+      this.EditProductDetailForm.markAllAsTouched();
+      this._toasterService.error("All the * marked fields are mandatory");
+      return;
+    }
+    else {
+      this.spinner.show();
+      let obj = {
+        productSizeColorId: Number(this.EditProductDetailForm.value.productSizeColorId),
+        productSizeId: Number(this.EditProductDetailForm.value.productSizeId),
+        productId: Number(this.SelectedProductId),
+        qty: Number(this.EditProductDetailForm.value.qty),
+        price: Number(this.EditProductDetailForm.value.price),
+        salePrice: Number(this.EditProductDetailForm.value.salePrice),
+        availableSize: this.EditProductDetailForm.value.availableSize,
+        availableColors: this.EditProductDetailForm.value.availableColors,
+        size: this.EditProductDetailForm.value.size,
+        sizeId: this.EditProductDetailForm.value.sizeId,
+        setNo: Number(this.EditProductDetailForm.value.setNo),
+        lookupColorId: Number(this.EditProductDetailForm.value.lookupColorId),
+        discount: Number(this.EditProductDetailForm.value.discount),
+        discountAvailable: Number(this.EditProductDetailForm.value.discount) > 0 ? true : false,//this.EditProductDetailForm.value.discountAvailable,
+        shippingPrice: Number(this.EditProductDetailForm.value.shippingPrice),
+        businessPrice: Number(this.EditProductDetailForm.value.businessPrice),
+        businessDiscount: Number(this.EditProductDetailForm.value.businessDiscount),
+        CreatedBy: Number(this.LoggedInUserId),
+        Modifiedby: Number(this.LoggedInUserId),
+      };
+      this._ProductService.SaveProductSizeColor(obj).subscribe(res => {
+        //this.spinner.hide();
+        if (res > 0) {
+          this.LoadProductDetail();
+          this._toasterService.success("Record has been saved successfully.");
+        }
+        else {
+          this._toasterService.error("Server error, Please try again after some time.");
+        }
+      });
+    }
+  }
+
+  UpdateSalePrice(event: any) {
+    debugger
+    const salePrice = this.EditProductDetailForm.get('salePrice');
+    const businessPrice = this.EditProductDetailForm.get('businessPrice');
+
+    if (this.EditProductDetailForm.value.price != '') {
+      let val = Number(this.EditProductDetailForm.value.price) + Number(this.EditProductDetailForm.value.shippingPrice) + ((Number(this.EditProductDetailForm.value.price) + Number(this.EditProductDetailForm.value.shippingPrice)) * 18 / 100)
+      salePrice.setValue(Number(val));
+      salePrice.updateValueAndValidity();
+      businessPrice.setValue(Number(this.EditProductDetailForm.value.price));
+      businessPrice.updateValueAndValidity();
+    }
+    else {
+      salePrice.setValue(0);
+      salePrice.updateValueAndValidity();
+      businessPrice.setValue(Number(this.EditProductDetailForm.value.price));
+      businessPrice.updateValueAndValidity();
+    }
+    this.UpdateDiscount('');
+  }
+
+  UpdateDiscount(event: any) {
+    debugger
+    const businessPrice = this.EditProductDetailForm.get('businessPrice');
+    const businessDiscount = this.EditProductDetailForm.get('businessDiscount');
+
+    if (this.EditProductDetailForm.value.businessDiscount != '') {
+      if (Number(this.EditProductDetailForm.value.price) < Number(this.EditProductDetailForm.value.businessDiscount)) {
+        businessDiscount.setValue(0);
+        businessDiscount.updateValueAndValidity();
+        businessPrice.setValue(Number(this.EditProductDetailForm.value.price));
+        businessPrice.updateValueAndValidity();
+        this.EditProductDetailForm.markAllAsTouched();
+        this._toasterService.error("Product ex-factory price should be greater than the business Discount.");
+      }
+      else {
+        var Decrease = (Number(this.EditProductDetailForm.value.price) - Number(this.EditProductDetailForm.value.businessDiscount));
+        businessPrice.setValue(Number(Decrease));
+        businessPrice.updateValueAndValidity();
+      }
+    }
+    else {
+      businessPrice.setValue(Number(this.EditProductDetailForm.value.price));
+      businessPrice.updateValueAndValidity();
+    }
   }
 
 }
