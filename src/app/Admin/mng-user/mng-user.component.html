@@ -205,27 +205,27 @@
                     <div class="col-md-4" *ngIf="f.businessLicenseType.value=='GSTIN' && f.isPersonal.value==false">
                         <mat-form-field appearance="outline">
                             <mat-label>GSTNo <span class="error">*</span></mat-label>
-                            <input type="text" matInput formControlName="gstNo" maxlength="15">
+                            <input type="text" matInput formControlName="gstNo" maxlength="15" disabled>
                         </mat-form-field>
                     </div>
 
                     <div class="col-md-4" *ngIf="f.businessLicenseType.value=='BusinessPAN' && f.isPersonal.value==false">
                         <mat-form-field appearance="outline">
                             <mat-label>PANNo <span class="error">*</span></mat-label>
-                            <input type="text" matInput formControlName="panNo" maxlength="10">
+                            <input type="text" matInput formControlName="panNo" maxlength="10" disabled>
                         </mat-form-field>
                     </div>
 
                     <div class="col-md-4" *ngIf="f.businessLicenseType.value=='AadharCard' && f.isPersonal.value==false">
                         <mat-form-field appearance="outline">
                             <mat-label>AadharCard <span class="error">*</span></mat-label>
-                            <input type="text" matInput formControlName="aadharCard" maxlength="12">
+                            <input type="text" matInput formControlName="aadharCard" maxlength="12" disabled>
                         </mat-form-field>
                     </div>
                     <div class="col-md-4" *ngIf="f.isPersonal.value==false">
                         <mat-form-field appearance="outline">
-                            <mat-label>BusinessName <span class="error">*</span></mat-label>
-                            <input type="text" matInput formControlName="businessName" maxlength="100">
+                            <mat-label>Company Name <span class="error">*</span></mat-label>
+                            <input type="text" matInput formControlName="businessName" maxlength="100" disabled>
                         </mat-form-field>
                     </div>
                     <!-- <div class="col-md-4">
