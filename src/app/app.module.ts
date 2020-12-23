@@ -78,6 +78,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { CreateEmailComponent } from './Admin/create-email/create-email.component';
 import { MngAgentComponent } from './Admin/mng-agent/mng-agent.component';
 import { TransportComponent } from './Admin/transport/transport.component';
+import { ProductnewComponent } from './Admin/productnew/productnew.component';
 
 
 @NgModule({
@@ -107,7 +108,8 @@ import { TransportComponent } from './Admin/transport/transport.component';
     MngUserComponent,
     CreateEmailComponent,
     MngAgentComponent,
-    TransportComponent
+    TransportComponent,
+    ProductnewComponent
 
   ],
   imports: [

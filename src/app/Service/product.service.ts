@@ -22,6 +22,14 @@ export class ProductService {
     );
   }
 
+  GetAllProductBySupplierId_New(_obj: any): Observable<any> {
+    this._methodName = "GetAllProductBySupplierId/";
+    this._param = _obj;
+    return this._http.post<any>(
+      this.BASE_API_URL + "WeatherForecast/" + this._methodName, this._param
+    );
+  }
+
   GetAllProductByStatusSupplierId(_obj: any): Observable<any> {
     this._methodName = "GetAllProductByStatusSupplierId/";
     this._param = _obj;

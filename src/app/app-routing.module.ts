@@ -21,6 +21,7 @@ import { MngUserComponent } from './Admin/mng-user/mng-user.component';
 import { CreateEmailComponent } from './Admin/create-email/create-email.component';
 import { MngAgentComponent } from './Admin/mng-agent/mng-agent.component';
 import { TransportComponent } from './Admin/transport/transport.component';
+import { ProductnewComponent } from './Admin/productnew/productnew.component';
 
 
 const routes: Routes = [
@@ -45,6 +46,7 @@ const routes: Routes = [
       // { path: 'SubCategory', component: SubCategoryComponent },
       { path: 'brand', component: BrandComponent, canActivate: [AuthGuard] },
       { path: 'product', component: ProductComponent, canActivate: [AuthGuard] },
+      { path: 'product1', component: ProductnewComponent},
       { path: 'productdetail', component: ProductDetailComponent, canActivate: [AuthGuard] },
       { path: 'productdetail/:productId', component: ProductDetailComponent, canActivate: [AuthGuard] },
       { path: 'supplier', component: SupplierComponent, canActivate: [AuthGuard] },

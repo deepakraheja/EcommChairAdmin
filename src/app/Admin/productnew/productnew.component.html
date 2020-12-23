@@ -1,0 +1,446 @@
+<div class="content">
+    <!-- Main charts -->
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Supplier</mat-label>
+                                <mat-select [formControl]="SelectsupplierID" (selectionChange)="LoadData($event)">
+                                    <mat-option value="">All</mat-option>
+                                    <mat-option *ngFor="let row of lstSupplier" value="{{row.supplierID}}">
+                                        {{row.companyName}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Status</mat-label>
+                                <mat-select [formControl]="SelectStatus" (selectionChange)="LoadData($event)">
+                                    <mat-option value="">All</mat-option>
+                                    <mat-option value="1">Active</mat-option>
+                                    <mat-option value="0">In-Active</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-7 text-right pb-3"><button mat-raised-button (click)="onAddNew();" class="btn btn-warning btn-lg">Add New
+                            </button></div>
+                    </div>
+
+                    <div class="new-section">
+
+
+                        <div class="row">
+                            <div class="col-lg-12 col-xs-12 col-sm-12 pl-4 pr-4 pt-1">
+                                <mat-form-field class="example-chip-list example-full-width">
+                                    <mat-label>Search</mat-label>
+                                    <input matInput placeholder="Search" (keyup)="applyFilter($event)" class="btn-search" style=" padding-bottom: 15px;">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 col-md-12">
+
+                                <ng-container matColumnDef="frontImage">
+                                    <th mat-header-cell *matHeaderCellDef>Image</th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <img src="{{ImagePath}}/{{element.productID}}/frontImage/{{element.frontImage}}" class="ProductFrontImage">
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="productName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Product Name</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="brandName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Brand</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.brandName}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="subcategoryName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.subcategoryName}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="supplierName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Supplier</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.supplierName}} </td>
+                                </ng-container>
+                                <!-- <ng-container matColumnDef="setType">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>SetType</th>
+                                    <td mat-cell *matCellDef="let element">
+                                        {{element.setType==1?'Without Set':(element.setType==2?'With Set':'Minimum')}}
+                                    </td>
+                                </ng-container> -->
+                                <ng-container matColumnDef="moq">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>MOQ</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.moq}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="warranty">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Warranty</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.warranty}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="review">
+                                    <th mat-header-cell *matHeaderCellDef>Review</th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <a href="javaScript:void(0);" (click)="OpenReviewPopUp(templateReview,element)">
+                                            Review</a>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="stock">
+                                    <th mat-header-cell *matHeaderCellDef>Stock</th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <a href="javaScript:void(0);" (click)="OpenStockPopUp(templateProductStock,element)">
+                                            Stock</a>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="active">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Active</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.active?'Active':'In-Active'}}
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="Edit">
+                                    <th mat-header-cell *matHeaderCellDef> Edit </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <a href="javaScript:void(0);" (click)="Edit(element)">
+                                            <i class="icon-pencil mr-2" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true;"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+
+                            <!-- <div *ngIf="dataSource.filteredData.length === 0">No records found</div> -->
+                            <mat-paginator [pageSizeOptions]="[10,20,30,50,100]" showFirstLastButtons></mat-paginator>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #templateReview>
+    <div class="col-md-12 add-info-head modal-text-heading">
+        <h2 mat-dialog-title>Product Review ({{SelectedProductName}})</h2>
+    </div>
+    <mat-dialog-content class="mat-typography">
+        <form class="w-100" [formGroup]="ReviewForm">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Title <span class="error">*</span></mat-label>
+                            <input type="text" placeholder="Title" matInput formControlName="titles">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-1">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Rating <span class="error">*</span>
+                            </mat-label>
+                            <input type="text" placeholder="Rating" matInput formControlName="rating" [mask]="OneNumberMask" [dropSpecialCharacters]="false" [showMaskTyped]="true" (focus)="addMask($event);">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Name <span class="error">*</span></mat-label>
+                            <input type="text" placeholder="name" matInput formControlName="name">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>PinCode</mat-label>
+                            <input matInput placeholder="PinCode" id="dest_addr_pin" formControlName="pinCode" minlength="6" [mask]="PinCodeMark" [dropSpecialCharacters]="true" [showMaskTyped]="showMask" (focus)="addMask($event);" onchange="getPostOffice()">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>State</mat-label>
+                            <input matInput placeholder="State" formControlName="state" id="dest_addr_state">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>City</mat-label>
+                            <input matInput placeholder="City" list="cityLst" formControlName="city" id="dest_addr_city" onblur="load_PostOffice()">
+                        </mat-form-field>
+                        <datalist id="cityLst">
+                        </datalist>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Post Office</mat-label>
+                            <input matInput placeholder="Post Office" list="postOfficeLst" id="dest_post_office" formControlName="postOffice">
+                        </mat-form-field>
+                        <datalist id="postOfficeLst">
+                        </datalist>
+                    </div>
+                    <div class="col-md-2">
+                        <button mat-button class="btn btn-primary btn-lg" (click)="SaveProductReview();">Save</button>
+                    </div>
+                    <div class="col-md-2">
+                        <button mat-button mat-dialog-close class="btn btn-secondary btn-lg">Cancel</button>
+                    </div>
+                    <div class="col-md-12">
+                        <h6>Notes<span class="error">*</span>
+                            <span style="float: right;" *ngIf="submitted && (f.notes.errors || f.notes.value=='')">
+                                <span *ngIf="(f.notes.errors.required || f.notes.value=='')" style="color: red;">Notes
+                                    is required.</span>
+                            </span>
+                        </h6>
+                        <angular-editor [config]="config" name="notes" formControlName="notes" required>
+                        </angular-editor>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <h2>All Reviews</h2>
+                    <div class="col-md-12">
+                        <table mat-table [dataSource]="dataSourceReview" matSort class="mat-elevation-z8 col-md-12">
+                            <ng-container matColumnDef="titles">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Titles</th>
+                                <td mat-cell *matCellDef="let element"> {{element.titles}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="rating">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Rating</th>
+                                <td mat-cell *matCellDef="let element"> {{element.rating}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+                                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="city">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>City</th>
+                                <td mat-cell *matCellDef="let element"> {{element.city}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="notes">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Notes</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <p class="text-black mb-0" [innerHTML]="element.notes | safe: 'html'"></p>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Delete">
+                                <th mat-header-cell *matHeaderCellDef> Delete </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <a href="javaScript:void(0);" (click)="DeleteReview(element)">
+                                        <i class="mi-delete mi-2x" style="color: red;" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumnsReview; sticky:true;"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumnsReview;"></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </mat-dialog-content>
+    <!-- <mat-dialog-actions align="center">
+        <button mat-button class="btn btn-primary btn-lg" (click)="SaveProductReview();">Save</button>
+        <button mat-button mat-dialog-close class="btn btn-secondary btn-lg">Cancel</button>
+    </mat-dialog-actions> -->
+
+</ng-template>
+
+<ng-template #templateProductStock>
+    <div class="col-md-12 add-info-head modal-text-heading">
+        <h2 mat-dialog-title>Product Stock Details ({{SelectedProductName}})</h2>
+    </div>
+    <mat-dialog-content class="mat-typography">
+        <!-- <form class="w-100" [formGroup]="ReviewForm"> -->
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12" style="max-height: 400px; overflow: auto;" [formGroup]="EditProductDetailForm">
+                    <table mat-table [dataSource]="dataSourceProductStock" matSort class="mat-eleation-z8 col-md-12">
+                        <!-- <ng-container matColumnDef="Upload">
+                                <th mat-header-cell *matHeaderCellDef>Upload Img</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <a href="javaScript:void(0);" (click)="OpenImagePopUp(templateImagesShow,element)">Upload</a>
+                                </td>
+                            </ng-container> -->
+                        <ng-container matColumnDef="color">
+                            <th mat-header-cell *matHeaderCellDef>Color</th>
+                            <td mat-cell *matCellDef="let element">
+                                {{element.color}}
+                            </td>
+                        </ng-container>
+                        <!-- <ng-container matColumnDef="size">
+                                <th mat-header-cell *matHeaderCellDef>Size</th>
+                                <td mat-cell *matCellDef="let element"> {{element.size}}
+                                </td>
+                            </ng-container> -->
+                        <!-- <ng-container matColumnDef="setNo">
+                            <th mat-header-cell *matHeaderCellDef>
+                                {{f.setType.value==2?'SetNo':''}}</th>
+                            <td mat-cell *matCellDef="let element">
+                                <span *ngIf="element.isEdit==false">
+                                        {{f.setType.value==2?element.setNo:''}}
+                                    </span>
+                                <mat-form-field appearance="outline" *ngIf="element.isEdit==true && f.setType.value==2" style="width: 60px !important;">
+                                    <input type="text" matInput formControlName="setNo" maxlength="10" [mask]="StockDecimalMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);">
+                                </mat-form-field>
+                            </td>
+                        </ng-container> -->
+                        <ng-container matColumnDef="qty">
+                            <th mat-header-cell *matHeaderCellDef>Stock</th>
+                            <td mat-cell *matCellDef="let element">
+                                <span *ngIf="element.isEdit==false"> {{element.qty}}
+                                    </span>
+                                <mat-form-field appearance="outline" *ngIf="element.isEdit==true" style="width: 60px !important;">
+                                    <input type="text" matInput formControlName="qty" maxlength="10" [mask]="StockDecimalMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);">
+                                </mat-form-field>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="price">
+                            <th mat-header-cell *matHeaderCellDef>Ex-Factory Price</th>
+                            <td mat-cell *matCellDef="let element">
+                                <!-- <span> {{element.price}}</span> -->
+                                <span *ngIf="element.isEdit==false"> {{element.price}}
+                                    </span>
+                                <mat-form-field appearance="outline" *ngIf="element.isEdit==true" style="width: 60px !important;">
+                                    <input type="text" matInput formControlName="price" maxlength="10" [mask]="StockDecimalMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);" (keyup)="UpdateSalePrice($event)">
+                                </mat-form-field>
+                            </td>
+                        </ng-container>
+                        <!-- <ng-container matColumnDef="discount">
+                                <th mat-header-cell *matHeaderCellDef>Discount</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <span *ngIf="element.isEdit==false">
+                                        {{element.discount}} </span>
+                                    <mat-form-field appearance="outline" *ngIf="element.isEdit==true" style="width: 60px !important;">
+                                        <input type="text" matInput formControlName="discount" maxlength="10" [mask]="NumberMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);" (keyup)="UpdateDiscount($event)">
+                                    </mat-form-field>
+                                </td>
+                            </ng-container> -->
+                        <ng-container matColumnDef="shippingPrice">
+                            <th mat-header-cell *matHeaderCellDef>Shipping Price</th>
+                            <td mat-cell *matCellDef="let element">
+                                <!-- <span> {{element.price}}</span> -->
+                                <span *ngIf="element.isEdit==false">
+                                        {{element.shippingPrice}}
+                                    </span>
+                                <mat-form-field appearance="outline" *ngIf="element.isEdit==true" style="width: 60px !important;">
+                                    <input type="text" matInput formControlName="shippingPrice" maxlength="10" [mask]="StockDecimalMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);" (keyup)="UpdateSalePrice($event)">
+                                </mat-form-field>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="gst">
+                            <th mat-header-cell *matHeaderCellDef>GST (%)</th>
+                            <td mat-cell *matCellDef="let element">
+                                <span> 18%</span>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="salePrice">
+                            <th mat-header-cell *matHeaderCellDef>Listing Price</th>
+                            <td mat-cell *matCellDef="let element">
+                                <span *ngIf="element.isEdit==true">
+                                        {{f2.salePrice.value}}</span>
+                                <span *ngIf="element.isEdit==false">
+                                        {{element.salePrice}} </span>
+                                <!-- <mat-form-field appearance="outline" style="width: 60px !important;">
+                                        <input type="text" matInput formControlName="salePrice" maxlength="10" [mask]="StockDecimalMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);" (keyup)="UpdateSalePrice($event)">
+                                    </mat-form-field> -->
+                            </td>
+                        </ng-container>
+                        <!-- <ng-container matColumnDef="availableSize">
+                                <th mat-header-cell *matHeaderCellDef>Avl Size</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <span *ngIf="element.isEdit==false">
+                                        {{element.availableSize?'Yes':'No'}} </span>
+                                    <mat-checkbox formControlName="availableSize"
+                                        *ngIf="element.isEdit==true"></mat-checkbox>
+                                </td>
+                            </ng-container> -->
+                        <ng-container matColumnDef="businessDiscount">
+                            <th mat-header-cell *matHeaderCellDef>BusinessDiscount</th>
+                            <td mat-cell *matCellDef="let element">
+                                <span *ngIf="element.isEdit==false">
+                                        {{element.businessDiscount}} </span>
+                                <mat-form-field appearance="outline" *ngIf="element.isEdit==true" style="width: 60px !important;">
+                                    <input type="text" matInput formControlName="businessDiscount" maxlength="10" [mask]="NumberMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);" (keyup)="UpdateDiscount($event)">
+                                </mat-form-field>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="businessPrice">
+                            <th mat-header-cell *matHeaderCellDef>Business Price</th>
+                            <td mat-cell *matCellDef="let element">
+                                <span *ngIf="element.isEdit==true">
+                                        {{f2.businessPrice.value}}
+                                    </span>
+                                <span *ngIf="element.isEdit==false">
+                                        {{element.businessPrice}}
+                                    </span>
+                                <!-- <mat-form-field appearance="outline" *ngIf="element.isEdit==true" style="width: 60px !important;">
+                                        <input type="text" matInput formControlName="businessPrice" maxlength="10" [mask]="StockDecimalMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);">
+                                    </mat-form-field> -->
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="availableColors">
+                            <th mat-header-cell *matHeaderCellDef>Avl Colors</th>
+                            <td mat-cell *matCellDef="let element">
+                                <!-- {{element.availableColors?'Yes':'No'}}  -->
+                                <span *ngIf="element.isEdit==false">
+                                        {{element.availableColors?'Yes':'No'}} </span>
+                                <mat-checkbox formControlName="availableColors" *ngIf="element.isEdit==true"></mat-checkbox>
+                            </td>
+                        </ng-container>
+
+
+
+
+                        <ng-container matColumnDef="Edit">
+                            <th mat-header-cell *matHeaderCellDef> Edit </th>
+                            <td mat-cell *matCellDef="let element">
+                                <a href="javaScript:void(0);" (click)="EditStock(element)" *ngIf="element.isEdit==false">
+                                    <i class="icon-pencil mr-2" aria-hidden="true"></i>
+                                </a>
+                                <a href="javaScript:void(0);" (click)="UpdateProductDetails()" *ngIf="element.isEdit==true">
+                                    <!-- <i class="icon-check mr-2" aria-hidden="true"></i> -->
+                                    <mat-icon style="color: green;">save</mat-icon>
+                                </a>
+                                <a href="javaScript:void(0);" (click)="Close(element)" *ngIf="element.isEdit==true">
+                                    <!-- <i class="fa fa-times" aria-hidden="true"></i> -->
+                                    <mat-icon style="color: red;">close</mat-icon>
+                                </a>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="Delete">
+                            <th mat-header-cell *matHeaderCellDef> Delete </th>
+                            <td mat-cell *matCellDef="let element">
+                                <a href="javaScript:void(0);" (click)="Delete(element)">
+                                    <i class="mi-delete mi-2x" style="color: red;" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedProductStockColumns; sticky:true;"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedProductStockColumns;">
+                        </tr>
+                    </table>
+                    <div *ngIf="dataSourceProductStock.filteredData.length === 0">No records found
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- </form> -->
+    </mat-dialog-content>
+    <mat-dialog-actions align="center">
+        <!-- <button mat-button class="btn btn-primary btn-lg" (click)="SaveProductReview();">Save</button> -->
+        <button mat-button mat-dialog-close class="btn btn-secondary btn-lg">Cancel</button>
+    </mat-dialog-actions>
+
+</ng-template>
