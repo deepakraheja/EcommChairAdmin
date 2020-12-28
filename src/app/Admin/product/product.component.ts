@@ -17,6 +17,7 @@ import { DatePipe } from '@angular/common';
 import { ReviewService } from 'src/app/Service/review.service';
 import { ConfirmBoxComponent } from 'src/app/confirm-box/confirm-box.component';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { CategoryService } from 'src/app/Service/category.service';
 
 @Component({
   selector: 'app-product',
@@ -38,6 +39,7 @@ export class ProductComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   SelectsupplierID = new FormControl('');
   SelectStatus = new FormControl('');
+  SelectSubCategoryID = new FormControl('');
   SelectedProductName: string = "";
   SelectedProductId: number = 0;
   ReviewForm: FormGroup;
@@ -54,6 +56,7 @@ export class ProductComponent implements OnInit {
   lstDataProductStock: any = [];
   displayedProductStockColumns: string[] = ['color', 'qty', 'price', 'shippingPrice', 'gst', 'salePrice', 'businessDiscount', 'businessPrice', 'availableColors', 'Edit', 'Delete'];
   dataSourceProductStock = new MatTableDataSource<any>(this.lstDataProductStock);
+  lstSubCategory: any = [];
   constructor(
     private formBuilder: FormBuilder,
     private _LocalStorage: LocalStorageService,
@@ -66,6 +69,7 @@ export class ProductComponent implements OnInit {
     private _datePipe: DatePipe,
     private _reviewService: ReviewService,
     private modalService: BsModalService,
+    private _CategoryService: CategoryService,
   ) {
     this.LoggedInUserId = this._LocalStorage.getValueOnLocalStorage("LoggedInUserId");
     this.ReviewForm = this.formBuilder.group({
@@ -85,6 +89,7 @@ export class ProductComponent implements OnInit {
 
     this.LoadData("");
     this.LoadSupplier();
+    this.LoadSubCategory();
   }
 
   ngOnInit(): void {
@@ -139,6 +144,21 @@ export class ProductComponent implements OnInit {
       this.lstSupplier = res;
     });
   }
+
+  LoadSubCategory() {
+    debugger
+
+    let obj = {
+      categoryID: 1,//Number(this.ProductForm.value.categoryID),
+      Active: true
+    }
+    this.spinner.show();
+    this._CategoryService.GetAllSubCategory(obj).subscribe(res => {
+      this.spinner.hide();
+      this.lstSubCategory = res;
+    });
+
+  }
   LoadData(event: any) {
     debugger
     if (this.SelectStatus.value == "") {
@@ -148,7 +168,12 @@ export class ProductComponent implements OnInit {
       this.spinner.show();
       this._ProductService.GetAllProductBySupplierId(obj).subscribe(res => {
         this.spinner.hide();
-        this.dataSource = new MatTableDataSource<any>(res);
+        if (this.SelectSubCategoryID.value == "")
+          this.dataSource = new MatTableDataSource<any>(res);
+        else {
+          var filterdata = res.filter(a => a.subCategoryID == Number(this.SelectSubCategoryID.value));
+          this.dataSource = new MatTableDataSource<any>(filterdata);
+        }
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
       });
@@ -161,7 +186,12 @@ export class ProductComponent implements OnInit {
       this.spinner.show();
       this._ProductService.GetAllProductByStatusSupplierId(obj).subscribe(res => {
         this.spinner.hide();
-        this.dataSource = new MatTableDataSource<any>(res);
+        if (this.SelectSubCategoryID.value == "")
+          this.dataSource = new MatTableDataSource<any>(res);
+        else {
+          var filterdata = res.filter(a => a.subCategoryID == Number(this.SelectSubCategoryID.value));
+          this.dataSource = new MatTableDataSource<any>(filterdata);
+        }
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
       });
