@@ -1,0 +1,53 @@
+<div class="content">
+    <!-- Main charts -->
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+
+                <div class="card-body">
+
+                    <div class="new-section">
+
+                        <div class="col-md-12" style="height: 400px; overflow: auto;">
+                            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 col-md-12">
+
+                                <ng-container matColumnDef="firstName">
+                                    <th mat-header-cell *matHeaderCellDef>First Name</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="lastName">
+                                    <th mat-header-cell *matHeaderCellDef>Last Name</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="phoneNo">
+                                    <th mat-header-cell *matHeaderCellDef>Phone No</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.phoneNo}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="email">
+                                    <th mat-header-cell *matHeaderCellDef>Email</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="message">
+                                    <th mat-header-cell *matHeaderCellDef>Message</th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <p class="text-black mb-0" [innerHTML]="element.message | safe: 'html'"></p>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="createdDate">
+                                    <th mat-header-cell *matHeaderCellDef>Created Date</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.createdDate}} </td>
+                                </ng-container>
+
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true;"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                            <div *ngIf="dataSource.filteredData.length === 0">No records found</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

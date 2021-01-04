@@ -19,6 +19,8 @@ export class AppHeaderComponent implements OnInit {
   public Category: boolean = false;
   public fabric: boolean = false;
   public agent: boolean = false;
+  public ContactUs: boolean = false;
+  public customerStory: boolean = false;
   menuIconClass: string = "";
 
   public materialprimary: string;
@@ -50,6 +52,8 @@ export class AppHeaderComponent implements OnInit {
       this.Category = false;
       this.fabric = false;
       this.agent = false;
+      this.ContactUs = false;
+      this.customerStory = false;
     }
     if (this._LocalStorage.getValueOnLocalStorage("Selected") == "2") {
       this.menuname = "Product";
@@ -65,6 +69,8 @@ export class AppHeaderComponent implements OnInit {
       this.Category = false;
       this.fabric = false;
       this.agent = false;
+      this.ContactUs = false;
+      this.customerStory = false;
     }
     if (this._LocalStorage.getValueOnLocalStorage("Selected") == "3") {
       this.materialprimary = "navbar navbar-expand-md navbar-dark material-green-primary";
@@ -78,6 +84,8 @@ export class AppHeaderComponent implements OnInit {
       this.Category = false;
       this.fabric = false;
       this.agent = false;
+      this.ContactUs = false;
+      this.customerStory = false;
       this.menuname = "User";
       this.menuIconClass = "icon-cash material-green-primary bg-white-icon bg-green-icon";
     }
@@ -93,6 +101,8 @@ export class AppHeaderComponent implements OnInit {
       this.Category = false;
       this.fabric = false;
       this.agent = false;
+      this.ContactUs = false;
+      this.customerStory = false;
       this.menuname = "Order";
       this.menuIconClass = "icon-cash material-navyblue-primary bg-white-icon bg-navyblue-icon";
     }
@@ -110,6 +120,8 @@ export class AppHeaderComponent implements OnInit {
       this.fabric = false;
       this.agent = false;
       this.report = false;
+      this.ContactUs = false;
+      this.customerStory = false;
     }
     if (this._LocalStorage.getValueOnLocalStorage("Selected") == "6") {
       this.menuname = "Material";
@@ -125,6 +137,8 @@ export class AppHeaderComponent implements OnInit {
       this.fabric = true;
       this.agent = false;
       this.report = false;
+      this.ContactUs = false;
+      this.customerStory = false;
     }
     if (this._LocalStorage.getValueOnLocalStorage("Selected") == "7") {
       this.menuname = "Agent";
@@ -140,6 +154,8 @@ export class AppHeaderComponent implements OnInit {
       this.fabric = false;
       this.agent = true;
       this.report = false;
+      this.ContactUs = false;
+      this.customerStory = false;
     }
     if (this._LocalStorage.getValueOnLocalStorage("Selected") == "8") {
       this.menuname = "Reports";
@@ -155,6 +171,42 @@ export class AppHeaderComponent implements OnInit {
       this.fabric = false;
       this.agent = false;
       this.report = true;
+      this.ContactUs = false;
+      this.customerStory = false;
+    }
+    if (this._LocalStorage.getValueOnLocalStorage("Selected") == "9") {
+      this.materialprimary = "navbar navbar-expand-md navbar-dark material-blue-primary";
+      this.materialsecondary = "material-blue-secondary space-all";
+
+      this.order = false;
+      this.admin = false;
+      this.product = false;
+      this.user = false;
+      this.report = false;
+      this.Category = false;
+      this.fabric = false;
+      this.agent = false;
+      this.ContactUs = true;
+      this.customerStory = false;
+      this.menuname = "Contact us";
+      this.menuIconClass = "icon-cash material-blue-primary bg-white-icon bg-blue-icon";
+    }
+    if (this._LocalStorage.getValueOnLocalStorage("Selected") == "10") {
+      this.materialprimary = "navbar navbar-expand-md navbar-dark material-DarkGreen-primary";
+      this.materialsecondary = "material-DarkGreen-secondary space-all";
+
+      this.order = false;
+      this.admin = false;
+      this.product = false;
+      this.user = false;
+      this.report = false;
+      this.Category = false;
+      this.fabric = false;
+      this.agent = false;
+      this.ContactUs = false;
+      this.customerStory = true;
+      this.menuname = "Customer Story";
+      this.menuIconClass = "icon-cash material-DarkGreen-primary bg-white-icon bg-DarkGreen-icon";
     }
   }
 

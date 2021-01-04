@@ -1,0 +1,145 @@
+<div class="content">
+    <!-- Main charts -->
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-md-12 text-right pb-3"><button mat-raised-button (click)="onAddNew(templateCustomerStory,'');" class="btn btn-warning btn-lg">Add New
+                            </button></div>
+                    </div>
+
+                    <div class="new-section">
+
+                        <div class="col-md-12" style="height: 400px; overflow: auto;">
+                            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 col-md-12">
+                                <ng-container matColumnDef="Image">
+                                    <th mat-header-cell *matHeaderCellDef>Image</th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <img src="{{APIURL}}/CustomerStoryImages/{{element.customerStoryId}}/{{element.imagePath}}" class="ProductFrontImage">
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="name">
+                                    <th mat-header-cell *matHeaderCellDef>Name</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="via">
+                                    <th mat-header-cell *matHeaderCellDef>Via</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.via}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="notes">
+                                    <th mat-header-cell *matHeaderCellDef>Notes</th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <p class="text-black mb-0" [innerHTML]="element.notes | safe: 'html'"></p>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="createdDate">
+                                    <th mat-header-cell *matHeaderCellDef>Created Date</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.createdDate}} </td>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="Edit">
+                                    <th mat-header-cell *matHeaderCellDef> Edit </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <a href="javaScript:void(0);" (click)="Edit(templateCustomerStory,element)">
+                                            <i class="icon-pencil mr-2" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true;"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                            <div *ngIf="dataSource.filteredData.length === 0">No records found</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #templateCustomerStory>
+    <div class="col-md-12 add-info-head modal-text-heading">
+        <h2 mat-dialog-title>Add / Edit Customer Story</h2>
+
+        <div class="header-elements">
+            <div class="list-icons" style="color: red;">
+                Note: All the * marked fields are mandatory
+            </div>
+        </div>
+    </div>
+    <mat-dialog-content class="mat-typography">
+        <form [formGroup]="CustomerStoryForm" class="w-100">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Name <span class="error">*</span></mat-label>
+                                    <input type="text" matInput formControlName="name" maxlength="50">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Via <span class="error">*</span></mat-label>
+                                    <mat-select formControlName="via">
+                                        <mat-option value="">Select</mat-option>
+                                        <mat-option value="Facebook">Facebook</mat-option>
+                                        <mat-option value="Instagram">Instagram</mat-option>
+                                        <mat-option value="Email">Email</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-12">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Notes </mat-label>
+                                    <textarea type="text" style="height: 218px;" matInput formControlName="notes" maxlength="1000"></textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row" style="margin-left: 1px;">
+                                    Product Images :<button (click)="file.click()" class="fHbZUJ" style="width:158px;height:50px">
+                                        <i class="fa fa-upload"></i>
+                                        <div class="sc-pQGev lbdMzz"></div><span>Upload Photo</span>
+                                    </button>
+                                    <input #file id="ProductImg" type="file" style="display: none;" (change)="UploadProductImages($event)" />
+                                    <div *ngIf="submitted && (f.imagePath.errors || f.imagePath.value==[])">
+                                        <div style="color: red;">&nbsp;Image is required.</div>
+                                    </div>
+                                    <div *ngFor='let url of ProductImg; index as i;'>
+                                        &nbsp;<img class="example-header-image" [src]="url">
+                                        <label class="mi-delete mi-1x" style="color: red;" (click)="removeImg(i,'product');"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <mat-card class="example-card">
+                                    <img mat-card-image [src]="PreviewUrl" style="height: auto;max-width: 50%;">
+                                </mat-card>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <div class="col-md-12 add-info-foot">
+            <button mat-raised-button class="btn btn-success btn-lg" (click)="Save()">
+                Save
+            </button>
+            <button mat-button mat-dialog-close class="btn btn-secondary btn-lg">Cancel</button>
+        </div>
+    </mat-dialog-actions>
+</ng-template>

@@ -79,6 +79,8 @@ import { CreateEmailComponent } from './Admin/create-email/create-email.componen
 import { MngAgentComponent } from './Admin/mng-agent/mng-agent.component';
 import { TransportComponent } from './Admin/transport/transport.component';
 import { ProductnewComponent } from './Admin/productnew/productnew.component';
+import { ContactUsComponent } from './Admin/contact-us/contact-us.component';
+import { CustomerStoryComponent } from './Admin/customer-story/customer-story.component';
 
 
 @NgModule({
@@ -109,7 +111,9 @@ import { ProductnewComponent } from './Admin/productnew/productnew.component';
     CreateEmailComponent,
     MngAgentComponent,
     TransportComponent,
-    ProductnewComponent
+    ProductnewComponent,
+    ContactUsComponent,
+    CustomerStoryComponent
 
   ],
   imports: [

@@ -22,6 +22,8 @@ import { CreateEmailComponent } from './Admin/create-email/create-email.componen
 import { MngAgentComponent } from './Admin/mng-agent/mng-agent.component';
 import { TransportComponent } from './Admin/transport/transport.component';
 import { ProductnewComponent } from './Admin/productnew/productnew.component';
+import { ContactUsComponent } from './Admin/contact-us/contact-us.component';
+import { CustomerStoryComponent } from './Admin/customer-story/customer-story.component';
 
 
 const routes: Routes = [
@@ -58,6 +60,8 @@ const routes: Routes = [
       { path: 'CreateEmail', component: CreateEmailComponent, canActivate: [AuthGuard] },
       { path: 'agent', component: MngAgentComponent, canActivate: [AuthGuard] },
       { path: 'transport', component: TransportComponent, canActivate: [AuthGuard] },
+      { path: 'ContactUs', component: ContactUsComponent, canActivate: [AuthGuard] },
+      { path: 'customerStory', component: CustomerStoryComponent, canActivate: [AuthGuard] },
       {
         path: 'report',
         loadChildren: () => import('./Reports/report.module').then(m => m.ReportModule)
