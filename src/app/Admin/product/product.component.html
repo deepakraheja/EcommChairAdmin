@@ -95,6 +95,10 @@
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Warranty</th>
                                     <td mat-cell *matCellDef="let element"> {{element.warranty}} </td>
                                 </ng-container>
+                                <ng-container matColumnDef="sku">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>SKU</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.sku}} </td>
+                                </ng-container>
                                 <ng-container matColumnDef="review">
                                     <th mat-header-cell *matHeaderCellDef>Review</th>
                                     <td mat-cell *matCellDef="let element">
