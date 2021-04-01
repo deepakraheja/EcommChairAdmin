@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from 'src/app/Service/category.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-sub-category',
@@ -13,11 +14,12 @@ import { CategoryService } from 'src/app/Service/category.service';
   styleUrls: ['./sub-category.component.css']
 })
 export class SubCategoryComponent implements OnInit {
+  public APIURL = environment.APIURL;
   CategoryForm: FormGroup;
   lstData: any = [];
   LoggedInUserId: string;
   LoggedInUserType: string;
-  displayedColumns: string[] = ['name', 'description', 'active', 'Edit'];
+  displayedColumns: string[] = ['Image','name', 'description', 'active', 'Edit'];
   dataSource = new MatTableDataSource<any>(this.lstData);
   lstCategory: any;
   title: string = "Add Module";
@@ -40,7 +42,8 @@ export class SubCategoryComponent implements OnInit {
       name: ['', Validators.required],
       description: [''],
       active: [false],
-      createdBy: Number(this.LoggedInUserId)
+      createdBy: Number(this.LoggedInUserId),
+      fileName: ['']
     });
     this.LoadData("");
   }
@@ -132,7 +135,8 @@ export class SubCategoryComponent implements OnInit {
       name: ['', Validators.required],
       description: [''],
       active: [false],
-      createdBy: Number(this.LoggedInUserId)
+      createdBy: Number(this.LoggedInUserId),
+      fileName: ['']
     });
     const dialogRef = this.dialog.open(template, {
       width: '500px',
@@ -153,7 +157,8 @@ export class SubCategoryComponent implements OnInit {
       name: [lst.name, Validators.required],
       description: [lst.description],
       active: [lst.active],
-      createdBy: Number(this.LoggedInUserId)
+      createdBy: Number(this.LoggedInUserId),
+      fileName: ['']
     });
     const dialogRef = this.dialog.open(template, {
       width: '500px',
@@ -193,5 +198,25 @@ export class SubCategoryComponent implements OnInit {
       });
     }
   }
+  ImageUpload(event) {
+    var images = [];
+    if (event.target.files && event.target.files[0]) {
+      var filesAmount = event.target.files.length;
+      for (let i = 0; i < filesAmount; i++) {
+        var reader = new FileReader();
+        reader.onload = (event: any) => {
+          debugger
+          images.push(event.target.result);
+          // this.previewUrl = event.target.result;
+          this.CategoryForm.patchValue({
+            fileName: images
+          });
+          this.CategoryForm.updateValueAndValidity();
+        }
+        reader.readAsDataURL(event.target.files[i]);
+      }
+    }
+  }
+
 }
 
