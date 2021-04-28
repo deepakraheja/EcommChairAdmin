@@ -91,4 +91,36 @@ export class ProductService {
       this._url + this._methodName, this._param
     );
   }
+
+  GetAllAccessory(): Observable<any> {
+    this._methodName = "GetAllAccessory/";
+    this._param = {};
+    return this._http.post<any>(
+      this._url + this._methodName, this._param
+    );
+  }
+
+  SaveAccessory(_obj: any): Observable<any> {
+    this._methodName = "SaveAccessory/";
+    this._param = _obj;
+    return this._http.post<any>(
+      this._url + this._methodName, this._param
+    );
+  }
+  
+  GetProductAccessory(_obj: any): Observable<any> {
+    this._methodName = "GetProductAccessory/";
+    this._param = _obj;
+    return this._http.post<any>(
+      this._url + this._methodName, this._param
+    );
+  }
+
+  SaveAssignAccessory(_obj: any): Observable<any> {
+    this._methodName = "SaveAssignAccessory/";
+    this._param = _obj;
+    return this._http.post<any>(
+      this._url + this._methodName, this._param
+    );
+  }
 }

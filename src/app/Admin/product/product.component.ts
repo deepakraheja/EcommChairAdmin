@@ -25,6 +25,7 @@ import { CategoryService } from 'src/app/Service/category.service';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
+  public APIURL = environment.APIURL;
   public ImagePath = environment.ImagePath;
   ProductForm: FormGroup;
   EditProductDetailForm: FormGroup;
@@ -33,7 +34,7 @@ export class ProductComponent implements OnInit {
   LoggedInUserType: string;
   lstSupplier: any = [];
   // displayedColumns: string[] = ['productName', 'brandName', 'subcategoryName', 'stockQty', 'price', 'salePrice', 'active', 'Edit'];
-  displayedColumns: string[] = ['frontImage', 'productName', 'brandName', 'subcategoryName', 'supplierName', 'moq', 'warranty','sku', 'review', 'stock', 'active', 'Edit'];
+  displayedColumns: string[] = ['frontImage', 'productName', 'brandName', 'subcategoryName', 'supplierName', 'moq', 'warranty','sku', 'review', 'stock','Accessory', 'active', 'Edit'];
   dataSource = new MatTableDataSource<any>(this.lstData);
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -57,6 +58,10 @@ export class ProductComponent implements OnInit {
   displayedProductStockColumns: string[] = ['color', 'qty', 'price', 'shippingPrice', 'gst', 'salePrice', 'businessDiscount', 'businessPrice', 'availableColors', 'Edit', 'Delete'];
   dataSourceProductStock = new MatTableDataSource<any>(this.lstDataProductStock);
   lstSubCategory: any = [];
+
+  lstDataAccessory: any = [];
+  displayedColumnsAccessory: string[] = ['isChecked', 'Image', 'name', 'price', 'description', 'active'];
+  dataSourceAccessory = new MatTableDataSource<any>(this.lstDataAccessory);
   constructor(
     private formBuilder: FormBuilder,
     private _LocalStorage: LocalStorageService,
@@ -499,5 +504,44 @@ export class ProductComponent implements OnInit {
     }
   }
 
+
+  AssignAccessory(template: TemplateRef<any>, lst) {
+    debugger
+    this.spinner.show();
+    let obj = {
+      productId: lst.productID
+    }
+    this.SelectedProductId = lst.productID;
+    this._ProductService.GetProductAccessory(obj).subscribe(res => {
+      this.spinner.hide();
+      this.lstDataAccessory = res;
+      this.dataSourceAccessory = new MatTableDataSource<any>(res);
+      const dialogRef = this.dialog.open(template, {
+        width: '100vw',
+        data: this.lstDataAccessory
+      });
+      dialogRef.disableClose = true;
+      dialogRef.afterClosed().subscribe(result => {
+        //console.log(`Dialog result: ${result}`);
+      });
+    });
+  }
+
+  SaveAssignAccessory() {
+    let selectedAccessory = '';
+    (this.dataSourceAccessory.filteredData).forEach(element => {
+      debugger
+      if (element.isChecked == true) {
+        selectedAccessory += element.accessoryId + ',';
+      }
+    });
+    let obj = {
+      ProductId: this.SelectedProductId,
+      AccessoryIds: selectedAccessory
+    };
+    this._ProductService.SaveAssignAccessory(obj).subscribe(res => {
+      this._toasterService.success("Record has been saved successfully.");
+    });
+  }
 }
 

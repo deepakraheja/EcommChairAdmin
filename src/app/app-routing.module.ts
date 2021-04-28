@@ -24,6 +24,7 @@ import { TransportComponent } from './Admin/transport/transport.component';
 import { ProductnewComponent } from './Admin/productnew/productnew.component';
 import { ContactUsComponent } from './Admin/contact-us/contact-us.component';
 import { CustomerStoryComponent } from './Admin/customer-story/customer-story.component';
+import { AccessoryComponent } from './Admin/accessory/accessory.component';
 
 
 const routes: Routes = [
@@ -62,6 +63,7 @@ const routes: Routes = [
       { path: 'transport', component: TransportComponent, canActivate: [AuthGuard] },
       { path: 'ContactUs', component: ContactUsComponent, canActivate: [AuthGuard] },
       { path: 'customerStory', component: CustomerStoryComponent, canActivate: [AuthGuard] },
+      { path: 'Accessory', component: AccessoryComponent, canActivate: [AuthGuard] },
       {
         path: 'report',
         loadChildren: () => import('./Reports/report.module').then(m => m.ReportModule)

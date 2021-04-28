@@ -81,6 +81,7 @@ import { TransportComponent } from './Admin/transport/transport.component';
 import { ProductnewComponent } from './Admin/productnew/productnew.component';
 import { ContactUsComponent } from './Admin/contact-us/contact-us.component';
 import { CustomerStoryComponent } from './Admin/customer-story/customer-story.component';
+import { AccessoryComponent } from './Admin/accessory/accessory.component';
 
 
 @NgModule({
@@ -113,7 +114,8 @@ import { CustomerStoryComponent } from './Admin/customer-story/customer-story.co
     TransportComponent,
     ProductnewComponent,
     ContactUsComponent,
-    CustomerStoryComponent
+    CustomerStoryComponent,
+    AccessoryComponent
 
   ],
   imports: [

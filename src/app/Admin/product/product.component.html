@@ -113,6 +113,14 @@
                                             Stock</a>
                                     </td>
                                 </ng-container>
+                                <ng-container matColumnDef="Accessory">
+                                    <th mat-header-cell *matHeaderCellDef> Accessory </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <a href="javaScript:void(0);" (click)="AssignAccessory(templateAssignAccessory,element)">
+                                            <i class="icon-user mr-2" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </ng-container>
                                 <ng-container matColumnDef="active">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Active</th>
                                     <td mat-cell *matCellDef="let element"> {{element.active?'Active':'In-Active'}}
@@ -459,4 +467,58 @@
         <button mat-button mat-dialog-close class="btn btn-secondary btn-lg">Cancel</button>
     </mat-dialog-actions>
 
+</ng-template>
+
+
+<ng-template #templateAssignAccessory>
+    <div class="col-md-12 add-info-head modal-text-heading">
+        <h2 mat-dialog-title>Assign Accessory</h2>
+    </div>
+    <mat-dialog-content class="mat-typography">
+        <div class="col-md-12">
+            <table mat-table [dataSource]="dataSourceAccessory" class="mat-elevation-z8 col-md-12">
+                <ng-container matColumnDef="isChecked">
+                    <th mat-header-cell *matHeaderCellDef>Select</th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-checkbox [(ngModel)]="element.isChecked" [ngModelOptions]="{standalone: true}"></mat-checkbox>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="Image">
+                    <th mat-header-cell *matHeaderCellDef>Image</th>
+                    <td mat-cell *matCellDef="let element">
+                        <img src="{{APIURL}}/AccessoryImage/{{element.accessoryId}}/{{element.fileName}}" class="ProductFrontImage">
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef>Accessory Name</th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+                <ng-container matColumnDef="price">
+                    <th mat-header-cell *matHeaderCellDef>Price</th>
+                    <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+                </ng-container>
+                <ng-container matColumnDef="description">
+                    <th mat-header-cell *matHeaderCellDef>Description</th>
+                    <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+                </ng-container>
+                <ng-container matColumnDef="active">
+                    <th mat-header-cell *matHeaderCellDef>Active</th>
+                    <td mat-cell *matCellDef="let element"> {{element.active?'Active':'In-Active'}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsAccessory; sticky:true;"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsAccessory;"></tr>
+            </table>
+            <div *ngIf="dataSourceAccessory?.filteredData?.length === 0">No records found</div>
+            <!-- <mat-paginator [pageSizeOptions]="[10,20,30,50,100]" showFirstLastButtons></mat-paginator> -->
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <div class="col-md-12 add-info-foot">
+            <button mat-raised-button class="btn btn-success btn-lg" (click)="SaveAssignAccessory()">
+            Save
+        </button>
+            <button mat-button mat-dialog-close class="btn btn-secondary btn-lg">Cancel</button>
+        </div>
+    </mat-dialog-actions>
 </ng-template>
