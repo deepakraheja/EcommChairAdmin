@@ -7,6 +7,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import { ProductService } from 'src/app/Service/Product.service';
+import { LookupService } from 'src/app/Service/lookup.service';
 
 @Component({
   selector: 'app-accessory',
@@ -19,7 +20,7 @@ export class AccessoryComponent implements OnInit {
   lstData: any = [];
   LoggedInUserId: string;
   LoggedInUserType: string;
-  displayedColumns: string[] = ['Image', 'name', 'price', 'description', 'active', 'Edit'];
+  displayedColumns: string[] = ['Image', 'accessoryCategoryName', 'name', 'price', 'isAddPrice', 'description', 'active', 'Edit'];
   dataSource = new MatTableDataSource<any>(this.lstData);
   lstAccessory: any;
   title: string = "Add Module";
@@ -28,22 +29,29 @@ export class AccessoryComponent implements OnInit {
   lstMainAccessory: any = [];
   DecimalMask = null;
   showMask = false;
+  lstAccessoryCategory: any = [];
   constructor(
     private formBuilder: FormBuilder,
     private _LocalStorage: LocalStorageService,
     public dialog: MatDialog,
     private spinner: NgxSpinnerService,
     private _toasterService: ToastrService,
-    private _ProductService: ProductService
+    private _ProductService: ProductService,
+    private _lookupService: LookupService
   ) {
     this.LoggedInUserId = this._LocalStorage.getValueOnLocalStorage("LoggedInUserId");
     this.AccessoryForm = this.formBuilder.group({
       accessoryId: [0, Validators.required],
+      accessoryCategoryId: ['', Validators.required],
       name: ['', Validators.required],
       description: [''],
       active: [false],
       createdBy: Number(this.LoggedInUserId),
-      fileName: ['']
+      fileName: [''],
+      isAddPrice: ['0', Validators.required]
+    });
+    this._lookupService.GetAccessoryCategory().subscribe(res => {
+      this.lstAccessoryCategory = res;
     });
     this.LoadData("");
   }
@@ -73,14 +81,16 @@ export class AccessoryComponent implements OnInit {
   onAddNew(template: TemplateRef<any>, lst) {
     this.AccessoryForm = this.formBuilder.group({
       accessoryId: [0, Validators.required],
+      accessoryCategoryId: ['', Validators.required],
       name: ['', Validators.required],
       price: ['', Validators.required],
       description: [''],
       active: [false],
-      fileName: ['']
+      fileName: [''],
+      isAddPrice: ['0', Validators.required]
     });
     const dialogRef = this.dialog.open(template, {
-      width: '500px',
+      width: '70vw',
       data: this.AccessoryForm
     });
     dialogRef.disableClose = true;
@@ -93,14 +103,16 @@ export class AccessoryComponent implements OnInit {
     debugger
     this.AccessoryForm = this.formBuilder.group({
       accessoryId: [lst.accessoryId, Validators.required],
+      accessoryCategoryId: [lst.accessoryCategoryId, Validators.required],
       name: [lst.name, Validators.required],
       price: [lst.price, Validators.required],
       description: [lst.description],
       active: [lst.active],
-      fileName: [lst.fileName]
+      fileName: [lst.fileName],
+      isAddPrice: [lst.isAddPrice, Validators.required]
     });
     const dialogRef = this.dialog.open(template, {
-      width: '500px',
+      width: '70vw',
       data: this.AccessoryForm
     });
     dialogRef.disableClose = true;
@@ -120,11 +132,13 @@ export class AccessoryComponent implements OnInit {
       this.spinner.show();
       let obj = {
         accessoryId: Number(this.AccessoryForm.value.accessoryId),
+        accessoryCategoryId: Number(this.AccessoryForm.value.accessoryCategoryId),
         name: this.AccessoryForm.value.name,
         price: Number(this.AccessoryForm.value.price),
         description: this.AccessoryForm.value.description,
         active: this.AccessoryForm.value.active,
-        fileName: this.AccessoryForm.value.fileName == null ? [] : this.AccessoryForm.value.fileName
+        fileName: this.AccessoryForm.value.fileName == null ? [] : this.AccessoryForm.value.fileName,
+        isAddPrice: Number(this.AccessoryForm.value.isAddPrice)
       };
       this._ProductService.SaveAccessory(obj).subscribe(res => {
         this.spinner.hide();
