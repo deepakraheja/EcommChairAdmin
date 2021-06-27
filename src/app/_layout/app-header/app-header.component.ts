@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { LocalStorageService } from 'src/app/Service/local-storage.service';
 import { Router } from '@angular/router';
 import { GlobalConstantsService } from 'src/app/Service/global-constants.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
+import { UserService } from 'src/app/Service/user.service';
+import { SharedDataService } from 'src/app/Service/shared-data.service';
 
 @Component({
   selector: 'app-header',
@@ -23,16 +28,27 @@ export class AppHeaderComponent implements OnInit {
   public customerStory: boolean = false;
   public Accessory: boolean = false;
   menuIconClass: string = "";
-
+  public LoggedInName: string = "";
   public materialprimary: string;
   public materialsecondary: string;
+  public ChangePasswordForm: FormGroup;
   constructor(
     private _LocalStorage: LocalStorageService,
     private router: Router,
-    public global: GlobalConstantsService
+    public global: GlobalConstantsService,
+    public formBuilder: FormBuilder,
+    public dialog: MatDialog,
+    public _toasterService: ToastrService,
+    public _UserService: UserService,
+    private _SharedDataService: SharedDataService,
   ) { }
 
   ngOnInit(): void {
+    this._SharedDataService.val.subscribe(res => {
+      this.LoadHeaderChanges();
+    });
+  }
+  LoadHeaderChanges(){
     if (this._LocalStorage.getValueOnLocalStorage("Selected") == "0") {
       this.menuname = "Dashboard";
       this.menuIconClass = "fa-tachometer icon-users bg-white-icon";
@@ -238,6 +254,7 @@ export class AppHeaderComponent implements OnInit {
       this.customerStory = false;
       this.Accessory = true;
     }
+    this.LoggedInName = this._LocalStorage.getValueOnLocalStorage("Name");
   }
 
 
@@ -252,5 +269,48 @@ export class AppHeaderComponent implements OnInit {
     debugger
     this._LocalStorage.removeAllLocalStorage();
     this.router.navigate(['/adminlogin']);
+  }
+  onChangePassword(template: TemplateRef<any>, lst) {
+    this.ChangePasswordForm = this.formBuilder.group({
+      password: ['', Validators.required],
+      newPassword: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
+    });
+    const dialogRef = this.dialog.open(template, {
+      width: '500px',
+      data: this.ChangePasswordForm
+    });
+    dialogRef.disableClose = true;
+    dialogRef.afterClosed().subscribe(result => {
+      //console.log(`Dialog result: ${result}`);
+    });
+  }
+  Save() {
+    if (this.ChangePasswordForm.invalid) {
+      this.ChangePasswordForm.markAllAsTouched();
+      this._toasterService.error("All the * marked fields are mandatory.");
+      return;
+    }
+    else {
+      if (this.ChangePasswordForm.value.newPassword != this.ChangePasswordForm.value.confirmPassword) {
+        this._toasterService.error("New password & confirm password must be same.");
+        return;
+      }
+      else {
+        let obj = {
+          password: this.ChangePasswordForm.value.password,
+          NewPassword: this.ChangePasswordForm.value.newPassword
+        }
+        this._UserService.UserPasswordChange(obj).subscribe(res => {
+          if (res > 0) {
+            this._toasterService.success("Password has been changed sucessfully.");
+            this.dialog.closeAll();
+          }
+          else {
+            this._toasterService.error("Old password is invalid");
+          }
+        });
+      }
+    }
   }
 }

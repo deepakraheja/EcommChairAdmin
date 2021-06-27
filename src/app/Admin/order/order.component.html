@@ -70,7 +70,7 @@
                                 <ng-container matColumnDef="orderDate">
                                     <th mat-header-cell *matHeaderCellDef>Order Date</th>
                                     <td mat-cell *matCellDef="let element">
-                                        {{element.orderDate | date :'MM/dd/yyyy HH:mm:ss'}} </td>
+                                        {{element.orderDate | date :'dd/MMyyyy HH:mm:ss'}} </td>
                                 </ng-container>
                                 <ng-container matColumnDef="fName">
                                     <th mat-header-cell *matHeaderCellDef>Name</th>
@@ -103,7 +103,7 @@
                             </table>
 
                             <!-- <div *ngIf="dataSource?.filteredData?.length == 0">No records found</div> -->
-                            <mat-paginator [pageSizeOptions]="[10,20,30,50,100]" showFirstLastButtons></mat-paginator>
+                            <mat-paginator [pageSize]="100" [pageSizeOptions]="[10,20,30,50,100]" showFirstLastButtons></mat-paginator>
                         </div>
                         <!-- <div class="dashboard">
 
@@ -323,7 +323,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <h3 style="margin-bottom: 3px !important;"><u><b>Order Detail</b></u></h3>
-                    <b>Order Date : </b> {{lstOrderDetails.orderDate | date :'MM/dd/yyyy HH:mm:ss'}}
+                    <b>Order Date : </b> {{lstOrderDetails.orderDate | date :'dd/MM/yyyy HH:mm:ss'}}
                     <br>
                     <b>Total Amount: </b> {{lstOrderDetails.totalAmount | currency:Currency.currency:'symbol'}}
                     <br>
@@ -440,7 +440,7 @@
                                                     <div class="a-row">
                                                         <a class="a-link-normal" style="color: red;">
                                                             Dispatched By : {{lstPro.transportName}}, Tracking Id :
-                                                            {{lstPro.bilty}}
+                                                            {{lstPro.bilty}}, Delivery Date : {{lstPro.deliveryDate | date : 'dd/MM/yyyy hh:mm:ss aa'}}
                                                         </a>
                                                     </div>
                                                     <div class="a-row" *ngIf="lstPro.trackingURL!=''">
@@ -570,6 +570,14 @@
                         <mat-form-field appearance="outline">
                             <mat-label>Tracking Id <span class="error">*</span></mat-label>
                             <input type="text" matInput formControlName="bilty" maxlength="50">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field appearance="outline">
+                            <mat-label>DeliveryDate</mat-label>
+                            <input matInput [min]="minDate" [matDatepicker]="dpDeliveryDate" readonly formControlName="deliveryDate" (click)="dpDeliveryDate.open()">
+                            <mat-datepicker-toggle matSuffix [for]="dpDeliveryDate"></mat-datepicker-toggle>
+                            <mat-datepicker #dpDeliveryDate disabled="false"></mat-datepicker>
                         </mat-form-field>
                     </div>
 

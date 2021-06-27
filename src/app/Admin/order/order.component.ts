@@ -14,6 +14,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ConfirmBoxComponent } from 'src/app/confirm-box/confirm-box.component';
 import { TransportService } from 'src/app/Service/Transport.service';
 import { InvoiceService } from 'src/app/Service/invoice.service';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-order',
@@ -38,6 +39,7 @@ export class OrderComponent implements OnInit {
   public lstTransport: any = [];
   public SelectedLst: any = [];
   minDate = new Date();
+  public param_statusId: any;
   constructor(
     private _OrderService: OrderService,
     private spinner: NgxSpinnerService,
@@ -49,15 +51,28 @@ export class OrderComponent implements OnInit {
     public _toastrService: ToastrService,
     private modalService: BsModalService,
     private _TransportService: TransportService,
-    private _InvoiceService: InvoiceService
+    private _InvoiceService: InvoiceService,
+    private route: ActivatedRoute,
   ) {
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      this.param_statusId = params.get('statusId');
+    });
     this.LoggedInUserId = this._LocalStorage.getValueOnLocalStorage("LoggedInUserId");
     this.LoadOrderStatus();
-    this.OrderForm = this.formBuilder.group({
-      startDate: [this._datePipe.transform(this.addDays(new Date(), -7).toString(), 'yyyy-MM-dd')],
-      endDate: [this._datePipe.transform(new Date().toString(), 'yyyy-MM-dd')],
-      statusId: [0]
-    });
+    if (this.param_statusId == 0) {
+      this.OrderForm = this.formBuilder.group({
+        startDate: [this._datePipe.transform(new Date().toString(), 'yyyy-MM-dd')],
+        endDate: [this._datePipe.transform(new Date().toString(), 'yyyy-MM-dd')],
+        statusId: [this.param_statusId == null ? 0 : Number(this.param_statusId)]
+      });
+    }
+    else {
+      this.OrderForm = this.formBuilder.group({
+        startDate: [this._datePipe.transform(new Date('01/01/2021').toString(), 'yyyy-MM-dd')],
+        endDate: [this._datePipe.transform(new Date().toString(), 'yyyy-MM-dd')],
+        statusId: [this.param_statusId == null ? 0 : Number(this.param_statusId)]
+      });
+    }
 
     this.DispatchedForm = this.formBuilder.group({
       selectedOrderDetailsIds: [''],
@@ -65,7 +80,8 @@ export class OrderComponent implements OnInit {
       dispatchDate: [this._datePipe.transform(new Date().toString(), 'yyyy-MM-dd')],
       bilty: ['', Validators.required],
       statusId: [0],
-      trackingURL: ['', Validators.required]
+      trackingURL: ['', Validators.required],
+      deliveryDate: [this._datePipe.transform(new Date().toString(), 'yyyy-MM-dd')],
     });
 
     let obj = {
@@ -115,7 +131,7 @@ export class OrderComponent implements OnInit {
     this._OrderService.GetAllOrder(obj).subscribe(res => {
       this.spinner.hide();
       //this.lstOrder = res;
-      this.dataSource = res;
+      this.dataSource = new MatTableDataSource<any>(res);
       this.dataSource.paginator = this.paginator;
       //console.log(res);
     });
@@ -199,7 +215,8 @@ export class OrderComponent implements OnInit {
               dispatchDate: [this._datePipe.transform(new Date().toString(), 'yyyy-MM-dd')],
               bilty: ['', Validators.required],
               statusId: [Number(this.ChangeStatusId)],
-              trackingURL: ['', Validators.required]
+              trackingURL: ['', Validators.required],
+              deliveryDate: [this._datePipe.transform(new Date().toString(), 'yyyy-MM-dd')],
             });
             const dialogRef = this.dialog.open(template, {
               width: '50vw',
@@ -226,7 +243,8 @@ export class OrderComponent implements OnInit {
                 transportID: element.transportID,
                 dispatchDate: element.dispatchDate,
                 bilty: element.bilty,
-                trackingURL: element.trackingURL
+                trackingURL: element.trackingURL,
+                deliveryDate: element.deliveryDate
               });
             });
 
@@ -288,7 +306,8 @@ export class OrderComponent implements OnInit {
           transportID: Number(this.DispatchedForm.value.transportID),
           dispatchDate: this._datePipe.transform(new Date(this.DispatchedForm.value.dispatchDate).toString(), 'yyyy-MM-dd') + ' ' + this._datePipe.transform(new Date().toString(), 'HH:mm:ss'),
           bilty: this.DispatchedForm.value.bilty,
-          trackingURL: this.DispatchedForm.value.trackingURL
+          trackingURL: this.DispatchedForm.value.trackingURL,
+          deliveryDate: this._datePipe.transform(new Date(this.DispatchedForm.value.deliveryDate).toString(), 'yyyy-MM-dd') + ' ' + this._datePipe.transform(new Date().toString(), 'HH:mm:ss'),
         });
       });
       this.spinner.show();

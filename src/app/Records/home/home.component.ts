@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from 'src/app/Service/order.service';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
+import { LocalStorageService } from 'src/app/Service/local-storage.service';
+import { SharedDataService } from 'src/app/Service/shared-data.service';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +21,9 @@ export class HomeComponent implements OnInit {
   constructor(
     private orderService: OrderService,
     private _datePipe: DatePipe,
+    private router: Router,
+    private _LocalStorage: LocalStorageService,
+    private _SharedDataService: SharedDataService,
   ) { }
 
   ngOnInit(): void {
@@ -35,4 +41,9 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  GoTo(val, page) {
+    this._LocalStorage.storeOnLocalStorage("Selected", val);
+    this._SharedDataService.SelectedValueChange('');
+    this.router.navigateByUrl(page);
+  }
 }

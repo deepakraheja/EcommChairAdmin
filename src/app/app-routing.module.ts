@@ -57,6 +57,7 @@ const routes: Routes = [
       { path: 'fabricType', component: FabricTypeComponent, canActivate: [AuthGuard] },
       { path: 'tagMaster', component: TagMasterComponent, canActivate: [AuthGuard] },
       { path: 'order', component: OrderComponent, canActivate: [AuthGuard] },
+      { path: 'order/:statusId', component: OrderComponent, canActivate: [AuthGuard] },
       { path: 'user', component: MngUserComponent, canActivate: [AuthGuard] },
       { path: 'CreateEmail', component: CreateEmailComponent, canActivate: [AuthGuard] },
       { path: 'agent', component: MngAgentComponent, canActivate: [AuthGuard] },
