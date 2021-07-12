@@ -157,7 +157,7 @@ export class MngUserComponent implements OnInit {
 
   addMask(obj: Object) {
     this.PhoneMask = "0000000000";
-    this.DecimalMask = "0.00";
+    this.DecimalMask = "99";
     this.PinCodeMask = "000000";
     this.NumberMask = "0";
     this.showMask = false;
@@ -225,8 +225,8 @@ export class MngUserComponent implements OnInit {
     }
     else {
       debugger
-      if (this.UserForm.value.additionalDiscount >5) {
-        this._toasterService.error("Additional Discount should be equal or less then 5%.");
+      if (this.UserForm.value.additionalDiscount > 10) {
+        this._toasterService.error("Additional Discount should be equal or less then 10 %.");
         return;
       }
       if (this.UserForm.value.isPersonal == false && this.UserForm.value.userDocument == null) {

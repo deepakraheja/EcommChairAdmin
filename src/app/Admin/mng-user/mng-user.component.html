@@ -14,7 +14,8 @@
                             <div class="col-lg-3 col-xs-3 col-sm-3 pl-4 pr-4 pt-1">
                                 <mat-form-field appearance="outline">
                                     <mat-label>Account Type </mat-label>
-                                    <mat-select [(ngModel)]="SelectAccountType" (selectionChange)="FilterAccountType($event)">
+                                    <mat-select [(ngModel)]="SelectAccountType"
+                                        (selectionChange)="FilterAccountType($event)">
                                         <mat-option value="">All</mat-option>
                                         <mat-option value="true">Personal buyer</mat-option>
                                         <mat-option value="false">Business bulk buyer</mat-option>
@@ -24,7 +25,8 @@
                             <div class="col-lg-9 col-xs-9 col-sm-9 pl-4 pr-4 pt-1">
                                 <mat-form-field class="example-chip-list example-full-width">
                                     <mat-label>Search</mat-label>
-                                    <input matInput placeholder="Search" (keyup)="applyFilter($event)" class="btn-search" style=" padding-bottom: 15px;">
+                                    <input matInput placeholder="Search" (keyup)="applyFilter($event)"
+                                        class="btn-search" style=" padding-bottom: 15px;">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -34,7 +36,9 @@
 
                                 <ng-container matColumnDef="name">
                                     <th mat-header-cell *matHeaderCellDef>Name</th>
-                                    <td mat-cell *matCellDef="let element" matTooltip="Login Id : {{element.loginId}}, Password : {{element.password}}" matTooltipPosition="above"> {{element.name}} </td>
+                                    <td mat-cell *matCellDef="let element"
+                                        matTooltip="Login Id : {{element.loginId}}, Password : {{element.password}}"
+                                        matTooltipPosition="above"> {{element.name}} </td>
                                 </ng-container>
                                 <ng-container matColumnDef="email">
                                     <th mat-header-cell *matHeaderCellDef>Email Address</th>
@@ -63,7 +67,8 @@
                                 <ng-container matColumnDef="Upload">
                                     <th mat-header-cell *matHeaderCellDef>Upload</th>
                                     <td mat-cell *matCellDef="let element">
-                                        <a href="javaScript:void(0);" *ngIf="element.isPersonal==false" (click)="OpenImagePopUp(templateImagesShow,element)">Upload
+                                        <a href="javaScript:void(0);" *ngIf="element.isPersonal==false"
+                                            (click)="OpenImagePopUp(templateImagesShow,element)">Upload
                                             Document</a>
                                     </td>
                                 </ng-container>
@@ -110,7 +115,8 @@
                                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                             </table>
                             <div *ngIf="dataSource.filteredData.length === 0">No records found</div>
-                            <mat-paginator [pageSize]="100" [pageSizeOptions]="[10,20,30,50,100]" showFirstLastButtons></mat-paginator>
+                            <mat-paginator [pageSize]="100" [pageSizeOptions]="[10,20,30,50,100]" showFirstLastButtons>
+                            </mat-paginator>
                         </div>
                     </div>
                 </div>
@@ -148,7 +154,9 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="outline">
                             <mat-label>MobileNo <span class="error">*</span></mat-label>
-                            <input type="text" matInput formControlName="mobileNo" readonly maxlength="10" [mask]="PhoneMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);">
+                            <input type="text" matInput formControlName="mobileNo" readonly maxlength="10"
+                                [mask]="PhoneMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask"
+                                (focus)="addMask($event);">
                         </mat-form-field>
                     </div>
                     <div class="col-md-4">
@@ -209,14 +217,16 @@
                         </mat-form-field>
                     </div>
 
-                    <div class="col-md-4" *ngIf="f.businessLicenseType.value=='BusinessPAN' && f.isPersonal.value==false">
+                    <div class="col-md-4"
+                        *ngIf="f.businessLicenseType.value=='BusinessPAN' && f.isPersonal.value==false">
                         <mat-form-field appearance="outline">
                             <mat-label>PANNo <span class="error">*</span></mat-label>
                             <input type="text" matInput formControlName="panNo" maxlength="10" disabled>
                         </mat-form-field>
                     </div>
 
-                    <div class="col-md-4" *ngIf="f.businessLicenseType.value=='AadharCard' && f.isPersonal.value==false">
+                    <div class="col-md-4"
+                        *ngIf="f.businessLicenseType.value=='AadharCard' && f.isPersonal.value==false">
                         <mat-form-field appearance="outline">
                             <mat-label>AadharCard <span class="error">*</span></mat-label>
                             <input type="text" matInput formControlName="aadharCard" maxlength="12" disabled>
@@ -325,7 +335,9 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="outline">
                             <mat-label>Additional Discount (%) <span class="error">*</span></mat-label>
-                            <input type="text" matInput formControlName="additionalDiscount" maxlength="4" [mask]="DecimalMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask" (focus)="addMask($event);">
+                            <input type="text" matInput formControlName="additionalDiscount" maxlength="2"
+                                [mask]="DecimalMask" [dropSpecialCharacters]="false" [showMaskTyped]="showMask"
+                                (focus)="addMask($event);">
                         </mat-form-field>
                     </div>
                     <!-- <div class="col-md-4 mt-2">
@@ -360,18 +372,21 @@
                     <div class="col-md-4">
                         <div class="form-group row" style="margin-left: 1px;">
 
-                            Document Images :<button (click)="file.click()" class="fHbZUJ" style="width:158px;height:50px">
+                            Document Images :<button (click)="file.click()" class="fHbZUJ"
+                                style="width:158px;height:50px">
                                 <i class="fa fa-upload"></i>
                                 <div class="sc-pQGev lbdMzz"></div><span>Upload Document</span>
                             </button>
-                            <input #file id="ProductImg" type="file" style="display: none;" (change)="UploadProductImages($event)" multiple="" />
+                            <input #file id="ProductImg" type="file" style="display: none;"
+                                (change)="UploadProductImages($event)" multiple="" />
                             <br />
                             <br />
                             <br />
                             <br />
                             <div *ngFor='let url of PopUpDocumentImg; index as i;'>
                                 <img class="example-header-image" [src]="url" (click)="ShowPopUpImage(url);">
-                                <label class="mi-delete mi-1x" style="color: red;" (click)="removeImg(i,'product');"></label>
+                                <label class="mi-delete mi-1x" style="color: red;"
+                                    (click)="removeImg(i,'product');"></label>
                             </div>
                         </div>
                     </div>

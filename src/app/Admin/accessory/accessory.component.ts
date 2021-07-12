@@ -20,7 +20,8 @@ export class AccessoryComponent implements OnInit {
   lstData: any = [];
   LoggedInUserId: string;
   LoggedInUserType: string;
-  displayedColumns: string[] = ['Image', 'accessoryCategoryName', 'name', 'price', 'isAddPrice', 'description', 'active', 'Edit'];
+  //displayedColumns: string[] = ['Image', 'accessoryCategoryName', 'name', 'price', 'isAddPrice', 'description', 'active', 'Edit'];
+  displayedColumns: string[] = ['Image', 'accessoryCategoryName', 'name', 'price', 'isAddPrice', 'active', 'Edit'];
   dataSource = new MatTableDataSource<any>(this.lstData);
   lstAccessory: any;
   title: string = "Add Module";
@@ -45,10 +46,10 @@ export class AccessoryComponent implements OnInit {
       accessoryCategoryId: ['', Validators.required],
       name: ['', Validators.required],
       description: [''],
-      active: [false],
+      active: [true],
       createdBy: Number(this.LoggedInUserId),
-      fileName: [''],
-      isAddPrice: ['0', Validators.required]
+      fileName: ['', Validators.required],
+      isAddPrice: ['1', Validators.required]
     });
     this._lookupService.GetAccessoryCategory().subscribe(res => {
       this.lstAccessoryCategory = res;
@@ -126,6 +127,12 @@ export class AccessoryComponent implements OnInit {
     if (this.AccessoryForm.invalid) {
       this.AccessoryForm.markAllAsTouched();
       this._toasterService.error("All the * marked fields are mandatory");
+      return;
+    }
+
+    else if (this.AccessoryForm.value.fileName == null || this.AccessoryForm.value.fileName == "") {
+      this.AccessoryForm.markAllAsTouched();
+      this._toasterService.error("Please select the image for upload.");
       return;
     }
     else {
